@@ -48,7 +48,7 @@ a{color:inherit}
 .in{max-width:1080px;margin-inline:auto;padding-inline:16px}
 .sec{padding-block:clamp(72px,11vw,150px)}
 
-/* الأقسام وتأكيد ظهور النصوص بوضوح تם */
+/* الأقسام وتأكيد ظهور النصوص بوضوح تام */
 .dark{background:var(--black);color:var(--snow)}
 .light{background:var(--paper);color:var(--ink)}
 
@@ -419,9 +419,9 @@ a:focus-visible,.scroller:focus-visible{outline:2px solid var(--cyan);outline-of
            onclick="showTeamMember(this)">👤 مهاب</div>
            
       <div class="team-badge" data-en="Amr" 
-           data-ar-role="مشارك في تطوير الموقع الإلكتروني (Website) وتصميم ملف العرض التقديمي (PowerPoint Presentation)."
-           data-en-role="Participated in website development and PowerPoint presentation design."
-           onclick="showTeamMember(this)">👤 عمرو</div>
+           data-ar-role="قائد المشروع بالكامل (Project Leader)، بالإضافة إلى المشاركة والمساعدة في تطوير الموقع الإلكتروني (Website) وتصميم العرض التقديمي (PowerPoint Presentation)."
+           data-en-role="Full Project Leader, in addition to assisting in website development and PowerPoint presentation design."
+           onclick="showTeamMember(this)">👤 عمرو (ليدر المشروع)</div>
            
       <div class="team-badge" data-en="Khaled" 
            data-ar-role="مساعد في البرمجة وتطوير الواجهات، إدارة البيانات، ومراجعة العرض التقديمي وتنسيق الفيديوهات."
@@ -479,7 +479,7 @@ a:focus-visible,.scroller:focus-visible{outline:2px solid var(--cyan);outline-of
 <div id="teamModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:20px;">
   <div style="position:relative; width:100%; max-width:450px; background:#1c2130; border:1px solid var(--line-d); padding:30px; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.5); text-align:center;">
     <button onclick="closeTeamModal()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:#fff; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
-    <div style="font-size:36px; margin-bottom:10px;">👨‍💻</div>
+    <div style="font-size:36px; margin-bottom:10px;">👤</div>
     <h3 id="memberName" style="font-family:var(--f-disp); font-size:24px; color:#fff; margin-bottom:12px;"></h3>
     <p id="memberRole" style="color:var(--grey-d); font-size:16px; line-height:1.6;"></p>
     <button onclick="closeTeamModal()" class="pill" id="modalCloseBtn" style="margin-top:24px; padding:8px 20px; font-size:14px;">إغلاق</button>
@@ -612,7 +612,11 @@ window.showTeamMember = function(badgeEl) {
   const name = badgeEl.getAttribute('data-en');
   const role = lang === 'en' ? badgeEl.getAttribute('data-en-role') : badgeEl.getAttribute('data-ar-role');
   
-  document.getElementById('memberName').textContent = name;
+  if (name === 'Amr') {
+    document.getElementById('memberName').textContent = lang === 'en' ? name + ' (Project Leader)' : name + ' (قائد المشروع)';
+  } else {
+    document.getElementById('memberName').textContent = name;
+  }
   document.getElementById('memberRole').textContent = role;
   document.getElementById('teamModal').style.display = 'flex';
 }
@@ -696,8 +700,10 @@ function setLang(l){
   EN.forEach(([s,h],i)=>{const el=document.querySelector(s);if(el&&AR[i]!==null)el.innerHTML=l==='en'?h:AR[i]});
   
   teamBadges.forEach((b, idx)=>{
-    b.textContent = l==='en' ? '👤 ' + b.getAttribute('data-en') : '👤 ' + arNames[idx];
+    b.textContent = l==='en' ? '👤 ' + b.getAttribute('data-en') : '👤 ' + arNames[idx].replace('👤 ', '');
   });
+  // ضبط اسم عمرو بالشعار الموحد مع التوضيح
+  teamBadges[1].textContent = l==='en' ? '👤 Amr (Leader)' : '👤 عمرو (ليدر المشروع)';
 
   kpiLabels.forEach((lbl, idx)=>{
     lbl.textContent = l==='en' ? lbl.getAttribute('data-en') : arKpiLabels[idx];
@@ -706,7 +712,11 @@ function setLang(l){
   if(activeBadgeElement && document.getElementById('teamModal').style.display === 'flex'){
     const name = activeBadgeElement.getAttribute('data-en');
     const role = l === 'en' ? activeBadgeElement.getAttribute('data-en-role') : activeBadgeElement.getAttribute('data-ar-role');
-    document.getElementById('memberName').textContent = name;
+    if (name === 'Amr') {
+      document.getElementById('memberName').textContent = l === 'en' ? name + ' (Project Leader)' : name + ' (قائد المشروع)';
+    } else {
+      document.getElementById('memberName').textContent = name;
+    }
     document.getElementById('memberRole').textContent = role;
   }
 
