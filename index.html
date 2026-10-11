@@ -282,7 +282,7 @@ body:not(.light-theme) .note{color:var(--grey-d)}
 
 /* team */
 .team .lead{margin-top:16px}
-.team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:40px}
+.team-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:40px}
 .team-card{background:rgba(255,255,255,0.03);border:1px solid var(--line-d);border-radius:22px;padding:26px 20px;text-align:center;transition:all .35s cubic-bezier(.2,.7,.2,1);cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:12px}
 body.light-theme .team-card{background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 6px 24px rgba(0,0,0,0.04)}
 .team-card:hover{transform:translateY(-6px);border-color:var(--cyan);box-shadow:0 15px 35px rgba(43,208,255,0.15)}
@@ -311,7 +311,7 @@ body.light-theme .lang,body.light-theme .theme-toggle{color:#1d1d1f;background:#
 body.light-theme .lang:hover,body.light-theme .theme-toggle:hover{color:#000;background:#d2d2dc;border-color:var(--blue)}
 .lang:focus-visible,.theme-toggle:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
-/* شات بوت توبي (AI Assistant) */
+/* شات بوت توبي (المساعد الذكي المحلي للموقع) */
 #aiAssistantWidget{position:fixed;bottom:24px;left:24px;z-index:999;font-family:var(--f-body)}
 #aiToggleBtn{background:linear-gradient(135deg,#0a64ff,#2bd0ff);color:#fff;border:none;padding:14px 22px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 30px rgba(10,100,255,0.5);display:flex;align-items:center;gap:10px;transition:all .3s ease}
 #aiToggleBtn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 35px rgba(43,208,255,0.6)}
@@ -403,7 +403,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <h2 class="big rv">السرعة لم تعد <span class="grad">مجرد تصفح.</span></h2>
     <p class="lead rv" style="margin-top:10px">معايير أداء فائقة صُممت خصيصاً لتلبي احتياجات الأنظمة الذكية والزمن الحقيقي.</p>
     
-    <!-- زر الفحص الحقيقي المبني على بيانات المشروع -->
+    <!-- زر فحص الأداء الحقيقي -->
     <div style="margin-top:24px;" class="rv">
       <button class="liquid-pill primary" onclick="runRealSpeedTest()" id="speedTestBtn">🚀 فحص الأداء الحقيقي (Run Benchmark)</button>
       <div id="speedTestStatus" style="margin-top:12px; font-family:var(--f-mono); font-size:14px; color:var(--cyan); min-height:24px;"></div>
@@ -599,7 +599,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<!-- قسم الفريق -->
+<!-- قسم الفريق (تم تحديثه وتوزيع الأعضاء الأربعة المهاب، عمرو، خالد، أسامة) -->
 <section class="sec light team" id="team">
   <div class="in center">
     <p class="eyebrow rv">الفريق</p>
@@ -608,18 +608,18 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     
     <div class="team-grid rv">
       <div class="team-card" data-en="Mohab" 
-           data-ar-role="المطور المسؤول عن قسم الـ AI (الذكاء الاصطناعي) وتعديل وتطوير الموقع بالكامل للشكل النهائي، بالإضافة لتصميم الباوربوينت ومونتاج الفيديو."
-           data-en-role="Lead AI Developer and responsible for the final website design, presentation design, and video production."
+           data-ar-role="المطور المسؤول عن برمجة الشات بوت، قسم الـ AI وتعديل وتطوير الموقع بالكامل للشكل النهائي، بالإضافة لتصميم الباوربوينت ومونتاج الفيديو."
+           data-en-role="Lead AI and Web Developer responsible for the final website design, chatbot development, presentation design, and video production."
            onclick="showTeamMember(this)">
         <div class="team-avatar">💻</div>
-        <span class="team-role-tag">AI Developer & UI</span>
+        <span class="team-role-tag">AI & UI Developer</span>
         <h3>مهاب</h3>
         <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
       </div>
            
       <div class="team-card" data-en="Amr" 
-           data-ar-role="قائد المشروع بالكامل (Project Leader)، بالإضافة إلى المشاركة والمساعدة في تطوير الموقع الإلكتروني وتصميم العرض التقديمي."
-           data-en-role="Full Project Leader, in addition to assisting in website development and PowerPoint presentation design."
+           data-ar-role="قائد المشروع بالكامل (Project Leader)، ومسؤول عن محاكاة النظام، قياسات الأداء التقني، والمساعدة في تطوير الموقع وتصميم العرض."
+           data-en-role="Full Project Leader, responsible for system simulation, technical performance metrics, and assisting in website and presentation design."
            onclick="showTeamMember(this)">
         <div class="team-avatar">👑</div>
         <span class="team-role-tag" style="background:rgba(255,180,0,0.12); color:#e69500;">ليدر المشروع</span>
@@ -628,42 +628,22 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
       </div>
            
       <div class="team-card" data-en="Khaled" 
-           data-ar-role="مساعد في البرمجة وتطوير الواجهات، إدارة البيانات، ومراجعة العرض التقديمي وتنسيق الفيديوهات."
-           data-en-role="Assisted in coding and UI development, data management, presentation review, and video coordination."
+           data-ar-role="مساعد في البرمجة وتطوير الواجهات، إدارة البيانات وجداول الأداء، ومراجعة العرض التقديمي وتنسيق الفيديوهات."
+           data-en-role="Assisted in coding and UI development, data management, performance tables, presentation review, and video coordination."
            onclick="showTeamMember(this)">
         <div class="team-avatar">⚡</div>
-        <span class="team-role-tag">UI & Code</span>
+        <span class="team-role-tag">UI & Data</span>
         <h3>خالد</h3>
         <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
       </div>
            
-      <div class="team-card" data-en="Fouad" 
-           data-ar-role="مسؤول الجانب التقني والمحاكاة، ومساعد في اختبار النظام وإعداد الرسوم البيانية والجداول."
-           data-en-role="Responsible for the technical side and simulation, system testing, and charts/tables preparation."
-           onclick="showTeamMember(this)">
-        <div class="team-avatar">📊</div>
-        <span class="team-role-tag">Simulation & Charts</span>
-        <h3>فؤاد</h3>
-        <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
-      </div>
-           
       <div class="team-card" data-en="Osama" 
-           data-ar-role="مساعد في تنظيم الأفكار، إعداد السيناريو الخاص بالعرض، والمشاركة في تصميم واجهات المستخدم."
-           data-en-role="Assisted in organizing ideas, preparing the presentation script, and UI design contributions."
+           data-ar-role="مسؤول استراتيجية المحتوى، إعداد السيناريو الخاص بالعرض التقديمي، ومتابعة اختبارات النظام وتجربة المستخدم."
+           data-en-role="Responsible for content strategy, preparing the presentation script, system testing, and user experience evaluation."
            onclick="showTeamMember(this)">
         <div class="team-avatar">🎯</div>
         <span class="team-role-tag">Strategy & Script</span>
         <h3>أسامة</h3>
-        <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
-      </div>
-           
-      <div class="team-card" data-en="Zein" 
-           data-ar-role="مساعد في إدارة المهام، التنسيق العام بين الفريق، ومراجعة الأداء الفني والتقني للمشروع."
-           data-en-role="Assisted in task management, team coordination, and technical performance review of the project."
-           onclick="showTeamMember(this)">
-        <div class="team-avatar">🚀</div>
-        <span class="team-role-tag">Coordination</span>
-        <h3>زين</h3>
         <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
       </div>
     </div>
@@ -780,7 +760,7 @@ window.toggleAIChat = function() {
   box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
 }
 
-// الردود المحلية الفورية الخاصة بمحتوى الموقع فقط (بدون أي اتصال خارجي أو أخطاء)
+// الردود المحلية الفورية المحدثة لتشمل أعضاء الفريق الأربعة فقط
 window.sendAIQuery = function() {
   const input = document.getElementById('aiInput');
   const body = document.getElementById('aiChatBody');
@@ -806,14 +786,20 @@ window.sendAIQuery = function() {
 
     const hasWord = (arr) => arr.some(w => text.includes(w));
 
-    if (hasWord(['مهاب', 'مين', 'طور', 'صمم', 'عمل', 'مطور', 'برمج', 'ai'])) {
-      reply = "مهاب هو المطور الأساسي المسؤول عن قسم الذكاء الاصطناعي وتطوير وتصميم واجهات الموقع بالكامل بالشكل النهائي، بالإضافة لتصميم الباوربوينت ومونتاج الفيديو.";
+    if (hasWord(['مهاب', 'مين', 'طور', 'صمم', 'عمل', 'مطور', 'برمج'])) {
+      reply = "مهاب هو المطور المسؤول عن برمجة الشات بوت، وتطوير وتصميم واجهات الموقع بالكامل، بالإضافة لتصميم الباوربوينت ومونتاج الفيديو.";
     } 
     else if (hasWord(['عمرو', 'ليدر', 'قائد'])) {
-      reply = "عمرو هو قائد المشروع (Project Leader)، ومسؤول عن تنسيق العمل والمساعدة في تطوير الموقع وتصميم العرض التقديمي.";
+      reply = "عمرو هو قائد المشروع (Project Leader)، ومسؤول عن محاكاة النظام ومؤشرات الأداء ومساعدة الفريق في التطوير والعرض.";
     }
     else if (hasWord(['خالد', 'فؤاد', 'أسامة', 'زين', 'الفريق', 'الجروب', 'الطلاب'])) {
-      reply = "فريق المشروع هم طلاب شعبة نظم معلومات الأعمال بأكاديمية المستقبل: عمرو (ليدر المشروع)، مهاب، خالد، فؤاد، أسامة، وزين.";
+      reply = "فريق المشروع هم 4 طلاب من نظم معلومات الأعمال بأكاديمية المستقبل: عمرو (ليدر)، مهاب (مطور)، خالد، وأسامة.";
+    }
+    else if (hasWord(['أسامة', 'اسامة'])) {
+      reply = "أسامة مسؤول عن استراتيجية المحتوى، إعداد السيناريو الخاص بالعرض التقديمي، ومتابعة اختبارات النظام وتجربة المستخدم.";
+    }
+    else if (hasWord(['خالد'])) {
+      reply = "خالد مسؤول عن مساعدة البرمجة وتطوير الواجهات، إدارة البيانات وجداول الأداء، ومراجعة العرض وتنسيق الفيديوهات.";
     }
     else if (hasWord(['سرعة', 'سرعه', 'tbps', 'ثانية', 'استجابة', 'تأخير', 'كام'])) {
       reply = "المشروع بيستهدف سرعة نقل بيانات خارقة بتوصل لـ 1 Tbps، بزمن استجابة لحظي (Latency) لا يتجاوز 0.001 ثانية.";
@@ -825,7 +811,7 @@ window.sendAIQuery = function() {
       reply = "المشروع ده مقدم ضمن متطلبات طلاب شعبة نظم معلومات الأعمال (BIS) في معهد المستقبل العالي بأكاديمية المستقبل.";
     } 
     else {
-      reply = `أهلاً بك! بصفتي المساعد الذكي "توبي"، يمكنني إخبارك أن مشروع 6G+ يناقش شبكات المستقبل والاتصالات السريعة. بخصوص سؤالك عن "${query}"، يمكنك تصفح أقسام الموقع المختلفة لمعرفة التفاصيل الكاملة أو سؤال عما يخص الفريق والسرعة.`;
+      reply = `أهلاً بك! بصفتي المساعد الذكي "توبي"، يمكنني إخبارك أن مشروع 6G+ يناقش شبكات المستقبل. بخصوص سؤالك عن "${query}"، يمكنك تصفح أقسام الموقع أو سؤال عما يخص الفريق والسرعة.`;
     }
 
     botDiv.textContent = reply;
@@ -1027,12 +1013,8 @@ window.showTeamMember = function(cardEl) {
     displayName = lang === 'en' ? 'Mohab (AI Developer)' : 'مهاب (مطور الـ AI)';
   } else if (nameEn === 'Khaled') {
     displayName = lang === 'en' ? 'Khaled' : 'خالد';
-  } else if (nameEn === 'Fouad') {
-    displayName = lang === 'en' ? 'Fouad' : 'فؤاد';
   } else if (nameEn === 'Osama') {
     displayName = lang === 'en' ? 'Osama' : 'أسامة';
-  } else if (nameEn === 'Zein') {
-    displayName = lang === 'en' ? 'Zein' : 'زين';
   }
 
   const nameEl = document.getElementById('memberName');
