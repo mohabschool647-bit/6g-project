@@ -28,33 +28,34 @@
   color-scheme:dark;
 }
 
+/* تعديل الوضع الفاتح ليحتوي على تفاصيل غنية، تباين عالي وعمق بصري */
 body.light-theme{
   color-scheme:light;
-  --black:#ffffff;
-  --paper:#f2f2f7;
+  --black:#edf2f7;
+  --paper:#f4f7fa;
   --white:#ffffff;
-  --snow:#1d1d1f;
-  --ink:#1d1d1f;
-  --grey-d:#48484a;
-  --grey-l:#545458;
-  --line-d:rgba(0,0,0,.12);
-  --line-l:rgba(0,0,0,.1);
+  --snow:#1a202c;
+  --ink:#2d3748;
+  --grey-d:#4a5568;
+  --grey-l:#718096;
+  --line-d:rgba(10,100,255,0.18);
+  --line-l:rgba(10,100,255,0.12);
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--snow);font-family:var(--f-body);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s ease, color .3s ease}
-body.light-theme{background:var(--paper);color:var(--ink)}
+body{background:var(--black);color:var(--snow);font-family:var(--f-body);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .35s ease, color .35s ease}
+body.light-theme{background:linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);color:var(--ink)}
 
 a{color:inherit}
 .site{overflow-x:clip}
 .in{max-width:1080px;margin-inline:auto;padding-inline:16px}
-.sec{padding-block:clamp(60px,10vw,140px)}
+.sec{padding-block:clamp(60px,10vw,140px);transition:background .35s ease, color .35s ease}
 
 .dark{background:var(--black);color:var(--snow)}
 .light{background:var(--paper);color:var(--ink)}
 
-body.light-theme .dark{background:var(--paper);color:var(--ink)}
+body.light-theme .dark{background:linear-gradient(135deg, #e4edf9 0%, #cbd5e1 100%);color:var(--ink);border-top:1px solid rgba(10,100,255,0.15);border-bottom:1px solid rgba(10,100,255,0.15)}
 body:not(.light-theme) .light{background:#11141d;color:#ffffff}
 
 .center{text-align:center}
@@ -63,74 +64,266 @@ h1,h2,h3,p{margin:0}
 /* مؤشر التمرير العلوي (Scroll Progress Bar) */
 #scrollProgress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0%;z-index:100;transition:width 0.1s ease}
 
+/* مؤشر حالة المحاكاة النشطة (Live Simulation Badge) */
+.live-sim-badge{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  z-index:998;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(19,23,34,0.85);
+  backdrop-filter:blur(10px);
+  color:var(--snow);
+  padding:8px 16px;
+  border-radius:999px;
+  font-size:12.5px;
+  font-family:var(--f-mono);
+  border:1px solid rgba(43,208,255,0.25);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  transition:all .3s ease;
+}
+body.light-theme .live-sim-badge{
+  background:rgba(255,255,255,0.95);
+  color:var(--ink);
+  border-color:rgba(10,100,255,0.3);
+  box-shadow:0 10px 25px rgba(10,100,255,0.12);
+}
+.pulse-dot{
+  width:9px;
+  height:9px;
+  background-color:#00ff88;
+  border-radius:50%;
+  box-shadow:0 0 10px #00ff88;
+  animation: livePulse 1.8s infinite ease-in-out;
+}
+@keyframes livePulse{
+  0%{transform:scale(0.95);opacity:0.8;}
+  50%{transform:scale(1.3);opacity:1;box-shadow:0 0 18px #00ff88;}
+  100%{transform:scale(0.95);opacity:0.8;}
+}
+
+/* أزرار نسخ رابط القسم (Section Share Links) */
+.section-title-wrapper{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  position:relative;
+}
+.share-link-btn{
+  background:none;
+  border:1px solid rgba(43,208,255,0.2);
+  color:var(--cyan);
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:all .2s;
+  font-family:var(--f-mono);
+}
+body.light-theme .share-link-btn{
+  color:var(--blue);
+  border-color:rgba(10,100,255,0.3);
+  background:rgba(10,100,255,0.05);
+}
+.share-link-btn:hover{
+  background:var(--cyan);
+  color:#000;
+}
+body.light-theme .share-link-btn:hover{
+  background:var(--blue);
+  color:#fff;
+}
+
+/* تأثيرات التمرير الانسيابية (Scroll Reveal Animations) */
+.scroll-reveal{
+  opacity:0;
+  transform:translateY(35px);
+  transition:opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+  will-change:opacity, transform;
+}
+.scroll-reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
 /* nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,13,19,.85);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line-d);transition:background .3s ease, border-color .3s ease}
-body.light-theme .nav{background:rgba(255,255,255,.9);border-bottom:1px solid rgba(0,0,0,.1)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,13,19,.85);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line-d);transition:background .35s ease, border-color .35s ease}
+body.light-theme .nav{background:rgba(255,255,255,0.88);border-bottom:1px solid rgba(10,100,255,0.15);box-shadow:0 4px 20px rgba(0,0,0,0.04)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
 .logo{font-family:var(--f-disp);font-weight:700;font-size:22px;text-decoration:none;letter-spacing:-.02em;direction:ltr;color:var(--snow)}
 body.light-theme .logo{color:var(--ink)}
 .nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;font-size:13px;color:#d2d2d7}
-body.light-theme .nav ul{color:#3a3a3c}
+body.light-theme .nav ul{color:#4a5568}
 .nav ul a{text-decoration:none;opacity:.85}
 .nav ul a:hover{opacity:1}
 
-/* تصميم أزرار الـ Neumorphism المتناسقة مع الوضعين */
+/* ========================================================
+   قاعدة الكروت (لكويد شفاف مع إضاءة نيون هادئة في الداكن والفاتح)
+   ======================================================== */
+.liquid-card, .card, .challenge-card, .kpi-card, .use, .chart-container-box, .tablebox {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(19, 23, 34, 0.4);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(43, 208, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s cubic-bezier(.2,.7,.2,1), border-color 0.4s ease;
+  cursor: pointer;
+}
+
+body.light-theme .liquid-card, body.light-theme .card, body.light-theme .challenge-card, body.light-theme .kpi-card, body.light-theme .use, body.light-theme .chart-container-box, body.light-theme .tablebox {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(10, 100, 255, 0.22);
+  box-shadow: 0 10px 30px rgba(10, 100, 255, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+/* إضاءة نيون هادئة وناعمة تتبع الماوس */
+.liquid-card::before, .card::before, .challenge-card::before, .kpi-card::before, .use::before, .chart-container-box::before {
+  content: '';
+  position: absolute;
+  top: var(--mouse-y, 50%);
+  left: var(--mouse-x, 50%);
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(43, 208, 255, 0.18) 0%, rgba(138, 107, 255, 0.08) 50%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(30px);
+}
+
+body.light-theme .liquid-card::before, body.light-theme .card::before, body.light-theme .challenge-card::before, body.light-theme .kpi-card::before, body.light-theme .use::before, body.light-theme .chart-container-box::before {
+  background: radial-gradient(circle, rgba(10, 100, 255, 0.15) 0%, rgba(43, 208, 255, 0.08) 50%, transparent 70%);
+}
+
+.liquid-card:hover::before, .card:hover::before, .challenge-card:hover::before, .kpi-card:hover::before, .use:hover::before, .chart-container-box:hover::before {
+  opacity: 1;
+}
+
+.liquid-card:hover, .card:hover, .challenge-card:hover, .kpi-card:hover, .use:hover, .chart-container-box:hover {
+  transform: translateY(-5px) scale(1.008);
+  border-color: rgba(43, 208, 255, 0.4);
+  box-shadow: 0 0 20px rgba(43, 208, 255, 0.2), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-theme .challenge-card:hover, body.light-theme .kpi-card:hover, body.light-theme .use:hover, body.light-theme .chart-container-box:hover {
+  border-color: rgba(10, 100, 255, 0.45);
+  box-shadow: 0 0 25px rgba(10, 100, 255, 0.18), 0 12px 30px rgba(10, 100, 255, 0.1), inset 0 1px 3px rgba(255, 255, 255, 1);
+}
+
+.liquid-card > *, .card > *, .challenge-card > *, .kpi-card > *, .use > *, .chart-container-box > *, .tablebox > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* كروت الفريق طبيعية وثابتة (بدون تفاعلات ماوس نيون) */
+.team-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(19, 23, 34, 0.4);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(43, 208, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 26px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.35s cubic-bezier(.2,.7,.2,1);
+  cursor: pointer;
+}
+body.light-theme .team-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(10, 100, 255, 0.22);
+  box-shadow: 0 10px 30px rgba(10, 100, 255, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+.team-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyan);
+  box-shadow: 0 12px 30px rgba(43, 208, 255, 0.2);
+}
+body.light-theme .team-card:hover {
+  border-color: var(--blue);
+  box-shadow: 0 12px 30px rgba(10, 100, 255, 0.15);
+}
+
+/* تصميم أزرار الـ Liquid Glassmorphism */
 .liquid-pill{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap:8px;
-  background: #131722;
+  background: rgba(19, 23, 34, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--snow);
   text-decoration: none;
   font-weight: 600;
   font-size: 15px;
   padding: 13px 28px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.4), -4px -4px 12px rgba(255, 255, 255, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(43, 208, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.35s cubic-bezier(.2,.7,.2,1);
   cursor: pointer;
 }
 body.light-theme .liquid-pill{
-  background: #e4e4eb;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--ink);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.08), -4px -4px 12px rgba(255, 255, 255, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(10, 100, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(10, 100, 255, 0.1), inset 0 1px 1px rgba(255, 255, 255, 1);
 }
 
 .liquid-pill:hover{
   transform: translateY(-3px) scale(1.04);
-  background: #1c2333;
+  background: rgba(28, 35, 51, 0.7);
   border-color: var(--cyan);
-  box-shadow: 0 10px 30px rgba(43, 208, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(43, 208, 255, 0.4), 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
 }
 body.light-theme .liquid-pill:hover{
-  background: #d8d8e2;
+  background: rgba(240, 244, 252, 0.95);
   border-color: var(--blue);
-  box-shadow: 0 10px 25px rgba(10, 100, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 1);
+  box-shadow: 0 0 20px rgba(10, 100, 255, 0.3), 0 10px 25px rgba(10, 100, 255, 0.15), inset 0 1px 2px rgba(255, 255, 255, 1);
 }
 
 .liquid-pill.primary{
-  background: linear-gradient(135deg, #0a64ff, #2bd0ff);
+  background: linear-gradient(135deg, rgba(10, 100, 255, 0.75), rgba(43, 208, 255, 0.75));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #fff;
-  border: none;
-  box-shadow: 0 8px 25px rgba(10, 100, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(10, 100, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 .liquid-pill.primary:hover{
-  background: linear-gradient(135deg, #1872ff, #45d8ff);
-  box-shadow: 0 12px 35px rgba(43, 208, 255, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(24, 114, 255, 0.9), rgba(69, 216, 255, 0.9));
+  box-shadow: 0 0 25px rgba(43, 208, 255, 0.6), 0 12px 35px rgba(10, 100, 255, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.8);
   transform: translateY(-3px) scale(1.04);
 }
 
-.nav .liquid-pill{font-size:12.5px;padding:6px 14px;box-shadow: 3px 3px 8px rgba(0,0,0,0.3);}
+.nav .liquid-pill{font-size:12.5px;padding:6px 14px;box-shadow: 0 4px 15px rgba(0,0,0,0.2);}
+body.light-theme .nav .liquid-pill{box-shadow: 0 4px 15px rgba(10,100,255,0.08);}
 
 @media (max-width:900px){.nav ul{display:none}}
 
 /* hero section */
 .hero{position:relative;overflow:hidden;padding-block:clamp(80px,14vw,160px) clamp(90px,15vw,160px);text-align:center}
 .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.45;animation:drift 18s ease-in-out infinite alternate}
-body.light-theme .blob{opacity:.22}
+body.light-theme .blob{opacity:.28}
 .b1{width:50vmax;height:50vmax;left:-10vmax;top:-15vmax;background:radial-gradient(circle,var(--cyan),transparent 65%)}
 .b2{width:45vmax;height:45vmax;right:-10vmax;top:-5vmax;background:radial-gradient(circle,var(--violet),transparent 65%);animation-delay:-6s}
 .b3{width:45vmax;height:35vmax;left:25%;bottom:-22vmax;background:radial-gradient(circle,var(--blue),transparent 65%);animation-delay:-10s;opacity:.35}
@@ -139,7 +332,7 @@ body.light-theme .blob{opacity:.22}
 .hero .in{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
 
 .hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--cyan);background:rgba(43,208,255,0.1);border:1px solid rgba(43,208,255,0.25);padding:8px 20px;border-radius:999px;margin-bottom:4px;box-shadow:0 4px 20px rgba(43,208,255,0.15)}
-body.light-theme .hero-badge{color:#0a64ff;background:rgba(10,100,255,0.08);border-color:rgba(10,100,255,0.2)}
+body.light-theme .hero-badge{color:#0a64ff;background:rgba(10,100,255,0.1);border-color:rgba(10,100,255,0.3);box-shadow:0 4px 15px rgba(10,100,255,0.08)}
 
 .mark{font-family:var(--f-disp);font-weight:700;font-size:clamp(90px,28vw,280px);line-height:.9;letter-spacing:-.05em;direction:ltr;background:linear-gradient(105deg,var(--snow) 5%,var(--cyan) 45%,var(--violet) 90%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-inline:.05em;filter:drop-shadow(0 15px 30px rgba(0,0,0,0.2))}
 
@@ -159,7 +352,7 @@ body.light-theme .lead{color:var(--grey-l)}
 .speed-direct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;margin-top:40px;align-items:center;text-align:center}
 .speed-direct-item{display:flex;flex-direction:column;align-items:center;gap:10px}
 .speed-direct-badge{font-family:var(--f-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);background:rgba(43,208,255,0.1);padding:6px 14px;border-radius:999px;margin-bottom:6px}
-body.light-theme .speed-direct-badge{color:#0a64ff;background:rgba(10,100,255,0.08)}
+body.light-theme .speed-direct-badge{color:#0a64ff;background:rgba(10,100,255,0.1);border:1px solid rgba(10,100,255,0.2)}
 .count{font-family:var(--f-mono);font-weight:700;font-size:clamp(48px,11vw,110px);line-height:1;direction:ltr;font-variant-numeric:tabular-nums;color:var(--snow)}
 body.light-theme .count{color:var(--ink)}
 .unit{font-family:var(--f-disp);font-weight:600;font-size:clamp(16px,2.2vw,24px);color:var(--grey-d)}
@@ -179,14 +372,11 @@ body.light-theme .tbps small{color:var(--grey-l)}
 /* bento - التقنيات والكروت */
 .head{display:flex;flex-direction:column;gap:12px;align-items:center;margin-bottom:clamp(36px,5vw,60px)}
 .bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.card{border-radius:24px;padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:12px;min-width:0;overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s cubic-bezier(.2,.7,.2,1), background .3s ease;cursor:pointer}
-body.light-theme .card{background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 20px rgba(0,0,0,0.04)}
-body:not(.light-theme) .card{background:#11141d;border:1px solid var(--line-d)}
-.card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 20px 40px rgba(10,100,255,0.15)}
-.card h3{font-family:var(--f-disp);font-weight:700;font-size:clamp(20px,2.4vw,28px);line-height:1.3;color:var(--ink)}
-body:not(.light-theme) .card h3{color:#ffffff}
-.card p{color:var(--grey-l);font-size:16px}
-body:not(.light-theme) .card p{color:var(--grey-d)}
+.card{padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:12px;min-width:0}
+.card h3{font-family:var(--f-disp);font-weight:700;font-size:clamp(20px,2.4vw,28px);line-height:1.3;color:var(--snow)}
+body.light-theme .card h3{color:var(--ink)}
+.card p{color:var(--grey-d);font-size:16px}
+body.light-theme .card p{color:var(--grey-l)}
 .card .eyebrow{font-size:12px;font-family:var(--f-mono);letter-spacing:.12em;text-transform:uppercase;direction:ltr;text-align:right;color:var(--blue)}
 .art{margin-top:auto;padding-top:16px;color:var(--blue);transition:transform .3s ease}
 .card:hover .art{transform:scale(1.03)}
@@ -205,92 +395,69 @@ body:not(.light-theme) .card p{color:var(--grey-d)}
 
 /* Live Analytics / KPIs Preview */
 .kpi-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:36px}
-.kpi-card{padding:24px 18px;border-radius:22px;text-align:center;transition:transform .3s ease, border-color .3s ease}
-body.light-theme .kpi-card{background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 20px rgba(0,0,0,0.03)}
-body:not(.light-theme) .kpi-card{background:#11141d;border:1px solid var(--line-d)}
-.kpi-card:hover{transform:translateY(-4px);border-color:var(--cyan)}
+.kpi-card{padding:24px 18px;text-align:center}
 .kpi-num{font-family:var(--f-mono);font-size:clamp(28px,3.8vw,44px);font-weight:700;margin-bottom:6px;direction:ltr}
 .kpi-label{font-size:14px;color:var(--grey-d)}
 body.light-theme .kpi-label{color:var(--grey-l)}
-body:not(.light-theme) .kpi-label{color:var(--grey-d)}
 @media (max-width:768px){.kpi-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* قسم التحديات والحلول */
 .challenges-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:36px}
-.challenge-card{border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;transition:transform .3s ease, border-color .3s ease;position:relative;overflow:hidden}
-body.light-theme .challenge-card{background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 20px rgba(0,0,0,0.03)}
-body:not(.light-theme) .challenge-card{background:#11141d;border:1px solid var(--line-d)}
-.challenge-card:hover{transform:translateY(-5px);border-color:var(--violet)}
+.challenge-card{padding:28px;display:flex;flex-direction:column;gap:14px}
 .challenge-icon{font-size:28px}
-.challenge-card h3{font-family:var(--f-disp);font-weight:700;font-size:19px;color:var(--ink)}
-body.light-theme .challenge-card h3{color:#1d1d1f}
-body:not(.light-theme) .challenge-card h3{color:#ffffff}
-.challenge-desc{font-size:14.5px;color:var(--grey-l)}
-body:not(.light-theme) .challenge-desc{color:var(--grey-d)}
-.challenge-solution{background:rgba(10,100,255,0.06);border-inline-start:3px solid var(--blue);padding:10px 14px;border-radius:0 10px 10px 0;font-size:14px}
-body.light-theme .challenge-solution{background:rgba(10,100,255,0.04);color:#1d1d1f}
-body:not(.light-theme) .challenge-solution{background:rgba(10,100,255,0.1);color:#d2d2d7}
+.challenge-card h3{font-family:var(--f-disp);font-weight:700;font-size:19px;color:var(--snow)}
+body.light-theme .challenge-card h3{color:var(--ink)}
+.challenge-desc{font-size:14.5px;color:var(--grey-d)}
+body.light-theme .challenge-desc{color:var(--grey-l)}
+.challenge-solution{background:rgba(10,100,255,0.12);backdrop-filter:blur(8px);border-inline-start:3px solid var(--cyan);padding:12px 16px;border-radius:0 12px 12px 0;font-size:14px}
+body.light-theme .challenge-solution{background:rgba(10,100,255,0.08);color:var(--ink);border-inline-start-color:var(--blue)}
+body:not(.light-theme) .challenge-solution{background:rgba(43,208,255,0.1);color:#d2d2d7}
 @media (max-width:768px){.challenges-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* قسم الرسم البياني التفاعلي */
 .chart-container-box{border-radius:24px;padding:clamp(16px,3vw,32px);margin-top:36px;position:relative}
-body.light-theme .chart-container-box{background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 20px rgba(0,0,0,0.04)}
-body:not(.light-theme) .chart-container-box{background:#11141d;border:1px solid var(--line-d)}
 .chart-inner{position:relative;width:100%;height:320px;max-height:40vh}
 
 /* uses - الاستخدامات المتجاوبة */
 .uses-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:36px}
-.use{border-radius:24px;padding:26px;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;position:relative;overflow:hidden;border:1px solid var(--line-d);transition:transform .3s ease, border-color .3s ease, background .3s ease}
-body.light-theme .use{background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 20px rgba(0,0,0,0.04);color:#1d1d1f}
-body:not(.light-theme) .use{background:#11141d;color:#fff}
-.use:hover{transform:translateY(-5px);border-color:var(--cyan)}
-.use::before{content:"";position:absolute;inset:-20% -20% 30% -20%;background:radial-gradient(circle at 50% 40%,hsl(var(--h) 100% 60% / .35),transparent 62%);filter:blur(10px)}
-.use>*{position:relative}
+.use{padding:26px;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
+.use::before{content:"";position:absolute;inset:-20% -20% 30% -20%;background:radial-gradient(circle at 50% 40%,hsl(var(--h) 100% 60% / .25),transparent 62%);filter:blur(15px);z-index:1}
+body.light-theme .use::before{background:radial-gradient(circle at 50% 40%,hsl(var(--h) 85% 55% / .2),transparent 62%)}
+.use>*{position:relative;z-index:2}
 .use .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:hsl(var(--h) 100% 70%);direction:ltr;text-align:right}
-body.light-theme .use .tag{color:hsl(var(--h) 80% 40%)}
+body.light-theme .use .tag{color:hsl(var(--h) 80% 35%)}
 .use h3{font-family:var(--f-disp);font-weight:700;font-size:22px;line-height:1.3}
-body.light-theme .use h3{color:#1d1d1f}
+body.light-theme .use h3{color:var(--ink)}
 body:not(.light-theme) .use h3{color:#fff}
-.use p{color:var(--grey-l);font-size:15px}
+.use p{color:var(--grey-d);font-size:15px}
 body.light-theme .use p{color:var(--grey-l)}
-body:not(.light-theme) .use p{color:var(--grey-d)}
 @media (max-width:1024px){.uses-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.uses-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* compare - المقارنة */
-.tablebox{overflow-x:auto;border-radius:24px;padding:clamp(6px,2vw,16px);transition:background .3s ease;box-shadow:0 4px 20px rgba(0,0,0,0.03)}
-body.light-theme .tablebox{background:#ffffff;border:1px solid rgba(0,0,0,0.06)}
-body:not(.light-theme) .tablebox{background:#11141d;border:1px solid var(--line-d)}
+.tablebox{border-radius:24px;padding:clamp(6px,2vw,16px);overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:480px;font-size:clamp(14px,1.6vw,17px)}
 th,td{padding:16px 14px;text-align:start;border-bottom:1px solid var(--line-l)}
 body:not(.light-theme) th,body:not(.light-theme) td{border-bottom:1px solid var(--line-d);color:#fff}
-body.light-theme th,body.light-theme td{color:var(--ink)}
+body.light-theme th,body.light-theme td{color:var(--ink);border-bottom:1px solid rgba(10,100,255,0.12)}
 tr:last-child td{border-bottom:0}
-th{font-weight:500;color:var(--grey-l);font-size:13.5px}
-body:not(.light-theme) th{color:var(--grey-d)}
+th{font-weight:500;color:var(--grey-d);font-size:13.5px}
+body.light-theme th{color:var(--grey-l)}
 th.me{font-family:var(--f-mono);font-size:15px;font-weight:500}
 td:first-child{font-weight:600}
 td.me{font-weight:600}
 td .lat{direction:ltr;display:inline-block}
-.note{margin-top:16px;font-size:13.5px;color:var(--grey-l);text-align:center}
-body:not(.light-theme) .note{color:var(--grey-d)}
-
-/* docs section */
-#docs .in{display:flex;flex-direction:column;align-items:center;gap:16px}
-#docs .lead{margin-top:6px;margin-bottom:6px}
-#docs .cta{margin-top:20px;gap:14px}
+.note{margin-top:16px;font-size:13.5px;color:var(--grey-d);text-align:center}
+body.light-theme .note{color:var(--grey-l)}
 
 /* team */
 .team .lead{margin-top:16px}
 .team-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:40px}
-.team-card{background:rgba(255,255,255,0.03);border:1px solid var(--line-d);border-radius:22px;padding:26px 20px;text-align:center;transition:all .35s cubic-bezier(.2,.7,.2,1);cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:12px}
-body.light-theme .team-card{background:#ffffff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 6px 24px rgba(0,0,0,0.04)}
-.team-card:hover{transform:translateY(-6px);border-color:var(--cyan);box-shadow:0 15px 35px rgba(43,208,255,0.15)}
 .team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,0.2);margin-bottom:4px}
 .team-card h3{font-family:var(--f-disp);font-weight:700;font-size:20px;color:var(--snow)}
 body.light-theme .team-card h3{color:var(--ink)}
 .team-role-tag{font-size:12.5px;font-family:var(--f-mono);padding:4px 12px;border-radius:999px;background:rgba(43,208,255,0.1);color:var(--cyan)}
-body.light-theme .team-role-tag{background:rgba(10,100,255,0.08);color:#0a64ff}
+body.light-theme .team-role-tag{background:rgba(10,100,255,0.1);color:#0a64ff;border:1px solid rgba(10,100,255,0.2)}
 .team-hint{font-size:13px;color:var(--grey-d);margin-top:auto;opacity:0.8}
 body.light-theme .team-hint{color:var(--grey-l)}
 @media (max-width:900px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -300,48 +467,67 @@ body.light-theme .team-hint{color:var(--grey-l)}
 .close .blob{opacity:.38}
 .close .in{position:relative;display:flex;flex-direction:column;gap:18px;align-items:center}
 .huge{font-family:var(--f-disp);font-weight:700;font-size:clamp(56px,14vw,170px);line-height:1.1}
-footer{background:var(--black);border-top:1px solid var(--line-d);color:var(--grey-d);font-size:12.5px;padding-block:24px;transition:background .3s ease}
-body.light-theme footer{background:var(--paper);color:var(--grey-l);border-top-color:rgba(0,0,0,0.1)}
+footer{background:var(--black);border-top:1px solid var(--line-d);color:var(--grey-d);font-size:12.5px;padding-block:24px;transition:background .35s ease, color .35s ease}
+body.light-theme footer{background:var(--paper);color:var(--grey-l);border-top-color:rgba(10,100,255,0.15)}
 footer .in{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 .nav .acts{display:flex;gap:8px;align-items:center}
 .lang,.theme-toggle{font:inherit;font-size:12.5px;font-weight:600;color:#d2d2d7;background:#131722;border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 16px;cursor:pointer;line-height:1.4;box-shadow: 3px 3px 8px rgba(0,0,0,0.25);transition:all .25s}
-body.light-theme .lang,body.light-theme .theme-toggle{color:#1d1d1f;background:#e4e4eb;border-color:rgba(0,0,0,0.15);box-shadow: 3px 3px 8px rgba(0,0,0,0.08)}
+body.light-theme .lang,body.light-theme .theme-toggle{color:#1a202c;background:#e2e8f0;border:1px solid rgba(10,100,255,0.2);box-shadow: 3px 3px 8px rgba(10,100,255,0.06)}
 .lang:hover,.theme-toggle:hover{color:#fff;border-color:var(--cyan);background:#1a2030;transform:scale(1.03)}
-body.light-theme .lang:hover,body.light-theme .theme-toggle:hover{color:#000;background:#d2d2dc;border-color:var(--blue)}
+body.light-theme .lang:hover,body.light-theme .theme-toggle:hover{color:#0a64ff;background:#cbd5e1;border-color:var(--blue)}
 .lang:focus-visible,.theme-toggle:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
-/* شات بوت توبي (المساعد الذكي المحلي للموقع) */
+/* شات بوت محماااا (المساعد الذكي للموقع) */
 #aiAssistantWidget{position:fixed;bottom:24px;left:24px;z-index:999;font-family:var(--f-body)}
 #aiToggleBtn{background:linear-gradient(135deg,#0a64ff,#2bd0ff);color:#fff;border:none;padding:14px 22px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 30px rgba(10,100,255,0.5);display:flex;align-items:center;gap:10px;transition:all .3s ease}
 #aiToggleBtn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 35px rgba(43,208,255,0.6)}
-#aiChatBox{display:none;width:340px;max-height:480px;background:#131722;border:1px solid rgba(255,255,255,0.2);border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,0.7);flex-direction:column;overflow:hidden;margin-bottom:12px}
-body.light-theme #aiChatBox{background:#ffffff;border:1px solid rgba(0,0,0,0.18);box-shadow:0 20px 50px rgba(0,0,0,0.2)}
+#aiChatBox{display:none;width:340px;max-height:480px;background:#131722;border:1px solid rgba(255,255,255,0.2);border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,0.7);flex-direction:column;overflow:hidden;margin-bottom:12px;transition:background .35s ease}
+body.light-theme #aiChatBox{background:#ffffff;border:1px solid rgba(10,100,255,0.25);box-shadow:0 20px 50px rgba(10,100,255,0.15)}
 #aiChatHeader{background:rgba(10,100,255,0.18);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.12)}
-body.light-theme #aiChatHeader{background:rgba(10,100,255,0.1);border-bottom-color:rgba(0,0,0,0.08)}
+body.light-theme #aiChatHeader{background:rgba(10,100,255,0.1);border-bottom-color:rgba(10,100,255,0.12)}
 #aiChatBody{padding:16px;overflow-y:auto;flex:1;max-height:280px;display:flex;flex-direction:column;gap:12px;font-size:14px}
 .ai-msg{padding:10px 14px;border-radius:14px;max-width:85%;line-height:1.5}
 .ai-msg.bot{background:rgba(43,208,255,0.12);color:var(--snow);align-self:flex-start;border-inline-start:3px solid var(--cyan)}
-body.light-theme .ai-msg.bot{background:rgba(10,100,255,0.08);color:var(--ink)}
+body.light-theme .ai-msg.bot{background:rgba(10,100,255,0.08);color:var(--ink);border-inline-start-color:var(--blue)}
 .ai-msg.user{background:var(--blue);color:#fff;align-self:flex-end}
 #aiChatFooter{padding:12px;border-top:1px solid rgba(255,255,255,0.12);display:flex;gap:8px}
-body.light-theme #aiChatFooter{border-top-color:rgba(0,0,0,0.08)}
+body.light-theme #aiChatFooter{border-top-color:rgba(10,100,255,0.12)}
 #aiInput{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);padding:9px 14px;border-radius:10px;color:inherit;font:inherit;font-size:13.5px}
-body.light-theme #aiInput{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.15)}
+body.light-theme #aiInput{background:rgba(10,100,255,0.04);border:1px solid rgba(10,100,255,0.2)}
 #aiSendBtn{background:var(--blue);color:#fff;border:none;padding:9px 16px;border-radius:10px;cursor:pointer;font-weight:600;transition:background .2s}
 #aiSendBtn:hover{background:#0051e0}
+
+/* تنسيق النوافذ المنبثقة لتتغير حسب الوضع الداكن والفاتح تلقائياً */
+.modal-content-box {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  background: #1c2130;
+  color: #fff;
+  border: 1px solid var(--line-d);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  text-align: center;
+  transition: background .35s ease, color .35s ease, border-color .35s ease;
+}
+body.light-theme .modal-content-box {
+  background: #ffffff;
+  color: var(--ink);
+  border: 1px solid rgba(10,100,255,0.25);
+  box-shadow: 0 20px 40px rgba(10,100,255,0.12);
+}
 
 .site[dir="ltr"] .card .eyebrow,.site[dir="ltr"] .use .tag{text-align:left}
 .site[dir="ltr"] .big,.site[dir="ltr"] .mid,.site[dir="ltr"] .huge,.site[dir="ltr"] .sub,.site[dir="ltr"] #scrub{letter-spacing:-.015em}
 .site[dir="ltr"] .lead{max-width:36em}
-.pre{opacity:.35;transform:translateY(30px)}
-.rv{transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .blob,.streaks i,.a-node,.a-rh,.a-ring,.a-tr{animation:none}
   .a-tr{stroke-dashoffset:0}
-  .pre{opacity:1;transform:none}
+  .scroll-reveal{opacity:1;transform:none}
 }
 </style>
 
@@ -349,6 +535,12 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 <!-- مؤشر التمرير العلوي -->
 <div id="scrollProgress"></div>
+
+<!-- شارة حالة المحاكاة النشطة في الزاوية -->
+<div class="live-sim-badge">
+  <span class="pulse-dot"></span>
+  <span>محاكاة نظام 6G نشطة</span>
+</div>
 
 <nav class="nav" aria-label="التنقل الرئيسي">
   <div class="in">
@@ -389,27 +581,33 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </header>
 
-<section class="sec light" id="vision">
+<section class="sec light scroll-reveal" id="vision">
   <div class="in center">
-    <p class="eyebrow" style="margin-bottom:24px">الرؤية</p>
+    <div class="section-title-wrapper" style="margin-bottom:24px;">
+      <p class="eyebrow" style="margin:0;">الرؤية</p>
+      <button class="share-link-btn" onclick="copySectionLink('vision')">🔗 نسخ الرابط</button>
+    </div>
     <p id="scrub">لقد اعتقدنا أن الـ 5G وصل بالسرعة إلى نهايتها. لكن العالم يتحرك بشكل أسرع مما نتخيل. السرعة لم تعد مجرد تصفح. إنها استجابة بجزء من ألف من الثانية، وربط بلا حدود، وذكاء اصطناعي يفكر معك في كل ثانية.</p>
   </div>
 </section>
 
 <!-- قسم السرعة الحقيقي والمستند لمعلومات المشروع -->
-<section class="sec dark" id="speed">
+<section class="sec dark scroll-reveal" id="speed">
   <div class="in center">
-    <p class="eyebrow rv">السرعة الخارقة</p>
-    <h2 class="big rv">السرعة لم تعد <span class="grad">مجرد تصفح.</span></h2>
-    <p class="lead rv" style="margin-top:10px">معايير أداء فائقة صُممت خصيصاً لتلبي احتياجات الأنظمة الذكية والزمن الحقيقي.</p>
+    <div class="section-title-wrapper">
+      <p class="eyebrow">السرعة الخارقة</p>
+      <button class="share-link-btn" onclick="copySectionLink('speed')">🔗 نسخ الرابط</button>
+    </div>
+    <h2 class="big" style="margin-top:12px;">السرعة لم تعد <span class="grad">مجرد تصفح.</span></h2>
+    <p class="lead" style="margin-top:10px">معايير أداء فائقة صُممت خصيصاً لتلبي احتياجات الأنظمة الذكية والزمن الحقيقي.</p>
     
     <!-- زر فحص الأداء الحقيقي -->
-    <div style="margin-top:24px;" class="rv">
+    <div style="margin-top:24px;">
       <button class="liquid-pill primary" onclick="runRealSpeedTest()" id="speedTestBtn">🚀 فحص الأداء الحقيقي (Run Benchmark)</button>
       <div id="speedTestStatus" style="margin-top:12px; font-family:var(--f-mono); font-size:14px; color:var(--cyan); min-height:24px;"></div>
     </div>
 
-    <div class="speed-direct-grid rv">
+    <div class="speed-direct-grid">
       <div class="speed-direct-item">
         <span class="speed-direct-badge">Latency Target</span>
         <div class="count grad" id="count" aria-label="0.001 ثانية">0.001</div>
@@ -426,35 +624,38 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   <div class="tbps" style="margin-top:50px;">
     <div class="streaks" id="streaks" aria-hidden="true"></div>
     <div class="in center">
-      <div class="tbps-t grad rv">6G+ Ultra</div>
+      <div class="tbps-t grad">6G+ Ultra</div>
       <small>Next-Gen Connectivity Paradigm</small>
-      <p class="mid rv" style="margin-top:12px">سرعات تنقل العالم إلى واقع افتراضي وتفاعلي بلا حدود.</p>
+      <p class="mid" style="margin-top:12px">سرعات تنقل العالم إلى واقع افتراضي وتفاعلي بلا حدود.</p>
     </div>
   </div>
 </section>
 
 <!-- قسم التحديات والحلول -->
-<section class="sec light" id="challenges">
+<section class="sec light scroll-reveal" id="challenges">
   <div class="in">
     <div class="head center">
-      <p class="eyebrow rv">التحديات والحلول (Challenges & Solutions)</p>
-      <h2 class="big rv">عقبات تقنية تتطلب <span class="grad">ذكاءً هندسياً.</span></h2>
-      <p class="lead rv">كيف يتعامل مشروعنا مع التحديات الفعلية لشبكات الجيل السادس.</p>
+      <div class="section-title-wrapper">
+        <p class="eyebrow" style="margin:0;">التحديات والحلول (Challenges & Solutions)</p>
+        <button class="share-link-btn" onclick="copySectionLink('challenges')">🔗 نسخ الرابط</button>
+      </div>
+      <h2 class="big" style="margin-top:12px;">عقبات تقنية تتطلب <span class="grad">ذكاءً هندسياً.</span></h2>
+      <p class="lead">كيف يتعامل مشروعنا مع التحديات الفعلية لشبكات الجيل السادس.</p>
     </div>
-    <div class="challenges-grid rv">
-      <div class="challenge-card">
+    <div class="challenges-grid">
+      <div class="challenge-card" onmousemove="updateCardNeon(event, this)">
         <div class="challenge-icon">📡</div>
         <h3 data-en="Terahertz (THz) Frequencies">الترددات العالية جداً (THz)</h3>
         <p class="challenge-desc" data-en="THz waves suffer from extreme high attenuation and short transmission range due to physical obstacles.">تعاني موجات التردد الفائق من ضعف شديد في الإشارة لمسافات طويلة وتأثرها بالعوائق المادية.</p>
         <div class="challenge-solution" data-en="Solution: Intelligent Reconfigurable Surfaces (IRS) and ultra-dense micro-cell deployment."><strong>الحل المقترح:</strong> استخدام الأسطح الذكية القابلة لإعادة التشكيل (IRS) لتوجيه الإشارات بذكاء وتخطي الحواجز.</div>
       </div>
-      <div class="challenge-card">
+      <div class="challenge-card" onmousemove="updateCardNeon(event, this)">
         <div class="challenge-icon">⚡</div>
         <h3 data-en="Energy Consumption">استهلاك الطاقة</h3>
         <p class="challenge-desc" data-en="Massive data rates and dense node processing can exponentially increase network power usage.">معدلات نقل البيانات الهائلة ومعالجة العقد المتعددة تستهلك طاقة كهربائية عالية جداً.</p>
         <div class="challenge-solution" data-en="Solution: AI-driven green networking algorithms that dynamically put idle nodes into sleep mode."><strong>الحل المقترح:</strong> خوارزميات شبكات خضراء مدعومة بالذكاء الاصطناعي لوضع العقد غير الخاملة في وضع السكون التلقائي.</div>
       </div>
-      <div class="challenge-card">
+      <div class="challenge-card" onmousemove="updateCardNeon(event, this)">
         <div class="challenge-icon">🔒</div>
         <h3 data-en="Cybersecurity & Privacy">الأمن السيبراني والخصوصية</h3>
         <p class="challenge-desc" data-en="Hyper-connectivity of billions of devices creates massive attack surfaces for cyber threats.">الربط الهائل لملايين الأجهزة الذكية يزيد من نقاط الضعف وثغرات الهجمات السيبرانية.</p>
@@ -465,31 +666,34 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 </section>
 
 <!-- قسم المؤشرات ورسم بياني تفاعلي -->
-<section class="sec dark" id="analytics">
+<section class="sec dark scroll-reveal" id="analytics">
   <div class="in">
     <div class="head center">
-      <p class="eyebrow rv">مؤشرات الأداء (BIS KPIs & Charts)</p>
-      <h2 class="big rv">أرقام ورسوم بيانية تعكس <span class="grad">كفاءة النظام.</span></h2>
-      <p class="lead rv">تحليل بياني مباشر لأداء شبكة المستقبل مقارنة بالجيل السابق.</p>
+      <div class="section-title-wrapper">
+        <p class="eyebrow" style="margin:0;">مؤشرات الأداء (BIS KPIs & Charts)</p>
+        <button class="share-link-btn" onclick="copySectionLink('analytics')">🔗 نسخ الرابط</button>
+      </div>
+      <h2 class="big" style="margin-top:12px;">أرقام ورسوم بيانية تعكس <span class="grad">كفاءة النظام.</span></h2>
+      <p class="lead">تحليل بياني مباشر لأداء شبكة المستقبل مقارنة بالجيل السابق.</p>
     </div>
-    <div class="kpi-grid rv">
-      <div class="kpi-card">
+    <div class="kpi-grid">
+      <div class="kpi-card" onmousemove="updateCardNeon(event, this)">
         <div class="kpi-num grad">99.9%</div>
         <div class="kpi-label" data-en="Latency Reduction">نسبة تقليل تأخير الشبكة</div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onmousemove="updateCardNeon(event, this)">
         <div class="kpi-num grad">+350%</div>
         <div class="kpi-label" data-en="Energy Efficiency">كفاءة استهلاك الطاقة</div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onmousemove="updateCardNeon(event, this)">
         <div class="kpi-num grad">10M+</div>
         <div class="kpi-label" data-en="Connected Devices / Sec">عدد الأجهزة المتصلة في الثانية</div>
       </div>
     </div>
     
-    <div class="chart-container-box rv">
+    <div class="chart-container-box" onmousemove="updateCardNeon(event, this)">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
-        <h3 id="chartTitle" style="font-family:var(--f-disp); font-size:19px; color:#fff;">مقارنة الأداء التقني (5G vs 6G+)</h3>
+        <h3 id="chartTitle" style="font-family:var(--f-disp); font-size:19px;">مقارنة الأداء التقني (5G vs 6G+)</h3>
         <span class="lat" style="font-size:11.5px; color:var(--cyan); background:rgba(43,208,255,0.1); padding:4px 10px; border-radius:999px;">BIS Analytics Engine</span>
       </div>
       <div class="chart-inner">
@@ -499,32 +703,35 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<section class="sec light" id="tech">
+<section class="sec light scroll-reveal" id="tech">
   <div class="in">
     <div class="head center">
-      <p class="eyebrow rv">التقنيات</p>
-      <h2 class="big rv">كل ما تحتاجه شبكة المستقبل.</h2>
+      <div class="section-title-wrapper">
+        <p class="eyebrow" style="margin:0;">التقنيات</p>
+        <button class="share-link-btn" onclick="copySectionLink('tech')">🔗 نسخ الرابط</button>
+      </div>
+      <h2 class="big" style="margin-top:12px;">كل ما تحتاجه شبكة المستقبل.</h2>
     </div>
     <div class="bento">
-      <article class="card rv">
+      <article class="card" onmousemove="updateCardNeon(event, this)">
         <span class="eyebrow">Embedded AI</span>
         <h3>الذكاء الاصطناعي المدمج</h3>
         <p>الشبكة تفهم سلوك المستخدم، وتتنبأ باحتياجاته قبل حدوثها.</p>
         <div class="art" data-art="ai"></div>
       </article>
-      <article class="card rv">
+      <article class="card" onmousemove="updateCardNeon(event, this)">
         <span class="eyebrow">Hologram</span>
         <h3>الهولوجرام والتفاعل الغامر</h3>
         <p>طلاب يدرسون طبقات جسدية أو هندسية عبر صور مجسمة تطفو في الهواء.</p>
         <div class="art" data-art="holo"></div>
       </article>
-      <article class="card rv">
+      <article class="card" onmousemove="updateCardNeon(event, this)">
         <span class="eyebrow">3D simulation</span>
         <h3>محاكاة ثلاثية الأبعاد</h3>
         <p>نظام محاكاة كامل لشبكة الـ 6G، نرى فيه كيف تنتقل البيانات بين الأجهزة.</p>
         <div class="art" data-art="sim"></div>
       </article>
-      <article class="card rv">
+      <article class="card" onmousemove="updateCardNeon(event, this)">
         <span class="eyebrow">Printed Circuit Boards</span>
         <h3>لوحات دوائر إلكترونية متطورة</h3>
         <p>الأجهزة التي تحمل الفكرة من التصميم إلى لوحة حقيقية.</p>
@@ -535,29 +742,32 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 </section>
 
 <!-- قسم الاستخدامات -->
-<section class="sec dark" id="uses">
+<section class="sec dark scroll-reveal" id="uses">
   <div class="in">
     <div class="head center">
-      <p class="eyebrow rv">الاستخدامات</p>
-      <h2 class="big rv">أشياء تحتاج الاستجابة <span class="grad">الآن.</span></h2>
+      <div class="section-title-wrapper">
+        <p class="eyebrow" style="margin:0;">الاستخدامات</p>
+        <button class="share-link-btn" onclick="copySectionLink('uses')">🔗 نسخ الرابط</button>
+      </div>
+      <h2 class="big" style="margin-top:12px;">أشياء تحتاج الاستجابة <span class="grad">الآن.</span></h2>
     </div>
-    <div class="uses-grid rv">
-      <article class="use" style="--h:195">
+    <div class="uses-grid">
+      <article class="use" style="--h:195" onmousemove="updateCardNeon(event, this)">
         <span class="tag">AUTONOMOUS</span>
         <h3 data-en="Self-driving cars">سيارات ذاتية القيادة</h3>
         <p data-en="They need an instant response, because any delay means a late decision on the road.">تحتاج استجابة فورية، فأي تأخير يعني قرارًا متأخرًا على الطريق.</p>
       </article>
-      <article class="use" style="--h:170">
+      <article class="use" style="--h:170" onmousemove="updateCardNeon(event, this)">
         <span class="tag">TELESURGERY</span>
         <h3 data-en="Remote surgery">جراحة عن بعد</h3>
         <p data-en="Surgeons operate from afar, and every movement arrives at the same instant.">جراحون يعالجون عن بعد، ويد الجرّاح تصل في اللحظة نفسها.</p>
       </article>
-      <article class="use" style="--h:275">
+      <article class="use" style="--h:275" onmousemove="updateCardNeon(event, this)">
         <span class="tag">METAVERSE</span>
         <h3 data-en="Virtual worlds">عوالم افتراضية</h3>
         <p data-en="They require instant data transfer so the experience stays smooth.">تتطلب نقلًا لحظيًا للبيانات حتى تبقى التجربة سلسة.</p>
       </article>
-      <article class="use" style="--h:215">
+      <article class="use" style="--h:215" onmousemove="updateCardNeon(event, this)">
         <span class="tag">SMART CITY</span>
         <h3 data-en="Smart cities">مدن ذكية</h3>
         <p data-en="Fast bursts of data connect every device in the city into one system.">ومضات بيانات سريعة تربط كل جهاز في المدينة بمنظومة واحدة.</p>
@@ -566,13 +776,16 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<section class="sec light" id="compare">
+<section class="sec light scroll-reveal" id="compare">
   <div class="in">
     <div class="head center">
-      <p class="eyebrow rv">المقارنة</p>
-      <h2 class="big rv">من 5G إلى <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.</h2>
+      <div class="section-title-wrapper">
+        <p class="eyebrow" style="margin:0;">المقارنة</p>
+        <button class="share-link-btn" onclick="copySectionLink('compare')">🔗 نسخ الرابط</button>
+      </div>
+      <h2 class="big" style="margin-top:12px;">من 5G إلى <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.</h2>
     </div>
-    <div class="tablebox rv">
+    <div class="tablebox" onmousemove="updateCardNeon(event, this)">
       <table>
         <thead><tr><th>الخاصية</th><th class="lat">5G</th><th class="lat me grad">6G+</th></tr></thead>
         <tbody>
@@ -587,26 +800,32 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<!-- قسم فيديو العرض التقديمي -->
-<section class="sec dark" id="docs">
+<!-- قسم فيديو العرض التقديمي (مرتبط بجوجل درايف) - الزر في المنتصف تماماً -->
+<section class="sec dark scroll-reveal" id="docs">
   <div class="in center">
-    <p class="eyebrow rv">العرض التقديمي</p>
-    <h2 class="big rv" style="margin-top:12px">فيديو عرض <span class="grad">المشروع.</span></h2>
-    <p class="lead rv">يمكنك مشاهدة فيديو العرض التقديمي التوضيحي للمشروع مباشرة.</p>
-    <div class="cta rv">
-      <a class="liquid-pill primary" href="#" onclick="openVideo(event)">🎬 عرض فيديو المشروع</a>
+    <div class="section-title-wrapper">
+      <p class="eyebrow" style="margin:0;">العرض التقديمي</p>
+      <button class="share-link-btn" onclick="copySectionLink('docs')">🔗 نسخ الرابط</button>
+    </div>
+    <h2 class="big" style="margin-top:12px">فيديو عرض <span class="grad">المشروع.</span></h2>
+    <p class="lead">يمكنك مشاهدة فيديو العرض التقديمي التوضيحي للمشروع مباشرة من جوجل درايف.</p>
+    <div style="display: flex; justify-content: center; margin-top: 24px; width: 100%;">
+      <a class="liquid-pill primary" href="#" onclick="openVideo(event)" id="docsWatchBtn">🎬 عرض فيديو المشروع</a>
     </div>
   </div>
 </section>
 
-<!-- قسم الفريق (تم تحديثه وتوزيع الأعضاء الأربعة المهاب، عمرو، خالد، أسامة) -->
-<section class="sec light team" id="team">
+<!-- قسم الفريق (بدون إفكت الماوس نيون) -->
+<section class="sec light team scroll-reveal" id="team">
   <div class="in center">
-    <p class="eyebrow rv">الفريق</p>
-    <h2 class="big rv" style="margin-top:12px">فريق المشروع، <span class="grad">معًا.</span></h2>
-    <p class="lead rv">طلاب وعقول شابة من قسم نظم معلومات الأعمال بأكاديمية المستقبل، يعملون معًا على شاشات تفاعلية ليحوّلوا فكرة الـ 6G إلى مشروع حقيقي. (اضغط على أي بطاقة لعرض المهام والأدوار)</p>
+    <div class="section-title-wrapper">
+      <p class="eyebrow" style="margin:0;">الفريق</p>
+      <button class="share-link-btn" onclick="copySectionLink('team')">🔗 نسخ الرابط</button>
+    </div>
+    <h2 class="big" style="margin-top:12px">فريق المشروع، <span class="grad">معًا.</span></h2>
+    <p class="lead">طلاب وعقول شابة من قسم نظم معلومات الأعمال بأكاديمية المستقبل، يعملون معًا على شاشات تفاعلية ليحوّلوا فكرة الـ 6G إلى مشروع حقيقي. (اضغط على أي بطاقة لعرض المهام والأدوار)</p>
     
-    <div class="team-grid rv">
+    <div class="team-grid">
       <div class="team-card" data-en="Mohab" 
            data-ar-role="المطور المسؤول عن برمجة الشات بوت، قسم الـ AI وتعديل وتطوير الموقع بالكامل للشكل النهائي، بالإضافة لتصميم الباوربوينت ومونتاج الفيديو."
            data-en-role="Lead AI and Web Developer responsible for the final website design, chatbot development, presentation design, and video production."
@@ -650,12 +869,12 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<section class="sec dark close">
+<section class="sec dark close scroll-reveal">
   <div class="blob b1"></div><div class="blob b2"></div>
   <div class="in">
-    <p class="mid rv">الابتكار لا ينتظر المستحيل...</p>
-    <h2 class="huge grad rv">بل يصنعه.</h2>
-    <p class="lead rv">مشروع الـ 6G+. عقولنا اليوم تبني مستقبل الغد.</p>
+    <p class="mid">الابتكار لا ينتظر المستحيل...</p>
+    <h2 class="huge grad">بل يصنعه.</h2>
+    <p class="lead">مشروع الـ 6G+. عقولنا اليوم تبني مستقبل الغد.</p>
     <a class="liquid-pill primary" href="#top" id="backToTopBtn">🚀 ارجع إلى البداية</a>
   </div>
 </section>
@@ -669,41 +888,41 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 </div>
 
-<!-- شات بوت توبي (المساعد الذكي المحلي للموقع) -->
+<!-- شات بوت محماااا بالمصري الخالص -->
 <div id="aiAssistantWidget">
   <div id="aiChatBox">
     <div id="aiChatHeader">
-      <span style="font-weight:700; font-size:14.5px; display:flex; align-items:center; gap:6px;">🤖 توبي (المساعد الذكي للمشروع)</span>
+      <span style="font-weight:700; font-size:14.5px; display:flex; align-items:center; gap:6px;">🤖 محماااا (المساعد الذكي للمشروع)</span>
       <button onclick="toggleAIChat()" style="background:none; border:none; color:inherit; font-size:20px; cursor:pointer;" aria-label="إغلاق">&times;</button>
     </div>
     <div id="aiChatBody">
-      <div class="ai-msg bot">أهلاً بيك. أنا "توبي" المساعد الذكي لمشروع 6G+. اسألني عن تفاصيل المشروع، السرعة، أو الفريق وسأرد عليك فوراً!</div>
+      <div class="ai-msg bot">يا هلا بيك يا دكتور! أنا "محماااا" مساعدك الذكي لمشروع 6G+. اسألني عن أي حاجة في المشروع، السرعة، الفريق، أو الأكاديمية وهرد عليك في ثواني!</div>
     </div>
     <div id="aiChatFooter">
-      <input type="text" id="aiInput" placeholder="اسأل توبي عن المشروع..." onkeydown="if(event.key==='Enter')sendAIQuery()">
+      <input type="text" id="aiInput" placeholder="اسأل محماااا عن أي حاجة..." onkeydown="if(event.key==='Enter')sendAIQuery()">
       <button id="aiSendBtn" onclick="sendAIQuery()">إرسال</button>
     </div>
   </div>
-  <button id="aiToggleBtn" onclick="toggleAIChat()">💬 اسأل توبي (AI Assistant)</button>
+  <button id="aiToggleBtn" onclick="toggleAIChat()">💬 اسأل محماااا (AI Assistant)</button>
 </div>
 
-<!-- نافذة تشغيل الفيديو المنبثقة -->
+<!-- نافذة تشغيل الفيديو المباشر (جوجل درايف) -->
 <div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; padding:20px;">
-  <div style="position:relative; width:100%; max-width:900px; background:#111; padding:20px; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.5);">
-    <button onclick="closeVideo()" style="position:absolute; top:12px; left:12px; background:none; border:none; color:#fff; font-size:28px; cursor:pointer; z-index:10;" aria-label="إغلاق">&times;</button>
-    <div style="position:relative; width:100%; padding-bottom:56.25%; height:0;">
-      <iframe src="https://drive.google.com/file/d/1JVxgE7JHYwcsyfO_4OgmONVGC7jUNlkg/preview" width="100%" height="100%" allow="autoplay" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; border-radius:12px;"></iframe>
+  <div class="modal-content-box" style="max-width:900px; padding:20px;">
+    <button onclick="closeVideo()" style="position:absolute; top:12px; left:12px; background:none; border:none; color:inherit; font-size:28px; cursor:pointer; z-index:10;" aria-label="إغلاق">&times;</button>
+    <div style="position:relative; width:100%; padding-bottom:56.25%; height:0; margin-top:20px;">
+      <iframe src="https://drive.google.com/file/d/1JVxgE7JHYwcsyfO_4OgmONVGC7jUNlkg/preview" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; border-radius:12px;" allow="autoplay" allowfullscreen></iframe>
     </div>
   </div>
 </div>
 
 <!-- نافذة منبثقة لعرض أدوار أفراد الفريق -->
 <div id="teamModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:20px;">
-  <div style="position:relative; width:100%; max-width:450px; background:#1c2130; border:1px solid var(--line-d); padding:30px; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.5); text-align:center;">
+  <div class="modal-content-box">
     <button onclick="closeTeamModal()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
     <div style="font-size:36px; margin-bottom:10px;">👤</div>
-    <h3 id="memberName" style="font-family:var(--f-disp); font-size:24px; color:#fff; margin-bottom:12px;"></h3>
-    <p id="memberRole" style="color:var(--grey-d); font-size:16px; line-height:1.6;"></p>
+    <h3 id="memberName" style="font-family:var(--f-disp); font-size:24px; margin-bottom:12px;"></h3>
+    <p id="memberRole" style="font-size:16px; line-height:1.6; opacity:0.85;"></p>
     <button onclick="closeTeamModal()" class="liquid-pill primary" id="modalCloseBtn" style="margin-top:24px; padding:8px 20px; font-size:14px; border:none;">إغلاق</button>
   </div>
 </div>
@@ -713,12 +932,46 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+window.updateCardNeon = function(e, card) {
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  card.style.setProperty('--mouse-x', `${x}px`);
+  card.style.setProperty('--mouse-y', `${y}px`);
+};
+
 window.addEventListener('scroll', () => {
   const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   const scrolled = (winScroll / height) * 100;
   document.getElementById('scrollProgress').style.width = scrolled + '%';
 });
+
+window.copySectionLink = function(sectionId) {
+  const url = window.location.origin + window.location.pathname + '#' + sectionId;
+  navigator.clipboard.writeText(url).then(() => {
+    alert('✨ تم نسخ رابط القسم بنجاح: ' + url);
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+  });
+}
+
+if('IntersectionObserver' in window && !reduce){
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.scroll-reveal').forEach(el => {
+    revealObserver.observe(el);
+  });
+} else {
+  document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible'));
+}
 
 window.runRealSpeedTest = function() {
   const btn = document.getElementById('speedTestBtn');
@@ -760,7 +1013,6 @@ window.toggleAIChat = function() {
   box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
 }
 
-// الردود المحلية الفورية المحدثة لتشمل أعضاء الفريق الأربعة فقط
 window.sendAIQuery = function() {
   const input = document.getElementById('aiInput');
   const body = document.getElementById('aiChatBody');
@@ -776,42 +1028,44 @@ window.sendAIQuery = function() {
 
   const botDiv = document.createElement('div');
   botDiv.className = 'ai-msg bot';
-  botDiv.textContent = 'توبي بيفكر... 🤖';
+  botDiv.textContent = 'محماااا بيحسبها... 🤖';
   body.appendChild(botDiv);
   body.scrollTop = body.scrollHeight;
 
   setTimeout(() => {
     const text = query.toLowerCase();
     let reply = "";
-
     const hasWord = (arr) => arr.some(w => text.includes(w));
 
-    if (hasWord(['مهاب', 'مين', 'طور', 'صمم', 'عمل', 'مطور', 'برمج'])) {
-      reply = "مهاب هو المطور المسؤول عن برمجة الشات بوت، وتطوير وتصميم واجهات الموقع بالكامل، بالإضافة لتصميم الباوربوينت ومونتاج الفيديو.";
+    if (hasWord(['مهاب', 'مين مهاب', 'مطور', 'برمج', 'صمم الشات', 'عمل الموقع'])) {
+      reply = "مهاب هو العبقري اللي برمج الشات بوت (أنا طبعاَ!) وصمم واجهات الموقع بالكامل، وكمان عمل الباوربوينت ومونتاج الفيديو!";
     } 
-    else if (hasWord(['عمرو', 'ليدر', 'قائد'])) {
-      reply = "عمرو هو قائد المشروع (Project Leader)، ومسؤول عن محاكاة النظام ومؤشرات الأداء ومساعدة الفريق في التطوير والعرض.";
+    else if (hasWord(['عمرو', 'ليدر', 'قائد', 'مين عمرو'])) {
+      reply = "يا سيدي عمرو هو ليدر المشروع الكفء، ومسؤول عن محاكاة النظام، قياسات الأداء التقني، وظبط الشغل كله مع الفريق.";
     }
-    else if (hasWord(['خالد', 'فؤاد', 'أسامة', 'زين', 'الفريق', 'الجروب', 'الطلاب'])) {
-      reply = "فريق المشروع هم 4 طلاب من نظم معلومات الأعمال بأكاديمية المستقبل: عمرو (ليدر)، مهاب (مطور)، خالد، وأسامة.";
+    else if (hasWord(['خالد', 'أسامة', 'اسامة', 'فريق', 'الجروب', 'الشباب', 'أعضاء'])) {
+      reply = "فريق المشروع عمالقة من نظم معلومات الأعمال بأكاديمية المستقبل: عمرو (الليدر)، مهاب (المطور)، خالد (البيانات والواجهات)، وأسامة (الاستراتيجية والسيناريو).";
     }
-    else if (hasWord(['أسامة', 'اسامة'])) {
-      reply = "أسامة مسؤول عن استراتيجية المحتوى، إعداد السيناريو الخاص بالعرض التقديمي، ومتابعة اختبارات النظام وتجربة المستخدم.";
-    }
-    else if (hasWord(['خالد'])) {
-      reply = "خالد مسؤول عن مساعدة البرمجة وتطوير الواجهات، إدارة البيانات وجداول الأداء، ومراجعة العرض وتنسيق الفيديوهات.";
-    }
-    else if (hasWord(['سرعة', 'سرعه', 'tbps', 'ثانية', 'استجابة', 'تأخير', 'كام'])) {
-      reply = "المشروع بيستهدف سرعة نقل بيانات خارقة بتوصل لـ 1 Tbps، بزمن استجابة لحظي (Latency) لا يتجاوز 0.001 ثانية.";
+    else if (hasWord(['سرعة', 'سرعه', 'tbps', 'ثانية', 'استجابة', 'تأخير', 'كام', 'السرعة'])) {
+      reply = "يا ريس سرعة نقل البيانات بتوصل لـ 1 Tbps، وزمن الاستجابة (Latency) خارق وبيوصل لـ 0.001 ثانية بس! يعني مفيش أي تقطيع نهائياً.";
     } 
     else if (hasWord(['تردد', 'thz', 'موجات', 'تحديات', 'عقبات', 'طاقة', 'أمن', 'حماية', 'irs'])) {
-      reply = "المشروع بيتعامل مع موجات التردد الفائق (THz) وحل مشكلة المدى القصير باستخدام الأسطح الذكية (IRS)، مع حل مشكلة الطاقة والأمن السيبراني ببنية ثقة معدومة.";
+      reply = "بص يا دكتور، مشاكل موجات الـ THz حليناها بالأسطح الذكية (IRS)، ومشاكل استهلاك الطاقة حليناها بالشبكات الخضراء، والأمن السيبراني ببنية الثقة المعدومة (Zero-Trust).";
     } 
     else if (hasWord(['كلية', 'معهد', 'أكاديمية', 'مستقبل', 'قسم', 'نظم', 'معلومات', 'اعمال', 'bis'])) {
-      reply = "المشروع ده مقدم ضمن متطلبات طلاب شعبة نظم معلومات الأعمال (BIS) في معهد المستقبل العالي بأكاديمية المستقبل.";
-    } 
+      reply = "المشروع ده مشروع تخرج جامد جداً لطلاب شعبة نظم معلومات الأعمال (BIS) في معهد المستقبل العالي بأكاديمية المستقبل.";
+    }
+    else if (hasWord(['ببجي', 'بيس', 'لعبة', 'ألعاب', 'جيم'])) {
+      reply = "لو لعبت ببجي أو بيس على شبكة 6G+, البينج هيكون صفر وهتكسر الدنيا من غير أي Lag!";
+    }
+    else if (hasWord(['فيديو', 'جوجل درايف', 'drive', 'عرض'])) {
+      reply = "تقدر تضغط على زر 'عرض فيديو المشروع' في الموقع وهيتفتح لك فيديو جوجل درايف التوضيحي للمشروع فوراً!";
+    }
+    else if (hasWord(['فلوس', 'تكلفة', 'ميزانية', 'كام تكلف'])) {
+      reply = "ده مشروع ريادي بحثي مستقبلي يا باشا، قيمته في الابتكار والعقول اللي صممته مش بالفلوس!";
+    }
     else {
-      reply = `أهلاً بك! بصفتي المساعد الذكي "توبي"، يمكنني إخبارك أن مشروع 6G+ يناقش شبكات المستقبل. بخصوص سؤالك عن "${query}"، يمكنك تصفح أقسام الموقع أو سؤال عما يخص الفريق والسرعة.`;
+      reply = `يا هالا! بصفتي المساعد الذكي "محماااا"، أحب أقولك إن سؤالك عن "${query}" في العقل القلبي للمشروع. 6G+ بيقدم مستقبل الاتصالات، ولو عندك أي استفسار تاني عن السرعة أو الفريق اسألني فوراً!`;
     }
 
     botDiv.textContent = reply;
@@ -875,15 +1129,6 @@ function scrub(){
 }
 addEventListener('scroll',scrub,{passive:true});addEventListener('resize',scrub);scrub();
 
-if('IntersectionObserver' in window&&!reduce){
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target)}}),{threshold:.12});
-  document.querySelectorAll('.rv').forEach(el=>{
-    const r=el.getBoundingClientRect();
-    if(r.top>innerHeight*.95){el.classList.add('pre');io.observe(el)}
-  });
-}
-document.querySelectorAll('.rv').forEach(el=>{el.style.willChange='opacity,transform'});
-
 const cEl=document.getElementById('count');let ran=false;
 function runCount(){
   if(ran||reduce)return;ran=true;const t0=performance.now(),D=2400;
@@ -917,16 +1162,16 @@ function initChart(isEn) {
         {
           label: '5G',
           data: data5G,
-          backgroundColor: 'rgba(110, 110, 115, 0.5)',
-          borderColor: 'rgba(110, 110, 115, 1)',
+          backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(113, 128, 150, 0.6)' : 'rgba(110, 110, 115, 0.5)',
+          borderColor: document.body.classList.contains('light-theme') ? 'rgba(113, 128, 150, 1)' : 'rgba(110, 110, 115, 1)',
           borderWidth: 1,
           borderRadius: 8
         },
         {
           label: '6G+',
           data: data6G,
-          backgroundColor: 'rgba(43, 208, 255, 0.7)',
-          borderColor: 'rgba(43, 208, 255, 1)',
+          backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(10, 100, 255, 0.75)' : 'rgba(43, 208, 255, 0.7)',
+          borderColor: document.body.classList.contains('light-theme') ? 'rgba(10, 100, 255, 1)' : 'rgba(43, 208, 255, 1)',
           borderWidth: 1,
           borderRadius: 8
         }
@@ -938,7 +1183,7 @@ function initChart(isEn) {
       plugins: {
         legend: {
           labels: {
-            color: document.body.classList.contains('light-theme') ? '#1d1d1f' : '#ffffff',
+            color: document.body.classList.contains('light-theme') ? '#2d3748' : '#ffffff',
             font: { family: 'IBM Plex Sans Arabic', size: 12 }
           }
         }
@@ -946,17 +1191,17 @@ function initChart(isEn) {
       scales: {
         x: {
           ticks: {
-            color: document.body.classList.contains('light-theme') ? '#6e6e73' : '#a1a1a6',
+            color: document.body.classList.contains('light-theme') ? '#4a5568' : '#a1a1a6',
             font: { family: 'IBM Plex Sans Arabic', size: 11 }
           },
           grid: { display: false }
         },
         y: {
           ticks: {
-            color: document.body.classList.contains('light-theme') ? '#6e6e73' : '#a1a1a6',
+            color: document.body.classList.contains('light-theme') ? '#4a5568' : '#a1a1a6',
             font: { family: 'IBM Plex Sans Arabic', size: 11 }
           },
-          grid: { color: document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)' }
+          grid: { color: document.body.classList.contains('light-theme') ? 'rgba(10,100,255,0.08)' : 'rgba(255,255,255,0.08)' }
         }
       }
     }
@@ -992,11 +1237,13 @@ document.getElementById('backToTopBtn').addEventListener('click', (e)=>{
 
 window.openVideo = function(e) {
   if(e) e.preventDefault();
-  document.getElementById('videoModal').style.display = 'flex';
+  const modal = document.getElementById('videoModal');
+  modal.style.display = 'flex';
 }
 
 window.closeVideo = function() {
-  document.getElementById('videoModal').style.display = 'none';
+  const modal = document.getElementById('videoModal');
+  modal.style.display = 'none';
 }
 
 let activeCardElement = null;
@@ -1062,8 +1309,8 @@ const EN=[
 ['.hero .lead','A pioneering project that breaks the rules of traditional connectivity. Ultra-low latency in a thousandth of a second, and an embedded AI framework thinking with you every second.'],
 ['.hero .cta .liquid-pill.primary','✨ Explore the project'],['.hero .cta .liquid-pill:nth-child(2)','⚡ See the speed'],['#heroDocBtn','🎬 Watch Project Video'],
 ['#vision .eyebrow','Vision'],
-['#speed .center > .eyebrow','Speed'],
-['#speed h2',`Speed is no longer ${G}just browsing.</span>`],
+['#speed .section-title-wrapper > .eyebrow','Speed'],
+['#speed h2.big',`Speed is no longer ${G}just browsing.</span>`],
 ['#speed .center > .lead','High-performance standards specifically designed to meet the needs of smart systems and real-time operations.'],
 ['.speed-direct-item:nth-child(1) .unit','seconds (Instant latency)'],
 ['.speed-direct-item:nth-child(2) .unit','Tbps (Data moving like light)'],
@@ -1094,7 +1341,7 @@ const EN=[
 ['tbody tr:nth-child(4) td:nth-child(2)','Screens'],['tbody tr:nth-child(4) td:nth-child(3)','Holograms and natural control'],
 ['.note','The numbers are research targets published in the public literature, not measurements from this project.'],
 ['#docs .eyebrow','Presentation'],['#docs h2',`Project presentation <span class="grad">video.</span>`],['#docs .lead','You can watch the presentation video for the project directly.'],
-['#docs .cta a','🎬 Watch Project Video'],
+['#docsWatchBtn','🎬 Watch Project Video'],
 ['#team .eyebrow','Team'],['#team h2',`The project team, ${G}together.</span>`],
 ['#team .lead','Students and young minds from Business Information Systems at Future Academy, working together on interactive screens to turn the 6G idea into a real project. (Click on any card to view roles and tasks)'],
 ['.close .mid','Innovation does not wait for the impossible...'],['.close .huge','It makes it.'],
