@@ -214,6 +214,9 @@ body.light-theme .logo{color:var(--ink)}
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s cubic-bezier(.2,.7,.2,1), border-color 0.4s ease;
   cursor: pointer;
+  /* إصلاح مشاكل الـ Glitch وتداخل الإضاءة عن طريق تحسين عزل الرسم وطبقات الـ GPU */
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
 }
 
 body.light-theme .liquid-card, body.light-theme .card, body.light-theme .challenge-card, body.light-theme .kpi-card, body.light-theme .use, body.light-theme .chart-container-box, body.light-theme .tablebox, body.light-theme .calc-box, body.light-theme .business-card, body.light-theme .gallery-card {
@@ -238,6 +241,7 @@ body.light-theme .liquid-card, body.light-theme .card, body.light-theme .challen
   pointer-events: none;
   z-index: 1;
   filter: blur(35px);
+  will-change: top, left, opacity;
 }
 
 body.light-theme .liquid-card::before, body.light-theme .card::before, body.light-theme .challenge-card::before, body.light-theme .kpi-card::before, body.light-theme .use::before, body.light-theme .chart-container-box::before, body.light-theme .calc-box::before, body.light-theme .business-card::before, body.light-theme .gallery-card::before {
@@ -249,9 +253,10 @@ body.light-theme .liquid-card::before, body.light-theme .card::before, body.ligh
 }
 
 .liquid-card:hover, .card:hover, .challenge-card:hover, .kpi-card:hover, .use:hover, .chart-container-box:hover, .calc-box:hover, .business-card:hover, .gallery-card:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-6px) scale(1.01) translateZ(0);
   border-color: rgba(43, 208, 255, 0.6);
   box-shadow: 0 0 30px rgba(43, 208, 255, 0.3), 0 22px 50px rgba(0, 0, 0, 0.5), inset 0 1px 4px rgba(255, 255, 255, 0.35);
+  z-index: 10;
 }
 
 body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-theme .challenge-card:hover, body.light-theme .kpi-card:hover, body.light-theme .use:hover, body.light-theme .chart-container-box:hover, body.light-theme .calc-box:hover, body.light-theme .business-card:hover, body.light-theme .gallery-card:hover {
@@ -281,6 +286,7 @@ body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-th
   gap: 12px;
   transition: all 0.35s cubic-bezier(.2,.7,.2,1);
   cursor: pointer;
+  transform: translateZ(0);
 }
 body.light-theme .team-card {
   background: rgba(255, 255, 255, 0.85);
@@ -290,9 +296,10 @@ body.light-theme .team-card {
   box-shadow: 0 10px 30px rgba(10, 100, 255, 0.08), inset 0 1px 3px rgba(255, 255, 255, 1);
 }
 .team-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px) translateZ(0);
   border-color: var(--cyan);
   box-shadow: 0 15px 35px rgba(43, 208, 255, 0.3);
+  z-index: 10;
 }
 body.light-theme .team-card:hover {
   border-color: var(--blue);
@@ -1221,7 +1228,6 @@ function start3DRenderer() {
   
   if (anim3DFrame) cancelAnimationFrame(anim3DFrame);
 
-  // إعداد تفاعل الماوس لتدوير المجسم 360 درجة
   canvas.onmousedown = (e) => {
     isDragging3D = true;
     startMouseX = e.clientX;
@@ -1238,7 +1244,6 @@ function start3DRenderer() {
     startMouseX = e.clientX;
   };
 
-  // دعم الشاشات اللمسية (Mobile Touch Support)
   canvas.ontouchstart = (e) => {
     isDragging3D = true;
     startMouseX = e.touches[0].clientX;
@@ -1570,7 +1575,7 @@ window.sendAIQuery = function() {
         reply = "شبكة 6G بتوفر تكاليف تشغيل الشركات بنسبة 65% من خلال الحوسبة السحابية وانعدام وقت التوقف، وبتتيح تحليل البيانات الضخمة (Big Data Analytics) للعملاء لحظياً في نفس الثانية!";
       }
       else if (hasWord(['مهاب', 'مطور', 'برمج'])) {
-        reply = "مهاب هو العبقري اللي برمج الشات بوت (أنا طبعاَ!) وصمم واجهات الموقع بالكامل، وكمان عمل الباوربوينت ومونتاج الفيديو!";
+        reply = "مهاب هو العبقري اللي برمج الشات بوت (أنا تطبيعي!) وصمم واجهات الموقع بالكامل، وكمان عمل الباوربوينت ومونتاج الفيديو!";
       } 
       else if (hasWord(['عمرو', 'ليدر', 'قائد'])) {
         reply = "عمرو هو ليدر المشروع الكفء، ومسؤول عن محاكاة النظام، قياسات الأداء التقني، وظبط الشغل كله مع الفريق.";
@@ -1981,7 +1986,7 @@ function setLang(l){
     } else {
       document.getElementById('memberName').textContent = name;
     }
-    document.getElementById('memberRole').textContent = role;
+    document.getElementById('memberRole').textContent, role;
   }
 
   buildScrub(l==='en'?SCRUB_EN:SCRUB_AR);scrub();
