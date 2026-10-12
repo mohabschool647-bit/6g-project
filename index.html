@@ -4,9 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600;700&display=swap">
-<!-- مكتبة الـ Confetti لتأثير الاحتفال -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<!-- مكتبة Chart.js للرسوم البيانية -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{
@@ -30,42 +28,61 @@
 
 body.light-theme{
   color-scheme:light;
-  --black:#edf2f7;
-  --paper:#f4f7fa;
+  --black:#f0f4f8;
+  --paper:#ffffff;
   --white:#ffffff;
   --snow:#1a202c;
-  --ink:#2d3748;
+  --ink:#1a202c;
   --grey-d:#4a5568;
-  --grey-l:#718096;
+  --grey-l:#4a5568;
   --line-d:rgba(10,100,255,0.18);
   --line-l:rgba(10,100,255,0.12);
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--snow);font-family:var(--f-body);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .35s ease, color .35s ease}
-body.light-theme{background:linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);color:var(--ink)}
+
+body{
+  background: radial-gradient(circle at 15% 15%, rgba(43, 208, 255, 0.22), transparent 45%),
+              radial-gradient(circle at 85% 85%, rgba(138, 107, 255, 0.22), transparent 45%),
+              radial-gradient(circle at 50% 50%, rgba(10, 100, 255, 0.15), transparent 65%),
+              var(--black);
+  background-attachment: fixed;
+  color:var(--snow);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  transition:background .35s ease, color .35s ease;
+}
+
+body.light-theme{
+  background: radial-gradient(circle at 15% 15%, rgba(10, 100, 255, 0.08), transparent 45%),
+              radial-gradient(circle at 85% 85%, rgba(43, 208, 255, 0.1), transparent 45%),
+              linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  background-attachment: fixed;
+  color:var(--ink);
+}
 
 a{color:inherit}
 .site{overflow-x:clip}
 .in{max-width:1080px;margin-inline:auto;padding-inline:16px}
 .sec{padding-block:clamp(60px,10vw,140px);transition:background .35s ease, color .35s ease}
 
-.dark{background:var(--black);color:var(--snow)}
-.light{background:var(--paper);color:var(--ink)}
+.dark{background:transparent;color:var(--snow)}
+.light{background:transparent;color:var(--ink)}
 
-body.light-theme .dark{background:linear-gradient(135deg, #e4edf9 0%, #cbd5e1 100%);color:var(--ink);border-top:1px solid rgba(10,100,255,0.15);border-bottom:1px solid rgba(10,100,255,0.15)}
-body:not(.light-theme) .light{background:#11141d;color:#ffffff}
+body.light-theme .dark{background:transparent;color:var(--ink);border-top:1px solid rgba(10,100,255,0.12);border-bottom:1px solid rgba(10,100,255,0.12)}
+body:not(.light-theme) .light{background:transparent;color:#ffffff}
 
 .center{text-align:center}
 h1,h2,h3,p{margin:0}
 
 #scrollProgress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0%;z-index:100;transition:width 0.1s ease}
 
-/* شريط الحزمة الحية (Terminal Live Ticker) */
 .live-ticker-bar{
-  background: rgba(11, 13, 19, 0.9);
-  border-bottom: 1px solid rgba(43, 208, 255, 0.2);
+  background: rgba(11, 13, 19, 0.7);
+  border-bottom: 1px solid rgba(43, 208, 255, 0.22);
   color: var(--cyan);
   font-family: var(--f-mono);
   font-size: 12px;
@@ -76,12 +93,13 @@ h1,h2,h3,p{margin:0}
   overflow: hidden;
   position: relative;
   z-index: 60;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 body.light-theme .live-ticker-bar{
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--blue);
-  border-bottom-color: rgba(10, 100, 255, 0.2);
+  border-bottom-color: rgba(10, 100, 255, 0.15);
 }
 .live-ticker-content{
   display: inline-block;
@@ -100,15 +118,16 @@ body.light-theme .live-ticker-bar{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  background:rgba(19,23,34,0.85);
-  backdrop-filter:blur(10px);
+  background:rgba(19,23,34,0.7);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
   color:var(--snow);
   padding:8px 16px;
   border-radius:999px;
   font-size:12.5px;
   font-family:var(--f-mono);
-  border:1px solid rgba(43,208,255,0.25);
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  border:1px solid rgba(43,208,255,0.3);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
   transition:all .3s ease;
 }
 body.light-theme .live-sim-badge{
@@ -138,8 +157,8 @@ body.light-theme .live-sim-badge{
   position:relative;
 }
 .share-link-btn{
-  background:none;
-  border:1px solid rgba(43,208,255,0.2);
+  background:rgba(43,208,255,0.08);
+  border:1px solid rgba(43,208,255,0.25);
   color:var(--cyan);
   font-size:12px;
   padding:4px 10px;
@@ -147,6 +166,7 @@ body.light-theme .live-sim-badge{
   cursor:pointer;
   transition:all .2s;
   font-family:var(--f-mono);
+  backdrop-filter: blur(8px);
 }
 body.light-theme .share-link-btn{
   color:var(--blue);
@@ -173,73 +193,73 @@ body.light-theme .share-link-btn:hover{
   transform:translateY(0);
 }
 
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,13,19,.85);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line-d);transition:background .35s ease, border-color .35s ease}
-body.light-theme .nav{background:rgba(255,255,255,0.88);border-bottom:1px solid rgba(10,100,255,0.15);box-shadow:0 4px 20px rgba(0,0,0,0.04)}
-.nav .in{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,13,19,0.75);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);border-bottom:1px solid var(--line-d);transition:background .35s ease, border-color .35s ease}
+body.light-theme .nav{background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(10,100,255,0.15);box-shadow:0 4px 20px rgba(0,0,0,0.04)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:8px}
 .logo{font-family:var(--f-disp);font-weight:700;font-size:22px;text-decoration:none;letter-spacing:-.02em;direction:ltr;color:var(--snow)}
 body.light-theme .logo{color:var(--ink)}
-.nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;font-size:13px;color:#d2d2d7}
-body.light-theme .nav ul{color:#4a5568}
-.nav ul a{text-decoration:none;opacity:.85}
-.nav ul a:hover{opacity:1}
 
-.liquid-card, .card, .challenge-card, .kpi-card, .use, .chart-container-box, .tablebox, .calc-box, .business-card {
+.nav-links{display:flex;gap:10px;list-style:none;margin:0;padding:0;font-size:11.5px;align-items:center}
+.nav-links a{text-decoration:none;opacity:.85;transition:opacity .2s;color:inherit}
+.nav-links a:hover{opacity:1}
+
+.liquid-card, .card, .challenge-card, .kpi-card, .use, .chart-container-box, .tablebox, .calc-box, .business-card, .gallery-card {
   position: relative;
   border-radius: 24px;
   overflow: hidden;
-  background: rgba(19, 23, 34, 0.4);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(43, 208, 255, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: rgba(22, 28, 42, 0.32);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(43, 208, 255, 0.25);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s cubic-bezier(.2,.7,.2,1), border-color 0.4s ease;
   cursor: pointer;
 }
 
-body.light-theme .liquid-card, body.light-theme .card, body.light-theme .challenge-card, body.light-theme .kpi-card, body.light-theme .use, body.light-theme .chart-container-box, body.light-theme .tablebox, body.light-theme .calc-box, body.light-theme .business-card {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+body.light-theme .liquid-card, body.light-theme .card, body.light-theme .challenge-card, body.light-theme .kpi-card, body.light-theme .use, body.light-theme .chart-container-box, body.light-theme .tablebox, body.light-theme .calc-box, body.light-theme .business-card, body.light-theme .gallery-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(10, 100, 255, 0.22);
-  box-shadow: 0 10px 30px rgba(10, 100, 255, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 30px rgba(10, 100, 255, 0.08), inset 0 1px 3px rgba(255, 255, 255, 1);
 }
 
-.liquid-card::before, .card::before, .challenge-card::before, .kpi-card::before, .use::before, .chart-container-box::before, .calc-box::before, .business-card::before {
+.liquid-card::before, .card::before, .challenge-card::before, .kpi-card::before, .use::before, .chart-container-box::before, .calc-box::before, .business-card::before, .gallery-card::before {
   content: '';
   position: absolute;
   top: var(--mouse-y, 50%);
   left: var(--mouse-x, 50%);
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, rgba(43, 208, 255, 0.18) 0%, rgba(138, 107, 255, 0.08) 50%, transparent 70%);
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(43, 208, 255, 0.28) 0%, rgba(138, 107, 255, 0.14) 50%, transparent 75%);
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
   z-index: 1;
-  filter: blur(30px);
+  filter: blur(35px);
 }
 
-body.light-theme .liquid-card::before, body.light-theme .card::before, body.light-theme .challenge-card::before, body.light-theme .kpi-card::before, body.light-theme .use::before, body.light-theme .chart-container-box::before, body.light-theme .calc-box::before, body.light-theme .business-card::before {
-  background: radial-gradient(circle, rgba(10, 100, 255, 0.15) 0%, rgba(43, 208, 255, 0.08) 50%, transparent 70%);
+body.light-theme .liquid-card::before, body.light-theme .card::before, body.light-theme .challenge-card::before, body.light-theme .kpi-card::before, body.light-theme .use::before, body.light-theme .chart-container-box::before, body.light-theme .calc-box::before, body.light-theme .business-card::before, body.light-theme .gallery-card::before {
+  background: radial-gradient(circle, rgba(10, 100, 255, 0.15) 0%, rgba(43, 208, 255, 0.08) 50%, transparent 75%);
 }
 
-.liquid-card:hover::before, .card:hover::before, .challenge-card:hover::before, .kpi-card:hover::before, .use:hover::before, .chart-container-box:hover::before, .calc-box:hover::before, .business-card:hover::before {
+.liquid-card:hover::before, .card:hover::before, .challenge-card:hover::before, .kpi-card:hover::before, .use:hover::before, .chart-container-box:hover::before, .calc-box:hover::before, .business-card:hover::before, .gallery-card:hover::before {
   opacity: 1;
 }
 
-.liquid-card:hover, .card:hover, .challenge-card:hover, .kpi-card:hover, .use:hover, .chart-container-box:hover, .calc-box:hover, .business-card:hover {
-  transform: translateY(-5px) scale(1.008);
-  border-color: rgba(43, 208, 255, 0.4);
-  box-shadow: 0 0 20px rgba(43, 208, 255, 0.2), 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+.liquid-card:hover, .card:hover, .challenge-card:hover, .kpi-card:hover, .use:hover, .chart-container-box:hover, .calc-box:hover, .business-card:hover, .gallery-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(43, 208, 255, 0.6);
+  box-shadow: 0 0 30px rgba(43, 208, 255, 0.3), 0 22px 50px rgba(0, 0, 0, 0.5), inset 0 1px 4px rgba(255, 255, 255, 0.35);
 }
 
-body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-theme .challenge-card:hover, body.light-theme .kpi-card:hover, body.light-theme .use:hover, body.light-theme .chart-container-box:hover, body.light-theme .calc-box:hover, body.light-theme .business-card:hover {
-  border-color: rgba(10, 100, 255, 0.45);
-  box-shadow: 0 0 25px rgba(10, 100, 255, 0.18), 0 12px 30px rgba(10, 100, 255, 0.1), inset 0 1px 3px rgba(255, 255, 255, 1);
+body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-theme .challenge-card:hover, body.light-theme .kpi-card:hover, body.light-theme .use:hover, body.light-theme .chart-container-box:hover, body.light-theme .calc-box:hover, body.light-theme .business-card:hover, body.light-theme .gallery-card:hover {
+  border-color: rgba(10, 100, 255, 0.5);
+  box-shadow: 0 0 25px rgba(10, 100, 255, 0.18), 0 16px 35px rgba(10, 100, 255, 0.12), inset 0 1px 4px rgba(255, 255, 255, 1);
 }
 
-.liquid-card > *, .card > *, .challenge-card > *, .kpi-card > *, .use > *, .chart-container-box > *, .tablebox > *, .calc-box > *, .business-card > * {
+.liquid-card > *, .card > *, .challenge-card > *, .kpi-card > *, .use > *, .chart-container-box > *, .tablebox > *, .calc-box > *, .business-card > *, .gallery-card > * {
   position: relative;
   z-index: 2;
 }
@@ -248,11 +268,11 @@ body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-th
   position: relative;
   border-radius: 24px;
   overflow: hidden;
-  background: rgba(19, 23, 34, 0.4);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(43, 208, 255, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: rgba(22, 28, 42, 0.32);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(43, 208, 255, 0.25);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.38);
   padding: 26px 20px;
   text-align: center;
   display: flex;
@@ -263,20 +283,20 @@ body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-th
   cursor: pointer;
 }
 body.light-theme .team-card {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(10, 100, 255, 0.22);
-  box-shadow: 0 10px 30px rgba(10, 100, 255, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 30px rgba(10, 100, 255, 0.08), inset 0 1px 3px rgba(255, 255, 255, 1);
 }
 .team-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   border-color: var(--cyan);
-  box-shadow: 0 12px 30px rgba(43, 208, 255, 0.2);
+  box-shadow: 0 15px 35px rgba(43, 208, 255, 0.3);
 }
 body.light-theme .team-card:hover {
   border-color: var(--blue);
-  box-shadow: 0 12px 30px rgba(10, 100, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(10, 100, 255, 0.18);
 }
 
 .liquid-pill{
@@ -284,74 +304,104 @@ body.light-theme .team-card:hover {
   align-items:center;
   justify-content:center;
   gap:8px;
-  background: rgba(19, 23, 34, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(22, 28, 42, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: var(--snow);
   text-decoration: none;
   font-weight: 600;
-  font-size: 15px;
-  padding: 13px 28px;
+  font-size: 13px;
+  padding: 9px 18px;
   border-radius: 999px;
-  border: 1px solid rgba(43, 208, 255, 0.25);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(43, 208, 255, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.25);
   transition: all 0.35s cubic-bezier(.2,.7,.2,1);
   cursor: pointer;
+  white-space: nowrap;
 }
 body.light-theme .liquid-pill{
   background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: var(--ink);
   border: 1px solid rgba(10, 100, 255, 0.3);
-  box-shadow: 0 8px 25px rgba(10, 100, 255, 0.1), inset 0 1px 1px rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 25px rgba(10, 100, 255, 0.12), inset 0 1px 2px rgba(255, 255, 255, 1);
 }
 
 .liquid-pill:hover{
   transform: translateY(-3px) scale(1.04);
-  background: rgba(28, 35, 51, 0.7);
+  background: rgba(35, 45, 68, 0.75);
   border-color: var(--cyan);
-  box-shadow: 0 0 20px rgba(43, 208, 255, 0.4), 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 30px rgba(43, 208, 255, 0.6), 0 15px 40px rgba(0, 0, 0, 0.55), inset 0 1px 4px rgba(255, 255, 255, 0.6);
 }
 body.light-theme .liquid-pill:hover{
-  background: rgba(240, 244, 252, 0.95);
+  background: rgba(240, 244, 252, 0.98);
   border-color: var(--blue);
-  box-shadow: 0 0 20px rgba(10, 100, 255, 0.3), 0 10px 25px rgba(10, 100, 255, 0.15), inset 0 1px 2px rgba(255, 255, 255, 1);
+  box-shadow: 0 0 25px rgba(10, 100, 255, 0.3), 0 10px 25px rgba(10, 100, 255, 0.18), inset 0 1px 3px rgba(255, 255, 255, 1);
 }
 
 .liquid-pill.primary{
-  background: linear-gradient(135deg, rgba(10, 100, 255, 0.75), rgba(43, 208, 255, 0.75));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(10, 100, 255, 0.85), rgba(43, 208, 255, 0.85));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 30px rgba(10, 100, 255, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 12px 40px rgba(10, 100, 255, 0.55), inset 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 .liquid-pill.primary:hover{
-  background: linear-gradient(135deg, rgba(24, 114, 255, 0.9), rgba(69, 216, 255, 0.9));
-  box-shadow: 0 0 25px rgba(43, 208, 255, 0.6), 0 12px 35px rgba(10, 100, 255, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  background: linear-gradient(135deg, rgba(24, 114, 255, 0.98), rgba(69, 216, 255, 0.98));
+  box-shadow: 0 0 35px rgba(43, 208, 255, 0.8), 0 18px 45px rgba(10, 100, 255, 0.8), inset 0 1px 4px rgba(255, 255, 255, 0.95);
   transform: translateY(-3px) scale(1.04);
 }
 
-.nav .liquid-pill{font-size:12.5px;padding:6px 14px;box-shadow: 0 4px 15px rgba(0,0,0,0.2);}
-body.light-theme .nav .liquid-pill{box-shadow: 0 4px 15px rgba(10,100,255,0.08);}
+.nav .acts{display:flex;gap:6px;align-items:center;flex-wrap:nowrap}
+.lang,.theme-toggle{font:inherit;font-size:11px;font-weight:600;color:#d2d2d7;background:rgba(19,23,34,0.65);border:1px solid rgba(255,255,255,0.18);border-radius:999px;padding:5px 12px;cursor:pointer;line-height:1.4;box-shadow: 2px 2px 10px rgba(0,0,0,0.25);transition:all .25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap}
+body.light-theme .lang,body.light-theme .theme-toggle{color:#1a202c;background:rgba(255,255,255,0.9);border:1px solid rgba(10,100,255,0.25);box-shadow: 2px 2px 10px rgba(10,100,255,0.06)}
+.lang:hover,.theme-toggle:hover{color:#fff;border-color:var(--cyan);background:rgba(26,32,48,0.85);transform:scale(1.03)}
+body.light-theme .lang:hover,body.light-theme .theme-toggle:hover{color:#0a64ff;background:rgba(240,244,252,1);border-color:var(--blue)}
 
-@media (max-width:900px){.nav ul{display:none}}
+@media (max-width:1200px){.nav-links{display:none}}
 
 .hero{position:relative;overflow:hidden;padding-block:clamp(80px,14vw,160px) clamp(90px,15vw,160px);text-align:center}
-.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.45;animation:drift 18s ease-in-out infinite alternate}
-body.light-theme .blob{opacity:.28}
+.blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:.55;animation:drift 18s ease-in-out infinite alternate}
+body.light-theme .blob{opacity:.22}
 .b1{width:50vmax;height:50vmax;left:-10vmax;top:-15vmax;background:radial-gradient(circle,var(--cyan),transparent 65%)}
 .b2{width:45vmax;height:45vmax;right:-10vmax;top:-5vmax;background:radial-gradient(circle,var(--violet),transparent 65%);animation-delay:-6s}
-.b3{width:45vmax;height:35vmax;left:25%;bottom:-22vmax;background:radial-gradient(circle,var(--blue),transparent 65%);animation-delay:-10s;opacity:.35}
+.b3{width:45vmax;height:35vmax;left:25%;bottom:-22vmax;background:radial-gradient(circle,var(--blue),transparent 65%);animation-delay:-10s;opacity:.45}
 @keyframes drift{to{transform:translate3d(6vmax,4vmax,0) scale(1.12)}}
 
 .hero .in{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
 
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--cyan);background:rgba(43,208,255,0.1);border:1px solid rgba(43,208,255,0.25);padding:8px 20px;border-radius:999px;margin-bottom:4px;box-shadow:0 4px 20px rgba(43,208,255,0.15)}
-body.light-theme .hero-badge{color:#0a64ff;background:rgba(10,100,255,0.1);border-color:rgba(10,100,255,0.3);box-shadow:0 4px 15px rgba(10,100,255,0.08)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--cyan);background:rgba(43,208,255,0.15);border:1px solid rgba(43,208,255,0.35);padding:8px 20px;border-radius:999px;margin-bottom:4px;box-shadow:0 4px 20px rgba(43,208,255,0.18);backdrop-filter:blur(12px)}
+body.light-theme .hero-badge{color:#0a64ff;background:rgba(10,100,255,0.08);border-color:rgba(10,100,255,0.22);box-shadow:0 4px 15px rgba(10,100,255,0.05)}
 
-.mark{font-family:var(--f-disp);font-weight:700;font-size:clamp(90px,28vw,280px);line-height:.9;letter-spacing:-.05em;direction:ltr;background:linear-gradient(105deg,var(--snow) 5%,var(--cyan) 45%,var(--violet) 90%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-inline:.05em;filter:drop-shadow(0 15px 30px rgba(0,0,0,0.2))}
+.mark {
+  font-family: var(--f-disp);
+  font-weight: 800;
+  font-size: clamp(90px, 26vw, 240px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  direction: ltr;
+  display: inline-block;
+  background: linear-gradient(135deg, #ffffff 10%, #2bd0ff 50%, #8a6bff 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 45px rgba(43, 208, 255, 0.45));
+  position: relative;
+  animation: logoGlowPulse 4s ease-in-out infinite alternate;
+}
+body.light-theme .mark {
+  background: linear-gradient(135deg, #1a202c 10%, #0a64ff 50%, #8a6bff 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 25px rgba(10, 100, 255, 0.18));
+}
+@keyframes logoGlowPulse {
+  0% { filter: drop-shadow(0 0 25px rgba(43, 208, 255, 0.3)); transform: scale(1); }
+  100% { filter: drop-shadow(0 0 55px rgba(138, 107, 255, 0.6)); transform: scale(1.015); }
+}
 
 .sub{font-family:var(--f-disp);font-weight:700;font-size:clamp(26px,5vw,56px);line-height:1.2;color:var(--snow);letter-spacing:-.01em}
 body.light-theme .sub{color:var(--ink)}
@@ -366,8 +416,8 @@ body.light-theme .lead{color:var(--grey-l)}
 
 .speed-direct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;margin-top:40px;align-items:center;text-align:center}
 .speed-direct-item{display:flex;flex-direction:column;align-items:center;gap:10px}
-.speed-direct-badge{font-family:var(--f-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);background:rgba(43,208,255,0.1);padding:6px 14px;border-radius:999px;margin-bottom:6px}
-body.light-theme .speed-direct-badge{color:#0a64ff;background:rgba(10,100,255,0.1);border:1px solid rgba(10,100,255,0.2)}
+.speed-direct-badge{font-family:var(--f-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);background:rgba(43,208,255,0.15);padding:6px 14px;border-radius:999px;margin-bottom:6px;backdrop-filter:blur(10px)}
+body.light-theme .speed-direct-badge{color:#0a64ff;background:rgba(10,100,255,0.08);border:1px solid rgba(10,100,255,0.18)}
 .count{font-family:var(--f-mono);font-weight:700;font-size:clamp(48px,11vw,110px);line-height:1;direction:ltr;font-variant-numeric:tabular-nums;color:var(--snow)}
 body.light-theme .count{color:var(--ink)}
 .unit{font-family:var(--f-disp);font-weight:600;font-size:clamp(16px,2.2vw,24px);color:var(--grey-d)}
@@ -386,11 +436,12 @@ body.light-theme .tbps small{color:var(--grey-l)}
 
 .calc-box{padding:clamp(24px,4vw,40px);margin-top:40px;text-align:start;width:100%;box-sizing:border-box}
 .calc-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
-.calc-btn{background:rgba(10,100,255,0.1);border:1px solid rgba(43,208,255,0.3);padding:16px 12px;border-radius:16px;color:inherit;font-family:var(--f-body);cursor:pointer;transition:all .3s ease;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;min-height:110px}
-body.light-theme .calc-btn{background:rgba(10,100,255,0.06);border-color:rgba(10,100,255,0.25)}
-.calc-btn:hover, .calc-btn.active{background:linear-gradient(135deg, rgba(10,100,255,0.25), rgba(43,208,255,0.25));border-color:var(--cyan);transform:translateY(-2px)}
-.calc-result-display{background:rgba(11,13,19,0.6);border:1px solid rgba(43,208,255,0.3);padding:20px;border-radius:16px;font-family:var(--f-mono);text-align:center;direction:ltr;margin-top:20px;word-break:break-word}
-body.light-theme .calc-result-display{background:rgba(240,244,252,0.9);border-color:rgba(10,100,255,0.3)}
+.calc-btn{background:rgba(10,100,255,0.14);border:1px solid rgba(43,208,255,0.35);padding:16px 12px;border-radius:16px;color:inherit;font-family:var(--f-body);cursor:pointer;transition:all .3s ease;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;min-height:110px;backdrop-filter:blur(12px)}
+body.light-theme .calc-btn{background:rgba(255,255,255,0.9);border-color:rgba(10,100,255,0.22);box-shadow:0 4px 15px rgba(10,100,255,0.05)}
+.calc-btn:hover, .calc-btn.active{background:linear-gradient(135deg, rgba(10,100,255,0.35), rgba(43,208,255,0.35));border-color:var(--cyan);transform:translateY(-2px)}
+body.light-theme .calc-btn:hover, body.light-theme .calc-btn.active{background:linear-gradient(135deg, rgba(10,100,255,0.12), rgba(43,208,255,0.12));border-color:var(--blue);color:#0a64ff}
+.calc-result-display{background:rgba(11,13,19,0.55);border:1px solid rgba(43,208,255,0.35);padding:20px;border-radius:16px;font-family:var(--f-mono);text-align:center;direction:ltr;margin-top:20px;word-break:break-word;backdrop-filter:blur(14px)}
+body.light-theme .calc-result-display{background:rgba(255,255,255,0.95);border-color:rgba(10,100,255,0.22);color:var(--ink)}
 @media (max-width:768px){.calc-options{grid-template-columns:minmax(0,1fr)}}
 
 .business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:36px}
@@ -401,6 +452,17 @@ body.light-theme .business-card h3{color:var(--ink)}
 .business-desc{font-size:15px;color:var(--grey-d)}
 body.light-theme .business-desc{color:var(--grey-l)}
 @media (max-width:768px){.business-grid{grid-template-columns:minmax(0,1fr)}}
+
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:36px}
+.gallery-card{padding:22px;display:flex;flex-direction:column;gap:12px;text-align:center}
+.gallery-img-box{width:100%;height:180px;border-radius:16px;background:linear-gradient(135deg,rgba(43,208,255,0.18),rgba(138,107,255,0.18));display:flex;align-items:center;justify-content:center;font-size:42px;border:1px solid rgba(43,208,255,0.3);box-shadow:inset 0 1px 3px rgba(255,255,255,0.2);position:relative;overflow:hidden;transition:transform .4s ease}
+body.light-theme .gallery-img-box{background:linear-gradient(135deg,rgba(10,100,255,0.08),rgba(43,208,255,0.1));border-color:rgba(10,100,255,0.2)}
+.gallery-card:hover .gallery-img-box{transform:scale(1.04)}
+.gallery-card h3{font-family:var(--f-disp);font-weight:700;font-size:18px;color:var(--snow)}
+body.light-theme .gallery-card h3{color:var(--ink)}
+.gallery-card p{font-size:14px;color:var(--grey-d)}
+body.light-theme .gallery-card p{color:var(--grey-l)}
+@media (max-width:768px){.gallery-grid{grid-template-columns:minmax(0,1fr)}}
 
 .head{display:flex;flex-direction:column;gap:12px;align-items:center;margin-bottom:clamp(36px,5vw,60px)}
 .bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
@@ -439,9 +501,9 @@ body.light-theme .kpi-label{color:var(--grey-l)}
 body.light-theme .challenge-card h3{color:var(--ink)}
 .challenge-desc{font-size:14.5px;color:var(--grey-d)}
 body.light-theme .challenge-desc{color:var(--grey-l)}
-.challenge-solution{background:rgba(10,100,255,0.12);backdrop-filter:blur(8px);border-inline-start:3px solid var(--cyan);padding:12px 16px;border-radius:0 12px 12px 0;font-size:14px}
-body.light-theme .challenge-solution{background:rgba(10,100,255,0.08);color:var(--ink);border-inline-start-color:var(--blue)}
-body:not(.light-theme) .challenge-solution{background:rgba(43,208,255,0.1);color:#d2d2d7}
+.challenge-solution{background:rgba(10,100,255,0.18);backdrop-filter:blur(12px);border-inline-start:3px solid var(--cyan);padding:12px 16px;border-radius:0 12px 12px 0;font-size:14px}
+body.light-theme .challenge-solution{background:rgba(10,100,255,0.06);color:var(--ink);border-inline-start-color:var(--blue)}
+body:not(.light-theme) .challenge-solution{background:rgba(43,208,255,0.15);color:#d2d2d7}
 @media (max-width:768px){.challenges-grid{grid-template-columns:minmax(0,1fr)}}
 
 .chart-container-box{border-radius:24px;padding:clamp(16px,3vw,32px);margin-top:36px;position:relative}
@@ -449,11 +511,11 @@ body:not(.light-theme) .challenge-solution{background:rgba(43,208,255,0.1);color
 
 .uses-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:36px}
 .use{padding:26px;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
-.use::before{content:"";position:absolute;inset:-20% -20% 30% -20%;background:radial-gradient(circle at 50% 40%,hsl(var(--h) 100% 60% / .25),transparent 62%);filter:blur(15px);z-index:1}
-body.light-theme .use::before{background:radial-gradient(circle at 50% 40%,hsl(var(--h) 85% 55% / .2),transparent 62%)}
+.use::before{content:"";position:absolute;inset:-20% -20% 30% -20%;background:radial-gradient(circle at 50% 40%,hsl(var(--h) 100% 60% / .32),transparent 62%);filter:blur(18px);z-index:1}
+body.light-theme .use::before{background:radial-gradient(circle at 50% 40%,hsl(var(--h) 85% 55% / .18),transparent 62%)}
 .use>*{position:relative;z-index:2}
 .use .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:hsl(var(--h) 100% 70%);direction:ltr;text-align:right}
-body.light-theme .use .tag{color:hsl(var(--h) 80% 35%)}
+body.light-theme .use .tag{color:hsl(var(--h) 75% 40%)}
 .use h3{font-family:var(--f-disp);font-weight:700;font-size:22px;line-height:1.3}
 body.light-theme .use h3{color:var(--ink)}
 body:not(.light-theme) .use h3{color:#fff}
@@ -466,7 +528,7 @@ body.light-theme .use p{color:var(--grey-l)}
 table{width:100%;border-collapse:collapse;min-width:480px;font-size:clamp(14px,1.6vw,17px)}
 th,td{padding:16px 14px;text-align:start;border-bottom:1px solid var(--line-l)}
 body:not(.light-theme) th,body:not(.light-theme) td{border-bottom:1px solid var(--line-d);color:#fff}
-body.light-theme th,body.light-theme td{color:var(--ink);border-bottom:1px solid rgba(10,100,255,0.12)}
+body.light-theme th,body.light-theme td{color:var(--ink);border-bottom:1px solid rgba(10,100,255,0.1)}
 tr:last-child td{border-bottom:0}
 th{font-weight:500;color:var(--grey-d);font-size:13.5px}
 body.light-theme th{color:var(--grey-l)}
@@ -482,76 +544,71 @@ body.light-theme .note{color:var(--grey-l)}
 .team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,0.2);margin-bottom:4px}
 .team-card h3{font-family:var(--f-disp);font-weight:700;font-size:20px;color:var(--snow)}
 body.light-theme .team-card h3{color:var(--ink)}
-.team-role-tag{font-size:12.5px;font-family:var(--f-mono);padding:4px 12px;border-radius:999px;background:rgba(43,208,255,0.1);color:var(--cyan)}
-body.light-theme .team-role-tag{background:rgba(10,100,255,0.1);color:#0a64ff;border:1px solid rgba(10,100,255,0.2)}
+.team-role-tag{font-size:12.5px;font-family:var(--f-mono);padding:4px 12px;border-radius:999px;background:rgba(43,208,255,0.15);color:var(--cyan);backdrop-filter:blur(10px)}
+body.light-theme .team-role-tag{background:rgba(10,100,255,0.08);color:#0a64ff;border:1px solid rgba(10,100,255,0.18)}
 .team-hint{font-size:13px;color:var(--grey-d);margin-top:auto;opacity:0.8}
 body.light-theme .team-hint{color:var(--grey-l)}
 @media (max-width:900px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:580px){.team-grid{grid-template-columns:minmax(0,1fr)}}
 
 .close{position:relative;overflow:hidden;text-align:center}
-.close .blob{opacity:.38}
+.close .blob{opacity:.5}
 .close .in{position:relative;display:flex;flex-direction:column;gap:18px;align-items:center}
 .huge{font-family:var(--f-disp);font-weight:700;font-size:clamp(56px,14vw,170px);line-height:1.1}
-footer{background:var(--black);border-top:1px solid var(--line-d);color:var(--grey-d);font-size:12.5px;padding-block:24px;transition:background .35s ease, color .35s ease}
-body.light-theme footer{background:var(--paper);color:var(--grey-l);border-top-color:rgba(10,100,255,0.15)}
+footer{background:rgba(11,13,19,0.75);border-top:1px solid var(--line-d);color:var(--grey-d);font-size:12.5px;padding-block:24px;transition:background .35s ease, color .35s ease;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+body.light-theme footer{background:rgba(244,247,250,0.9);color:var(--grey-l);border-top-color:rgba(10,100,255,0.12)}
 footer .in{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-.nav .acts{display:flex;gap:8px;align-items:center}
-.lang,.theme-toggle{font:inherit;font-size:12.5px;font-weight:600;color:#d2d2d7;background:#131722;border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 16px;cursor:pointer;line-height:1.4;box-shadow: 3px 3px 8px rgba(0,0,0,0.25);transition:all .25s}
-body.light-theme .lang,body.light-theme .theme-toggle{color:#1a202c;background:#e2e8f0;border:1px solid rgba(10,100,255,0.2);box-shadow: 3px 3px 8px rgba(10,100,255,0.06)}
-.lang:hover,.theme-toggle:hover{color:#fff;border-color:var(--cyan);background:#1a2030;transform:scale(1.03)}
-body.light-theme .lang:hover,body.light-theme .theme-toggle:hover{color:#0a64ff;background:#cbd5e1;border-color:var(--blue)}
-.lang:focus-visible,.theme-toggle:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 #aiAssistantWidget{position:fixed;bottom:24px;left:24px;z-index:999;font-family:var(--f-body)}
 #aiToggleBtn{background:linear-gradient(135deg,#0a64ff,#2bd0ff);color:#fff;border:none;padding:14px 22px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 30px rgba(10,100,255,0.5);display:flex;align-items:center;gap:10px;transition:all .3s ease}
 #aiToggleBtn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 35px rgba(43,208,255,0.6)}
-#aiChatBox{display:none;width:340px;max-height:520px;background:#131722;border:1px solid rgba(255,255,255,0.2);border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,0.7);flex-direction:column;overflow:hidden;margin-bottom:12px;transition:background .35s ease}
-body.light-theme #aiChatBox{background:#ffffff;border:1px solid rgba(10,100,255,0.25);box-shadow:0 20px 50px rgba(10,100,255,0.15)}
-#aiChatHeader{background:rgba(10,100,255,0.18);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.12)}
-body.light-theme #aiChatHeader{background:rgba(10,100,255,0.1);border-bottom-color:rgba(10,100,255,0.12)}
+#aiChatBox{display:none;width:340px;max-height:540px;background:rgba(19,23,34,0.92);border:1px solid rgba(255,255,255,0.25);border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,0.75);flex-direction:column;overflow:hidden;margin-bottom:12px;transition:background .35s ease;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+body.light-theme #aiChatBox{background:rgba(255,255,255,0.98);border:1px solid rgba(10,100,255,0.25);box-shadow:0 20px 50px rgba(10,100,255,0.15)}
+#aiChatHeader{background:rgba(10,100,255,0.25);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.18)}
+body.light-theme #aiChatHeader{background:rgba(10,100,255,0.08);border-bottom-color:rgba(10,100,255,0.12)}
 #aiChatBody{padding:16px;overflow-y:auto;flex:1;max-height:260px;display:flex;flex-direction:column;gap:12px;font-size:14px}
 .ai-msg{padding:10px 14px;border-radius:14px;max-width:85%;line-height:1.5}
-.ai-msg.bot{background:rgba(43,208,255,0.12);color:var(--snow);align-self:flex-start;border-inline-start:3px solid var(--cyan)}
+.ai-msg.bot{background:rgba(43,208,255,0.18);color:var(--snow);align-self:flex-start;border-inline-start:3px solid var(--cyan)}
 body.light-theme .ai-msg.bot{background:rgba(10,100,255,0.08);color:var(--ink);border-inline-start-color:var(--blue)}
 .ai-msg.user{background:var(--blue);color:#fff;align-self:flex-end}
 
 .ai-quick-questions{display:flex;flex-direction:column;gap:6px;margin:8px 0;padding-inline:4px}
-.ai-quick-btn{background:rgba(43,208,255,0.1);border:1px solid rgba(43,208,255,0.25);color:var(--cyan);font-size:12px;padding:6px 12px;border-radius:10px;cursor:pointer;text-align:right;font-family:var(--f-body);transition:all .2s}
-body.light-theme .ai-quick-btn{background:rgba(10,100,255,0.08);color:var(--blue);border-color:rgba(10,100,255,0.2)}
+.ai-quick-btn{background:rgba(43,208,255,0.15);border:1px solid rgba(43,208,255,0.32);color:var(--cyan);font-size:12px;padding:6px 12px;border-radius:10px;cursor:pointer;text-align:right;font-family:var(--f-body);transition:all .2s;backdrop-filter:blur(10px)}
+body.light-theme .ai-quick-btn{background:rgba(10,100,255,0.06);color:var(--blue);border-color:rgba(10,100,255,0.2)}
 .ai-quick-btn:hover{background:var(--cyan);color:#000}
 body.light-theme .ai-quick-btn:hover{background:var(--blue);color:#fff}
+.site[dir="ltr"] .ai-quick-btn{text-align:left}
 
-#aiChatFooter{padding:12px;border-top:1px solid rgba(255,255,255,0.12);display:flex;gap:8px}
+#aiChatFooter{padding:12px;border-top:1px solid rgba(255,255,255,0.18);display:flex;gap:8px}
 body.light-theme #aiChatFooter{border-top-color:rgba(10,100,255,0.12)}
-#aiInput{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);padding:9px 14px;border-radius:10px;color:inherit;font:inherit;font-size:13.5px}
-body.light-theme #aiInput{background:rgba(10,100,255,0.04);border:1px solid rgba(10,100,255,0.2)}
+#aiInput{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.28);padding:9px 14px;border-radius:10px;color:inherit;font:inherit;font-size:13.5px}
+body.light-theme #aiInput{background:rgba(10,100,255,0.04);border:1px solid rgba(10,100,255,0.22);color:var(--ink)}
 #aiSendBtn{background:var(--blue);color:#fff;border:none;padding:9px 16px;border-radius:10px;cursor:pointer;font-weight:600;transition:background .2s}
 #aiSendBtn:hover{background:#0051e0}
 
 .modal-content-box {
   position: relative;
   width: 100%;
-  max-width: 450px;
-  background: #1c2130;
+  max-width: 500px;
+  background: rgba(25, 30, 45, 0.95);
   color: #fff;
-  border: 1px solid var(--line-d);
+  border: 1px solid rgba(43,208,255,0.35);
   padding: 30px;
   border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.65);
   text-align: center;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   transition: background .35s ease, color .35s ease, border-color .35s ease;
 }
 body.light-theme .modal-content-box {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.98);
   color: var(--ink);
   border: 1px solid rgba(10,100,255,0.25);
-  box-shadow: 0 20px 40px rgba(10,100,255,0.12);
+  box-shadow: 0 20px 50px rgba(10,100,255,0.15);
 }
 
 .site[dir="ltr"] .card .eyebrow,.site[dir="ltr"] .use .tag{text-align:left}
-.site[dir="ltr"] .ai-quick-btn{text-align:left}
 .site[dir="ltr"] .calc-box{text-align:left}
 .site[dir="ltr"] .business-card{text-align:left}
 a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
@@ -565,10 +622,8 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 <div class="site" dir="rtl" lang="ar">
 
-<!-- خلفية شبكة الجسيمات بوضوح عالٍ وثبات تام -->
-<canvas id="particleCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.8;"></canvas>
+<canvas id="particleCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.75;"></canvas>
 
-<!-- شريط حركة البيانات الحية (Terminal Live Ticker) -->
 <div class="live-ticker-bar">
   <div class="live-ticker-content">
     [Connected] Node_ID: 6G_Core_Cairo &nbsp;&bull;&nbsp; Latency: 0.0008ms &nbsp;&bull;&nbsp; [Data Transfer] 940 Gbps &nbsp;&bull;&nbsp; Status: Secure (Quantum Encrypted) &nbsp;&bull;&nbsp; [AI Mesh Active] &nbsp;&bull;&nbsp; BIS Project Live Simulation
@@ -584,23 +639,23 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 <nav class="nav" aria-label="التنقل الرئيسي">
   <div class="in">
-    <a class="logo" href="#top">6G+</a>
-    <ul>
-      <li><a href="#vision" id="navVision">الرؤية</a></li>
-      <li><a href="#speed" id="navSpeed">السرعة والحاسبة</a></li>
-      <li><a href="#business" id="navBusiness">الأعمال (BIS)</a></li>
-      <li><a href="#challenges" id="navChallenges">التحديات</a></li>
-      <li><a href="#analytics" id="navAnalytics">المؤشرات</a></li>
-      <li><a href="#tech" id="navTech">التقنيات</a></li>
-      <li><a href="#uses" id="navUses">الاستخدامات</a></li>
-      <li><a href="#compare" id="navCompare">المقارنة</a></li>
-      <li><a href="#team" id="navTeam">الفريق</a></li>
+    <a class="logo" href="#top" onclick="playSound('click')">6G+</a>
+    <ul class="nav-links">
+      <li><a href="#vision" onclick="playSound('click')" id="navVision">الرؤية</a></li>
+      <li><a href="#speed" onclick="playSound('click')" id="navSpeed">السرعة</a></li>
+      <li><a href="#business" onclick="playSound('click')" id="navBusiness">الأعمال (BIS)</a></li>
+      <li><a href="#gallery" onclick="playSound('click')" id="navGallery">معرض 3D</a></li>
+      <li><a href="#challenges" onclick="playSound('click')" id="navChallenges">التحديات</a></li>
+      <li><a href="#analytics" onclick="playSound('click')" id="navAnalytics">المؤشرات</a></li>
+      <li><a href="#tech" onclick="playSound('click')" id="navTech">التقنيات</a></li>
+      <li><a href="#uses" onclick="playSound('click')" id="navUses">الاستخدامات</a></li>
+      <li><a href="#compare" onclick="playSound('click')" id="navCompare">المقارنة</a></li>
+      <li><a href="#team" onclick="playSound('click')" id="navTeam">الفريق</a></li>
     </ul>
     <div class="acts">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="تبديل المظهر">الوضع الداكن</button>
-      <button class="lang" id="lang" type="button" aria-label="Switch to English">English</button>
-      <a class="liquid-pill" href="#docs" style="font-size:12px;padding:6px 12px;" id="navDocBtn">🎬 فيديو العرض</a>
-      <a class="liquid-pill primary" href="#tech" id="navExploreBtn">✨ اكتشف</a>
+      <button class="theme-toggle" id="themeToggle" type="button" onclick="playSound('click')" aria-label="تبديل المظهر">الوضع الفاتح</button>
+      <button class="lang" id="lang" type="button" onclick="playSound('click')" aria-label="Switch to English">EN</button>
+      <a class="liquid-pill" href="#docs" onclick="playSound('click')" style="font-size:11px;padding:5px 10px;" id="navDocBtn">🎬 الفيديو</a>
     </div>
   </div>
 </nav>
@@ -614,8 +669,8 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <p class="lead" id="heroLeadText">مشروع ريادي يكسر قواعد الاتصال التقليدية. استجابة فائقة في جزء من ألف من الثانية، وبنية ذكاء اصطناعي متكاملة تفكر معك في كل ثانية.</p>
     
     <div class="cta">
-      <a class="liquid-pill primary" href="#tech" id="heroCta1">✨ اكتشف المشروع</a>
-      <a class="liquid-pill" href="#speedCalcSection" id="heroCta2">⚡ حاسبة السرعة التفاعلية</a>
+      <a class="liquid-pill primary" href="#tech" onclick="playSound('click')" id="heroCta1">✨ اكتشف المشروع</a>
+      <a class="liquid-pill" href="#speedCalcSection" onclick="playSound('click')" id="heroCta2">⚡ حاسبة السرعة التفاعلية</a>
       <a class="liquid-pill" href="#" onclick="openVideo(event)" id="heroDocBtn">🎬 عرض فيديو المشروع</a>
     </div>
 
@@ -626,18 +681,17 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   <div class="in center">
     <div class="section-title-wrapper" style="margin-bottom:24px;">
       <p class="eyebrow" id="visionEyebrow" style="margin:0;">الرؤية</p>
-      <button class="share-link-btn" onclick="copySectionLink('vision')" id="shareVisionBtn">🔗 نسخ الرابط</button>
+      <button class="share-link-btn" onclick="copySectionLink('vision')" id="shareBtnVision">🔗 نسخ الرابط</button>
     </div>
     <p id="scrub">لقد اعتقدنا أن الـ 5G وصل بالسرعة إلى نهايتها. لكن العالم يتحرك بشكل أسرع مما نتخيل. السرعة لم تعد مجرد تصفح. إنها استجابة بجزء من ألف من الثانية، وربط بلا حدود، وذكاء اصطناعي يفكر معك في كل ثانية.</p>
   </div>
 </section>
 
-<!-- قسم السرعة والحاسبة التفاعلية الفورية -->
 <section class="sec dark scroll-reveal" id="speed">
   <div class="in center">
     <div class="section-title-wrapper">
       <p class="eyebrow" id="speedEyebrow">السرعة الخارقة وحاسبة البيانات</p>
-      <button class="share-link-btn" onclick="copySectionLink('speed')" id="shareSpeedBtn">🔗 نسخ الرابط</button>
+      <button class="share-link-btn" onclick="copySectionLink('speed')" id="shareBtnSpeed">🔗 نسخ الرابط</button>
     </div>
     <h2 class="big" id="speedTitleHead" style="margin-top:12px;">السرعة لم تعد <span class="grad">مجرد تصفح.</span></h2>
     <p class="lead" id="speedLeadText" style="margin-top:10px">معايير أداء فائقة صُممت خصيصاً لتلبي احتياجات الأنظمة الذكية والزمن الحقيقي.</p>
@@ -649,24 +703,23 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
     <div class="speed-direct-grid">
       <div class="speed-direct-item">
-        <span class="speed-direct-badge">Latency Target</span>
+        <span class="speed-direct-badge" id="latBadgeText">Latency Target</span>
         <div class="count grad" id="count" aria-label="0.001 ثانية">0.001</div>
         <div class="unit" id="unitLatency">ثانية (زمن الاستجابة اللحظي المستهدف)</div>
       </div>
       <div class="speed-direct-item">
-        <span class="speed-direct-badge">Throughput Peak</span>
+        <span class="speed-direct-badge" id="tpBadgeText">Throughput Peak</span>
         <div class="count grad" id="throughputCount">1.0</div>
         <div class="unit" id="unitThroughput">Tbps (نقل بيانات شبكة الجيل السادس)</div>
       </div>
     </div>
   </div>
 
-  <!-- حاسبة سرعة البيانات الفورية التفاعلية المتناسقة -->
   <div class="in" id="speedCalcSection" style="margin-top:60px;">
     <div class="calc-box" onmousemove="updateCardNeon(event, this)">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h3 id="calcBoxTitle" style="font-family:var(--f-disp); font-size:22px;">⚡ حاسبة سرعة البيانات الفورية (Interactive Speed Calculator)</h3>
-        <span class="lat" id="calcNetworkBadge" style="font-size:12px; color:var(--cyan); background:rgba(43,208,255,0.1); padding:4px 12px; border-radius:999px;">سرعة الشبكة: 1.0 Tbps</span>
+        <span class="lat" id="calcNetworkBadge" style="font-size:12px; color:var(--cyan); background:rgba(43,208,255,0.15); padding:4px 12px; border-radius:999px;">سرعة الشبكة: 1.0 Tbps</span>
       </div>
       <p id="calcBoxDesc" style="color:var(--grey-d); font-size:15px; margin-top:8px;">اختار نوع الملف أو المحتوى، وشوف هينزل في كام جزء من ألف من الثانية بفضل تقنية الـ 6G+:</p>
       
@@ -699,19 +752,18 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="streaks" id="streaks" aria-hidden="true"></div>
     <div class="in center">
       <div class="tbps-t grad">6G+ Ultra</div>
-      <small>Next-Gen Connectivity Paradigm</small>
+      <small id="tbpsSmallText">Next-Gen Connectivity Paradigm</small>
       <p class="mid" id="tbpsMidText" style="margin-top:12px">سرعات تنقل العالم إلى واقع افتراضي وتفاعلي بلا حدود.</p>
     </div>
   </div>
 </section>
 
-<!-- قسم تأثير الـ 6G على قطاع الأعمال (Business Impact) -->
 <section class="sec light scroll-reveal" id="business">
   <div class="in">
     <div class="head center">
       <div class="section-title-wrapper">
         <p class="eyebrow" id="businessEyebrow" style="margin:0;">قطاع الأعمال (BIS Business Impact)</p>
-        <button class="share-link-btn" onclick="copySectionLink('business')" id="shareBusinessBtn">🔗 نسخ الرابط</button>
+        <button class="share-link-btn" onclick="copySectionLink('business')" id="shareBtnBiz">🔗 نسخ الرابط</button>
       </div>
       <h2 class="big" id="businessTitleHead" style="margin-top:12px;">كيف تُعيد شبكات الـ 6G صياغة <span class="grad">عالم الأعمال؟</span></h2>
       <p class="lead" id="businessLeadText">بما أن مشروعنا يخدم تخصص نظم معلومات الأعمال (BIS), إليك الأثر المالي والتشغيلي للـ 6G:</p>
@@ -732,13 +784,43 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<!-- قسم التحديات والحلول -->
-<section class="sec dark scroll-reveal" id="challenges">
+<section class="sec dark scroll-reveal" id="gallery">
+  <div class="in">
+    <div class="head center">
+      <div class="section-title-wrapper">
+        <p class="eyebrow" id="galleryEyebrow" style="margin:0;">معرض الدوائر والمحاكاة ثلاثية الأبعاد (3D Holographic Viewer)</p>
+        <button class="share-link-btn" onclick="copySectionLink('gallery')" id="shareBtnGallery">🔗 نسخ الرابط</button>
+      </div>
+      <h2 class="big" id="galleryTitleHead" style="margin-top:12px;">التصميم العملي <span class="grad">والتطبيقي التفاعلي.</span></h2>
+      <p class="lead" id="galleryLeadText">اضغط على أي عنصر أدناه لفتح عارض 3D تفاعلي يتيح لك استعراض دوائر الـ PCB، موجات التيرابت، وبنية الهولوجرام من كل الزوايا.</p>
+    </div>
+    
+    <div class="gallery-grid">
+      <div class="gallery-card" onclick="open3DViewer('pcb')" onmousemove="updateCardNeon(event, this)">
+        <div class="gallery-img-box">🔌</div>
+        <h3 id="galleryCard1Title" data-en="Printed Circuit Boards (PCB)" data-ar="لوحات الدوائر المطبوعة (PCB)">لوحات الدوائر المطبوعة (PCB)</h3>
+        <p id="galleryCard1Desc" data-en="Click to launch 3D interactive hardware architecture inspection." data-ar="اضغط لفتح المعاينة ثلاثية الأبعاد وتفقد بنية الهاردوير المتقدمة.">اضغط لفتح المعاينة ثلاثية الأبعاد وتفقد بنية الهاردوير المتقدمة.</p>
+      </div>
+      <div class="gallery-card" onclick="open3DViewer('thz')" onmousemove="updateCardNeon(event, this)">
+        <div class="gallery-img-box">🌐</div>
+        <h3 id="galleryCard2Title" data-en="Terahertz Simulation" data-ar="محاكاة ترددات التيرابت (THz)">محاكاة ترددات التيرابت (THz)</h3>
+        <p id="galleryCard2Desc" data-en="Click to launch live 3D wave propagation and IRS routing simulator." data-ar="اضغط لبدء محاكاة انتشار الموجات وتوجيه الإشارات بالأسطح الذكية.">اضغط لبدء محاكاة انتشار الموجات وتوجيه الإشارات بالأسطح الذكية.</p>
+      </div>
+      <div class="gallery-card" onclick="open3DViewer('holo')" onmousemove="updateCardNeon(event, this)">
+        <div class="gallery-img-box">👁️‍🗨️</div>
+        <h3 id="galleryCard3Title" data-en="Holographic Mesh Interface" data-ar="بنية الهولوجرام والتفاعل">بنية الهولوجرام والتفاعل</h3>
+        <p id="galleryCard3Desc" data-en="Click to launch immersive 3D spatial data visualization node." data-ar="اضغط لتشغيل بيئة تجسيد البيانات المجسمة ثلاثية الأبعاد.">اضغط لتشغيل بيئة تجسيد البيانات المجسمة ثلاثية الأبعاد.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec light scroll-reveal" id="challenges">
   <div class="in">
     <div class="head center">
       <div class="section-title-wrapper">
         <p class="eyebrow" id="challengesEyebrow" style="margin:0;">التحديات والحلول (Challenges & Solutions)</p>
-        <button class="share-link-btn" onclick="copySectionLink('challenges')" id="shareChallengesBtn">🔗 نسخ الرابط</button>
+        <button class="share-link-btn" onclick="copySectionLink('challenges')" id="shareBtnChal">🔗 نسخ الرابط</button>
       </div>
       <h2 class="big" id="challengesTitleHead" style="margin-top:12px;">عقبات تقنية تتطلب <span class="grad">ذكاءً هندسياً.</span></h2>
       <p class="lead" id="challengesLeadText">كيف يتعامل مشروعنا مع التحديات الفعلية لشبكات الجيل السادس.</p>
@@ -748,31 +830,30 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
         <div class="challenge-icon">📡</div>
         <h3 id="chal1Title" data-en="Terahertz (THz) Frequencies">الترددات العالية جداً (THz)</h3>
         <p class="challenge-desc" id="chal1Desc" data-en="THz waves suffer from extreme high attenuation and short transmission range due to physical obstacles.">تعاني موجات التردد الفائق من ضعف شديد في الإشارة لمسافات طويلة وتأثرها بالعوائق المادية.</p>
-        <div class="challenge-solution" id="chal1Sol" data-en="Solution: Intelligent Reconfigurable Surfaces (IRS) and ultra-dense micro-cell deployment."><strong>الحل المقترح:</strong> استخدام الأسطح الذكية القابلة لإعادة التشكيل (IRS) لتوجيه الإشارات بذكاء وتخطي الحواجز.</div>
+        <div class="challenge-solution" id="chal1Sol" data-en="Solution: Intelligent Reconfigurable Surfaces (IRS) and ultra-dense micro-cell deployment."><strong id="chal1SolPrefix">الحل المقترح:</strong> استخدام الأسطح الذكية القابلة لإعادة التشكيل (IRS) لتوجيه الإشارات بذكاء وتخطي الحواجز.</div>
       </div>
       <div class="challenge-card" onmousemove="updateCardNeon(event, this)">
         <div class="challenge-icon">⚡</div>
         <h3 id="chal2Title" data-en="Energy Consumption">استهلاك الطاقة</h3>
         <p class="challenge-desc" id="chal2Desc" data-en="Massive data rates and dense node processing can exponentially increase network power usage.">معدلات نقل البيانات الهائلة ومعالجة العقد المتعددة تستهلك طاقة كهربائية عالية جداً.</p>
-        <div class="challenge-solution" id="chal2Sol" data-en="Solution: AI-driven green networking algorithms that dynamically put idle nodes into sleep mode."><strong>الحل المقترح:</strong> خوارزميات شبكات خضراء مدعومة بالذكاء الاصطناعي لوضع العقد غير الخاملة في وضع السكون التلقائي.</div>
+        <div class="challenge-solution" id="chal2Sol" data-en="Solution: AI-driven green networking algorithms that dynamically put idle nodes into sleep mode."><strong id="chal2SolPrefix">الحل المقترح:</strong> خوارزميات شبكات خضراء مدعومة بالذكاء الاصطناعي لوضع العقد غير الخاملة في وضع السكون التلقائي.</div>
       </div>
       <div class="challenge-card" onmousemove="updateCardNeon(event, this)">
         <div class="challenge-icon">🔒</div>
         <h3 id="chal3Title" data-en="Cybersecurity & Privacy">الأمن السيبراني والخصوصية</h3>
         <p class="challenge-desc" id="chal3Desc" data-en="Hyper-connectivity of billions of devices creates massive attack surfaces for cyber threats.">الربط الهائل لملايين الأجهزة الذكية يزيد من نقاط الضعف وثغرات الهجمات السيبرانية.</p>
-        <div class="challenge-solution" id="chal3Sol" data-en="Solution: Zero-trust architecture with embedded quantum-resistant cryptographic protocols."><strong>الحل المقترح:</strong> بنية ثقة معدومة (Zero-Trust) وبروتوكولات تشفير متطورة مقاومة للهجمات الكمية.</div>
+        <div class="challenge-solution" id="chal3Sol" data-en="Solution: Zero-trust architecture with embedded quantum-resistant cryptographic protocols."><strong id="chal3SolPrefix">الحل المقترح:</strong> بنية ثقة معدومة (Zero-Trust) وبروتوكولات تشفير متطورة مقاومة للهجمات الكمية.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- قسم المؤشرات ورسم بياني تفاعلي -->
 <section class="sec light scroll-reveal" id="analytics">
   <div class="in">
     <div class="head center">
       <div class="section-title-wrapper">
         <p class="eyebrow" id="analyticsEyebrow" style="margin:0;">مؤشرات الأداء (BIS KPIs & Charts)</p>
-        <button class="share-link-btn" onclick="copySectionLink('analytics')" id="shareAnalyticsBtn">🔗 نسخ الرابط</button>
+        <button class="share-link-btn" onclick="copySectionLink('analytics')" id="shareBtnAnalytics">🔗 نسخ الرابط</button>
       </div>
       <h2 class="big" id="analyticsTitleHead" style="margin-top:12px;">أرقام ورسوم بيانية تعكس <span class="grad">كفاءة النظام.</span></h2>
       <p class="lead" id="analyticsLeadText">تحليل بياني مباشر لأداء شبكة المستقبل مقارنة بالجيل السابق.</p>
@@ -795,7 +876,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="chart-container-box" onmousemove="updateCardNeon(event, this)">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
         <h3 id="chartTitle" style="font-family:var(--f-disp); font-size:19px;">مقارنة الأداء التقني (5G vs 6G+)</h3>
-        <span class="lat" style="font-size:11.5px; color:var(--cyan); background:rgba(43,208,255,0.1); padding:4px 10px; border-radius:999px;">BIS Analytics Engine</span>
+        <span class="lat" style="font-size:11.5px; color:var(--cyan); background:rgba(43,208,255,0.15); padding:4px 10px; border-radius:999px;">BIS Analytics Engine</span>
       </div>
       <div class="chart-inner">
         <canvas id="performanceChart"></canvas>
@@ -809,7 +890,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="head center">
       <div class="section-title-wrapper">
         <p class="eyebrow" id="techEyebrow" style="margin:0;">التقنيات</p>
-        <button class="share-link-btn" onclick="copySectionLink('tech')" id="shareTechBtn">🔗 نسخ الرابط</button>
+        <button class="share-link-btn" onclick="copySectionLink('tech')" id="shareBtnTech">🔗 نسخ الرابط</button>
       </div>
       <h2 class="big" id="techTitleHead" style="margin-top:12px;">كل ما تحتاجه شبكة المستقبل.</h2>
     </div>
@@ -842,13 +923,12 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<!-- قسم الاستخدامات -->
 <section class="sec light scroll-reveal" id="uses">
   <div class="in">
     <div class="head center">
       <div class="section-title-wrapper">
         <p class="eyebrow" id="usesEyebrow" style="margin:0;">الاستخدامات</p>
-        <button class="share-link-btn" onclick="copySectionLink('uses')" id="shareUsesBtn">🔗 نسخ الرابط</button>
+        <button class="share-link-btn" onclick="copySectionLink('uses')" id="shareBtnUses">🔗 نسخ الرابط</button>
       </div>
       <h2 class="big" id="usesTitleHead" style="margin-top:12px;">أشياء تحتاج الاستجابة <span class="grad">الآن.</span></h2>
     </div>
@@ -882,7 +962,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="head center">
       <div class="section-title-wrapper">
         <p class="eyebrow" id="compareEyebrow" style="margin:0;">المقارنة</p>
-        <button class="share-link-btn" onclick="copySectionLink('compare')" id="shareCompareBtn">🔗 نسخ الرابط</button>
+        <button class="share-link-btn" onclick="copySectionLink('compare')" id="shareBtnCompare">🔗 نسخ الرابط</button>
       </div>
       <h2 class="big" id="compareTitleHead" style="margin-top:12px;">من 5G إلى <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.</h2>
     </div>
@@ -905,7 +985,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   <div class="in center">
     <div class="section-title-wrapper">
       <p class="eyebrow" id="docsEyebrow" style="margin:0;">العرض التقديمي</p>
-      <button class="share-link-btn" onclick="copySectionLink('docs')" id="shareDocsBtn">🔗 نسخ الرابط</button>
+      <button class="share-link-btn" onclick="copySectionLink('docs')" id="shareBtnDocs">🔗 نسخ الرابط</button>
     </div>
     <h2 class="big" id="docsTitleHead" style="margin-top:12px">فيديو عرض <span class="grad">المشروع.</span></h2>
     <p class="lead" id="docsLeadText">يمكنك مشاهدة فيديو العرض التقديمي التوضيحي للمشروع مباشرة من جوجل درايف.</p>
@@ -919,7 +999,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   <div class="in center">
     <div class="section-title-wrapper">
       <p class="eyebrow" id="teamEyebrow" style="margin:0;">الفريق</p>
-      <button class="share-link-btn" onclick="copySectionLink('team')" id="shareTeamBtn">🔗 نسخ الرابط</button>
+      <button class="share-link-btn" onclick="copySectionLink('team')" id="shareBtnTeam">🔗 نسخ الرابط</button>
     </div>
     <h2 class="big" id="teamTitleHead" style="margin-top:12px">فريق المشروع، <span class="grad">معًا.</span></h2>
     <p class="lead" id="teamLeadText">طلاب وعقول شابة من قسم نظم معلومات الأعمال بأكاديمية المستقبل، يعملون معًا على شاشات تفاعلية ليحوّلوا فكرة الـ 6G إلى مشروع حقيقي. (اضغط على أي بطاقة لعرض المهام والأدوار)</p>
@@ -928,41 +1008,41 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
       <div class="team-card" data-en="Mohab" 
            data-ar-role="المطور المسؤول عن برمجة الشات بوت، قسم الـ AI وتعديل وتطوير الموقع بالكامل للشكل النهائي، بالإضافة لتصميم الباوربوينت ومونتاج الفيديو."
            data-en-role="Lead AI and Web Developer responsible for the final website design, chatbot development, presentation design, and video production."
-           onclick="showTeamMember(this)">
+           onclick="playSound('click'); showTeamMember(this)">
         <div class="team-avatar">💻</div>
         <span class="team-role-tag">AI & UI Developer</span>
         <h3>مهاب</h3>
-        <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
+        <p class="team-hint" id="teamHint1">اضغط لعرض المهام والأدوار ←</p>
       </div>
            
       <div class="team-card" data-en="Amr" 
            data-ar-role="قائد المشروع بالكامل (Project Leader)، ومسؤول عن محاكاة النظام، قياسات الأداء التقني، والمساعدة في تطوير الموقع وتصميم العرض."
            data-en-role="Full Project Leader, responsible for system simulation, technical performance metrics, and assisting in website and presentation design."
-           onclick="showTeamMember(this)">
+           onclick="playSound('click'); showTeamMember(this)">
         <div class="team-avatar">👑</div>
-        <span class="team-role-tag" id="amrRoleTag" style="background:rgba(255,180,0,0.12); color:#e69500;">ليدر المشروع</span>
+        <span class="team-role-tag" id="amrRoleTag" style="background:rgba(255,180,0,0.18); color:#e69500;">ليدر المشروع</span>
         <h3>عمرو</h3>
-        <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
+        <p class="team-hint" id="teamHint2">اضغط لعرض المهام والأدوار ←</p>
       </div>
            
       <div class="team-card" data-en="Khaled" 
            data-ar-role="مساعد في البرمجة وتطوير الواجهات، إدارة البيانات وجداول الأداء، ومراجعة العرض التقديمي وتنسيق الفيديوهات."
            data-en-role="Assisted in coding and UI development, data management, performance tables, presentation review, and video coordination."
-           onclick="showTeamMember(this)">
+           onclick="playSound('click'); showTeamMember(this)">
         <div class="team-avatar">⚡</div>
         <span class="team-role-tag">UI & Data</span>
         <h3>خالد</h3>
-        <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
+        <p class="team-hint" id="teamHint3">اضغط لعرض المهام والأدوار ←</p>
       </div>
            
       <div class="team-card" data-en="Osama" 
            data-ar-role="مسؤول استراتيجية المحتوى، إعداد السيناريو الخاص بالعرض التقديمي، ومتابعة اختبارات النظام وتجربة المستخدم."
            data-en-role="Responsible for content strategy, preparing the presentation script, system testing, and user experience evaluation."
-           onclick="showTeamMember(this)">
+           onclick="playSound('click'); showTeamMember(this)">
         <div class="team-avatar">🎯</div>
         <span class="team-role-tag">Strategy & Script</span>
         <h3>أسامة</h3>
-        <p class="team-hint">اضغط لعرض المهام والأدوار ←</p>
+        <p class="team-hint" id="teamHint4">اضغط لعرض المهام والأدوار ←</p>
       </div>
     </div>
   </div>
@@ -974,45 +1054,64 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <p class="mid" id="closeMidText">الابتكار لا ينتظر المستحيل...</p>
     <h2 class="huge grad" id="closeHugeText">بل يصنعه.</h2>
     <p class="lead" id="closeLeadText">مشروع الـ 6G+. عقولنا اليوم تبني مستقبل الغد.</p>
-    <a class="liquid-pill primary" href="#top" id="backToTopBtn">🚀 ارجع إلى البداية</a>
+    <a class="liquid-pill primary" href="#top" onclick="playSound('click')" id="backToTopBtn">🚀 ارجع إلى البداية</a>
   </div>
 </section>
 
 <footer>
   <div class="in">
-    <span id="footerText">© 2026 مشروع 6G+ · طلاب نظم معلومات الأعمال - أكاديمية المستقبل</span>
+    <span id="footerText">© 2026 مشروع 6G+ · طلاب نظم معلومات الأعمال - أكاديمية المستقبل[cite: 1]</span>
     <span class="lat" style="direction:ltr">6G+</span>
   </div>
 </footer>
 
 </div>
 
-<!-- شات بوت محماااا بالمصري الخالص مع أزرار الأسئلة السريعة -->
+<!-- عارض الـ 3D التفاعلي -->
+<div id="viewer3DModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:1000; align-items:center; justify-content:center; padding:20px;">
+  <div class="modal-content-box" style="max-width:550px; text-align:center;">
+    <button onclick="close3DViewer()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
+    <div style="font-size:19px; font-family:var(--f-disp); font-weight:700; color:var(--cyan); margin-bottom:6px;" id="viewer3DTitle" data-ar="عارض المحاكاة ثلاثية الأبعاد (3D Holographic Mesh)" data-en="3D Holographic Mesh Viewer">عارض المحاكاة ثلاثية الأبعاد (3D Holographic Mesh)</div>
+    <p style="font-size:13px; opacity:0.8; margin-bottom:14px;" id="viewer3DDesc" data-ar="يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D (انقر واسحب بالماوس للتحريك بـ 360 درجة):" data-en="Inspect simulation & rotate the 3D model (Click & Drag to rotate 360°):">يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D:</p>
+    
+    <div style="position:relative; width:100%; height:260px; background:radial-gradient(circle, rgba(43,208,255,0.2) 0%, rgba(10,12,22,0.95) 85%); border-radius:16px; border:1px solid rgba(43,208,255,0.4); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+      <canvas id="canvas3DModel" width="480" height="240" style="cursor:grab;"></canvas>
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:8px; margin-top:18px; flex-wrap:wrap;">
+      <button onclick="change3DMode('rotate')" class="liquid-pill primary" id="btnModeRotate" data-ar="🔄 تدوير المجسم" data-en="🔄 Rotate Model" style="padding:6px 12px; font-size:11.5px;">🔄 تدوير المجسم</button>
+      <button onclick="change3DMode('pulse')" class="liquid-pill" id="btnModePulse" data-ar="⚡ نبض الإشارة" data-en="⚡ Signal Pulse" style="padding:6px 12px; font-size:11.5px;">⚡ نبض الإشارة</button>
+      <button onclick="change3DMode('wireframe')" class="liquid-pill" id="btnModeWire" data-ar="🌐 هيكل الشبكة" data-en="🌐 Network Mesh" style="padding:6px 12px; font-size:11.5px;">🌐 هيكل الشبكة</button>
+    </div>
+  </div>
+</div>
+
 <div id="aiAssistantWidget">
   <div id="aiChatBox">
     <div id="aiChatHeader">
-      <span id="aiHeaderTitle" style="font-weight:700; font-size:14.5px; display:flex; align-items:center; gap:6px;">🤖 محماااا (المساعد الذكي للمشروع)</span>
-      <button onclick="toggleAIChat()" style="background:none; border:none; color:inherit; font-size:20px; cursor:pointer;" aria-label="إغلاق">&times;</button>
+      <span id="aiHeaderTitle" style="font-weight:700; font-size:14.5px; display:flex; align-items:center; gap:6px;" data-ar="🤖 محماااا (المساعد الذكي للمشروع)" data-en="🤖 Mahmama (AI Project Assistant)">🤖 محماااا (المساعد الذكي للمشروع)</span>
+      <button onclick="playSound('click'); toggleAIChat()" style="background:none; border:none; color:inherit; font-size:20px; cursor:pointer;" aria-label="إغلاق">&times;</button>
     </div>
     <div id="aiChatBody">
-      <div class="ai-msg bot" id="aiWelcomeMsg">يا هلا بيك يا دكتور! أنا "محماااا" مساعدك الذكي لمشروع 6G+. اسألني عن أي حاجة في المشروع، السرعة، الفريق، أو الأكاديمية وهرد عليك في ثواني!</div>
+      <div class="ai-msg bot" id="aiWelcomeMsg" data-ar="يا هلا بيك يا دكتور! أنا 'محماااا' مساعدك الذكي لمشروع 6G+. اسألني عن أي حاجة في المشروع، السرعة، الفريق، أو الأكاديمية وهرد عليك في ثواني!" data-en="Welcome doctor! I am 'Mahmama', your smart assistant for the 6G+ project. Ask me about the project, speed, team, or academy and I will reply in seconds!">يا هلا بيك يا دكتور! أنا "محماااا" مساعدك الذكي لمشروع 6G+. اسألني عن أي حاجة في المشروع، السرعة، الفريق، أو الأكاديمية وهرد عليك في ثواني!</div>
       
       <div class="ai-quick-questions">
-        <button class="ai-quick-btn" onclick="sendQuickQuery('إيه أهم هدف في المشروع؟')" id="qBtn1">🎯 إيه أهم هدف في المشروع؟</button>
-        <button class="ai-quick-btn" onclick="sendQuickQuery('مين فريق العمل؟')" id="qBtn2">👥 مين فريق العمل؟</button>
-        <button class="ai-quick-btn" onclick="sendQuickQuery('إيه علاقة الـ 6G بالبزنس؟')" id="qBtn3">💼 إيه علاقة الـ 6G بالبزنس؟</button>
-        <button class="ai-quick-btn" onclick="sendQuickQuery('كام سرعة نقل البيانات؟')" id="qBtn4">⚡ كام سرعة نقل البيانات؟</button>
+        <button class="ai-quick-btn" onclick="playSound('click'); sendQuickQuery(this.getAttribute('data-q'))" data-q-ar="إيه أهم هدف في المشروع؟" data-q-en="What is the main project goal?" id="qBtn1">🎯 إيه أهم هدف في المشروع؟</button>
+        <button class="ai-quick-btn" onclick="playSound('click'); sendQuickQuery(this.getAttribute('data-q'))" data-q-ar="مين فريق العمل؟" data-q-en="Who is the team?" id="qBtn2">👥 مين فريق العمل؟</button>
+        <button class="ai-quick-btn" onclick="playSound('click'); sendQuickQuery(this.getAttribute('data-q'))" data-q-ar="إيه علاقة الـ 6G بالبزنس؟" data-q-en="What is 6G business impact?" id="qBtn3">💼 إيه علاقة الـ 6G بالبزنس؟</button>
+        <button class="ai-quick-btn" onclick="playSound('click'); sendQuickQuery(this.getAttribute('data-q'))" data-q-ar="كام سرعة نقل البيانات؟" data-q-en="What is the data speed?" id="qBtn4">⚡ كام سرعة نقل البيانات؟</button>
+        <button class="ai-quick-btn" onclick="playSound('click'); sendQuickQuery(this.getAttribute('data-q'))" data-q-ar="إيه هي مميزات عارض الـ 3D؟" data-q-en="What are 3D viewer features?" id="qBtn5">🌐 إيه هي مميزات عارض الـ 3D؟</button>
+        <button class="ai-quick-btn" onclick="playSound('click'); sendQuickQuery(this.getAttribute('data-q'))" data-q-ar="إزاي الموقع بيخدم تخصص الـ BIS؟" data-q-en="How does the site serve BIS?" id="qBtn6">📈 إزاي الموقع بيخدم تخصص الـ BIS؟</button>
       </div>
     </div>
     <div id="aiChatFooter">
       <input type="text" id="aiInput" placeholder="اسأل محماااا عن أي حاجة..." onkeydown="if(event.key==='Enter')sendAIQuery()">
-      <button id="aiSendBtn" onclick="sendAIQuery()">إرسال</button>
+      <button id="aiSendBtn" onclick="playSound('click'); sendAIQuery()" data-ar="إرسال" data-en="Send">إرسال</button>
     </div>
   </div>
-  <button id="aiToggleBtn" onclick="toggleAIChat()"><span id="aiToggleText">💬 اسأل محماااا (AI Assistant)</span></button>
+  <button id="aiToggleBtn" onclick="playSound('click'); toggleAIChat()"><span id="aiToggleText" data-ar="💬 اسأل محماااا (AI Assistant)" data-en="💬 Ask Mahmama (AI Assistant)">💬 اسأل محماااا (AI Assistant)</span></button>
 </div>
 
-<!-- نافذة تشغيل الفيديو المباشر (جوجل درايف) -->
 <div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; padding:20px;">
   <div class="modal-content-box" style="max-width:900px; padding:20px;">
     <button onclick="closeVideo()" style="position:absolute; top:12px; left:12px; background:none; border:none; color:inherit; font-size:28px; cursor:pointer; z-index:10;" aria-label="إغلاق">&times;</button>
@@ -1022,14 +1121,13 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </div>
 
-<!-- نافذة منبثقة لعرض أدوار أفراد الفريق -->
 <div id="teamModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:20px;">
   <div class="modal-content-box">
     <button onclick="closeTeamModal()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
     <div style="font-size:36px; margin-bottom:10px;">👤</div>
     <h3 id="memberName" style="font-family:var(--f-disp); font-size:24px; margin-bottom:12px;"></h3>
     <p id="memberRole" style="font-size:16px; line-height:1.6; opacity:0.85;"></p>
-    <button onclick="closeTeamModal()" class="liquid-pill primary" id="modalCloseBtn" style="margin-top:24px; padding:8px 20px; font-size:14px; border:none;">إغلاق</button>
+    <button onclick="closeTeamModal()" class="liquid-pill primary" id="modalCloseBtn" style="margin-top:24px; padding:8px 20px; font-size:14px; border:none;" data-ar="إغلاق" data-en="Close">إغلاق</button>
   </div>
 </div>
 
@@ -1037,6 +1135,204 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 (()=>{
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let audioCtx = null;
+window.playSound = function(type) {
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+    if (type === 'click') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(580, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } else if (type === 'whoosh') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(440, now + 0.25);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    }
+  } catch(e) {}
+};
+
+let current3DType = 'pcb';
+let anim3DFrame = null;
+let mode3DState = 'rotate';
+let angle3D = 0;
+let isDragging3D = false;
+let startMouseX = 0;
+let userRotationOffset = 0;
+
+window.open3DViewer = function(type) {
+  playSound('whoosh');
+  current3DType = type;
+  userRotationOffset = 0;
+  const modal = document.getElementById('viewer3DModal');
+  const titleEl = document.getElementById('viewer3DTitle');
+  const descEl = document.getElementById('viewer3DDesc');
+  const lang = document.querySelector('.site').lang || 'ar';
+
+  if (type === 'pcb') {
+    titleEl.textContent = lang === 'en' ? '3D Printed Circuit Board (PCB)' : 'معاينة لوحات الدوائر المطبوعة 3D (PCB)';
+    descEl.textContent = lang === 'en' ? 'Inspect and drag 360° to rotate custom hardware matrix.' : 'قم بالسحب بالماوس يميناً ويساراً لتدوير المجسم 360 درجة.';
+  } else if (type === 'thz') {
+    titleEl.textContent = lang === 'en' ? '3D Terahertz Wave Propagation' : 'محاكاة انتشار موجات التيرابت 3D (THz)';
+    descEl.textContent = lang === 'en' ? 'Inspect and drag 360° to rotate wave propagation model.' : 'قم بالسحب بالماوس يميناً ويساراً لتدوير المجسم 360 درجة.';
+  } else {
+    titleEl.textContent = lang === 'en' ? '3D Holographic Mesh Node' : 'عقدة الهولوجرام والتفاعل المجسم 3D';
+    descEl.textContent = lang === 'en' ? 'Inspect and drag 360° to rotate holographic mesh node.' : 'قم بالسحب بالماوس يميناً ويساراً لتدوير المجسم 360 درجة.';
+  }
+
+  modal.style.display = 'flex';
+  start3DRenderer();
+}
+
+window.close3DViewer = function() {
+  playSound('click');
+  document.getElementById('viewer3DModal').style.display = 'none';
+  if (anim3DFrame) cancelAnimationFrame(anim3DFrame);
+}
+
+window.change3DMode = function(mode) {
+  playSound('click');
+  mode3DState = mode;
+}
+
+function start3DRenderer() {
+  const canvas = document.getElementById('canvas3DModel');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  if (anim3DFrame) cancelAnimationFrame(anim3DFrame);
+
+  // إعداد تفاعل الماوس لتدوير المجسم 360 درجة
+  canvas.onmousedown = (e) => {
+    isDragging3D = true;
+    startMouseX = e.clientX;
+    canvas.style.cursor = 'grabbing';
+  };
+  window.onmouseup = () => {
+    isDragging3D = false;
+    canvas.style.cursor = 'grab';
+  };
+  canvas.onmousemove = (e) => {
+    if (!isDragging3D) return;
+    const deltaX = e.clientX - startMouseX;
+    userRotationOffset += deltaX * 0.015;
+    startMouseX = e.clientX;
+  };
+
+  // دعم الشاشات اللمسية (Mobile Touch Support)
+  canvas.ontouchstart = (e) => {
+    isDragging3D = true;
+    startMouseX = e.touches[0].clientX;
+  };
+  window.ontouchend = () => {
+    isDragging3D = false;
+  };
+  canvas.ontouchmove = (e) => {
+    if (!isDragging3D) return;
+    const deltaX = e.touches[0].clientX - startMouseX;
+    userRotationOffset += deltaX * 0.015;
+    startMouseX = e.touches[0].clientX;
+  };
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!isDragging3D && mode3DState === 'rotate') {
+      angle3D += 0.02;
+    }
+    const currentAngle = angle3D + userRotationOffset;
+
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+
+    const isLight = document.body.classList.contains('light-theme');
+
+    if (current3DType === 'pcb') {
+      ctx.strokeStyle = isLight ? '#0a64ff' : '#2bd0ff';
+      ctx.lineWidth = 2.5;
+      ctx.fillStyle = isLight ? 'rgba(10, 100, 255, 0.18)' : 'rgba(10, 100, 255, 0.35)';
+      
+      let scale = mode3DState === 'pulse' ? 1 + Math.sin(currentAngle * 3) * 0.2 : 1;
+      ctx.scale(scale, scale);
+      ctx.rotate(currentAngle);
+
+      ctx.beginPath();
+      ctx.rect(-90, -60, 180, 120);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(-70, -40); ctx.lineTo(-30, -40); ctx.lineTo(0, -10); ctx.lineTo(60, -10);
+      ctx.moveTo(-50, 30); ctx.lineTo(10, 30); ctx.lineTo(70, -30);
+      ctx.stroke();
+
+      ctx.fillStyle = isLight ? '#6b46c1' : '#8a6bff';
+      ctx.beginPath();
+      ctx.arc(0, -10, 10, 0, Math.PI * 2);
+      ctx.arc(-50, -20, 6, 0, Math.PI * 2);
+      ctx.arc(50, 30, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+    } else if (current3DType === 'thz') {
+      ctx.strokeStyle = isLight ? '#059669' : '#00ff88';
+      ctx.lineWidth = 2.5;
+      
+      for (let i = -3; i <= 3; i++) {
+        ctx.beginPath();
+        let yOffset = i * 28;
+        let waveSine = Math.sin(currentAngle * 2.5 + i) * 20;
+        ctx.moveTo(-140, yOffset);
+        ctx.bezierCurveTo(-50, yOffset + waveSine * 1.8, 50, yOffset - waveSine * 1.8, 140, yOffset);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = isLight ? '#0a64ff' : '#2bd0ff';
+      ctx.beginPath();
+      ctx.arc(Math.sin(currentAngle * 1.5) * 80, Math.cos(currentAngle * 1.5) * 25, 12, 0, Math.PI * 2);
+      ctx.fill();
+
+    } else {
+      ctx.strokeStyle = mode3DState === 'wireframe' ? (isLight ? '#1a202c' : '#ffffff') : (isLight ? '#6b46c1' : '#8a6bff');
+      ctx.lineWidth = 2.5;
+
+      let r = 75 + (mode3DState === 'pulse' ? Math.sin(currentAngle * 4) * 18 : 0);
+      ctx.rotate(currentAngle);
+
+      ctx.beginPath();
+      ctx.moveTo(0, -r); ctx.lineTo(r * 0.85, r * 0.6); ctx.lineTo(-r * 0.85, r * 0.6); ctx.closePath();
+      ctx.moveTo(0, r); ctx.lineTo(r * 0.85, -r * 0.6); ctx.lineTo(-r * 0.85, -r * 0.6); ctx.closePath();
+      ctx.stroke();
+
+      ctx.fillStyle = isLight ? 'rgba(10, 100, 255, 0.2)' : 'rgba(43,208,255,0.35)';
+      ctx.beginPath();
+      ctx.arc(0, 0, 24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    ctx.restore();
+    anim3DFrame = requestAnimationFrame(render);
+  }
+  render();
+}
 
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
@@ -1113,9 +1409,11 @@ window.addEventListener('scroll', () => {
 });
 
 window.copySectionLink = function(sectionId) {
+  playSound('click');
   const url = window.location.origin + window.location.pathname + '#' + sectionId;
+  const lang = document.querySelector('.site').lang || 'ar';
   navigator.clipboard.writeText(url).then(() => {
-    alert('✨ تم نسخ رابط القسم بنجاح: ' + url);
+    alert(lang === 'en' ? '✨ Section link copied successfully: ' + url : '✨ تم نسخ رابط القسم بنجاح: ' + url);
   }).catch(err => {
     console.error('Failed to copy: ', err);
   });
@@ -1139,6 +1437,7 @@ if('IntersectionObserver' in window && !reduce){
 }
 
 window.calculateDownload = function(type, sizeGB, btnElement) {
+  playSound('click');
   document.querySelectorAll('.calc-btn').forEach(b => b.classList.remove('active'));
   btnElement.classList.add('active');
 
@@ -1170,6 +1469,7 @@ window.calculateDownload = function(type, sizeGB, btnElement) {
 }
 
 window.runRealSpeedTest = function() {
+  playSound('whoosh');
   const btn = document.getElementById('speedTestBtn');
   const status = document.getElementById('speedTestStatus');
   const latEl = document.getElementById('count');
@@ -1206,6 +1506,7 @@ window.runRealSpeedTest = function() {
 }
 
 window.toggleAIChat = function() {
+  playSound('click');
   const box = document.getElementById('aiChatBox');
   box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
 }
@@ -1217,6 +1518,7 @@ window.sendQuickQuery = function(queryText) {
 }
 
 window.sendAIQuery = function() {
+  playSound('click');
   const input = document.getElementById('aiInput');
   const body = document.getElementById('aiChatBody');
   const query = input.value.trim();
@@ -1242,25 +1544,29 @@ window.sendAIQuery = function() {
     const hasWord = (arr) => arr.some(w => text.includes(w));
 
     if (lang === 'en') {
-      if (hasWord(['goal', 'purpose', 'objective'])) {
+      if (hasWord(['goal', 'purpose', 'objective', 'هدف'])) {
         reply = "The main goal of the project is to break traditional connectivity limits, delivering 6G ultra-speed with 0.001s latency, integrating AI and holograms for smart business systems.";
-      } else if (hasWord(['team', 'members', 'who'])) {
+      } else if (hasWord(['team', 'members', 'who', 'فريق'])) {
         reply = "The project team consists of BIS students at Future Academy: Amr (Project Leader), Mohab (AI & Web Developer), Khaled (Data & UI), and Osama (Strategy & Script).";
-      } else if (hasWord(['business', 'bis', 'cost'])) {
+      } else if (hasWord(['business', 'bis', 'cost', 'بزنس'])) {
         reply = "6G reduces enterprise operational costs by 65% through cloud computing and zero downtime, enabling real-time big data analytics in the exact same second!";
-      } else if (hasWord(['speed', 'tbps', 'latency'])) {
+      } else if (hasWord(['speed', 'tbps', 'latency', 'سرعة'])) {
         reply = "Data throughput reaches 1.0 Tbps with an instant latency of just 0.001 seconds!";
+      } else if (hasWord(['3d', 'viewer', 'عرض'])) {
+        reply = "The 3D viewer lets you inspect PCB circuits, Terahertz wave propagation, and holographic mesh nodes interactively in a 3D space with rotation and pulse modes!";
+      } else if (hasWord(['site', 'website', 'features', 'موقع'])) {
+        reply = "This website features a bilingual interface (AR/EN), light/dark themes, interactive calculators, 3D holographic viewers, and live AI assistant support!";
       } else {
         reply = `Hello! As 'Mahmama' AI assistant, your query about "${query}" is at the heart of 6G+. Let me know if you need any other technical details!`;
       }
     } else {
-      if (hasWord(['هدف', 'المشروع', 'أهم هدف'])) {
+      if (hasWord(['هدف', 'المشروع', 'أهم هدف', 'goal'])) {
         reply = "أهم هدف في المشروع هو كسر قيود الاتصال التقليدية وتقديم شبكة 6G فائقة السرعة بزمن استجابة (0.001 ثانية) ودمج الذكاء الاصطناعي والهولوجرام لخدمة قطاع الأعمال والأنظمة الذكية.";
       }
-      else if (hasWord(['فريق', 'العمل', 'مين الفريق'])) {
+      else if (hasWord(['فريق', 'العمل', 'مين الفريق', 'team'])) {
         reply = "فريق المشروع عمالقة من نظم معلومات الأعمال بأكاديمية المستقبل: عمرو (ليدر المشروع)، مهاب (مطور الـ AI والواجهات)، خالد (البيانات والجداول)، وأسامة (الاستراتيجية والسيناريو).";
       }
-      else if (hasWord(['بزنس', 'الـ 6g بالبزنس', 'أعمال', 'bis'])) {
+      else if (hasWord(['بزنس', 'الـ 6g بالبزنس', 'أعمال', 'bis', 'business'])) {
         reply = "شبكة 6G بتوفر تكاليف تشغيل الشركات بنسبة 65% من خلال الحوسبة السحابية وانعدام وقت التوقف، وبتتيح تحليل البيانات الضخمة (Big Data Analytics) للعملاء لحظياً في نفس الثانية!";
       }
       else if (hasWord(['مهاب', 'مطور', 'برمج'])) {
@@ -1269,9 +1575,15 @@ window.sendAIQuery = function() {
       else if (hasWord(['عمرو', 'ليدر', 'قائد'])) {
         reply = "عمرو هو ليدر المشروع الكفء، ومسؤول عن محاكاة النظام، قياسات الأداء التقني، وظبط الشغل كله مع الفريق.";
       }
-      else if (hasWord(['سرعة', 'سرعه', 'tbps', 'ثانية', 'استجابة', 'كام'])) {
+      else if (hasWord(['سرعة', 'سرعه', 'tbps', 'ثانية', 'استجابة', 'كام', 'speed'])) {
         reply = "يا ريس سرعة نقل البيانات بتوصل لـ 1 Tbps، وزمن الاستجابة (Latency) خارق وبيوصل لـ 0.001 ثانية بس! يعني مفيش أي تقطيع نهائياً.";
-      } 
+      }
+      else if (hasWord(['3d', 'عارض', 'دوار', 'محاكاة'])) {
+        reply = "عارض الـ 3D التفاعلي بيتيح ليك تفقد دوائر الـ PCB، موجات التيرابت، وبنية الهولوجرام مع إمكانية التدوير، تكبير المجسم، والتحكم في نبضات الإشارة!";
+      }
+      else if (hasWord(['مميزات', 'موقع', 'إمكانيات', 'الموقع'])) {
+        reply = "الموقع بيدعم اللغتين العربية والإنجليزية، الوضع الفاتح والداكن، حاسبة سرعة فورية، وكمان مساعد ذكي (أنا!) عشان يرد على كل أسئلة لجنة المناقشة بذكاء واحترافية!";
+      }
       else {
         reply = `يا هلا! بصفتي المساعد الذكي "محماااا", أحب أقولك إن سؤالك عن "${query}" في قلب مشروع 6G+. لو عندك أي استفسار تاني عن السرعة أو الفريق اسألني فوراً!`;
       }
@@ -1410,7 +1722,7 @@ function initChart(isEn) {
             color: document.body.classList.contains('light-theme') ? '#4a5568' : '#a1a1a6',
             font: { family: 'IBM Plex Sans Arabic', size: 11 }
           },
-          grid: { color: document.body.classList.contains('light-theme') ? 'rgba(10,100,255,0.08)' : 'rgba(255,255,255,0.08)' }
+          grid: { color: document.body.classList.contains('light-theme') ? 'rgba(10,100,255,0.06)' : 'rgba(255,255,255,0.08)' }
         }
       }
     }
@@ -1442,11 +1754,13 @@ document.getElementById('backToTopBtn').addEventListener('click', (e)=>{
 
 window.openVideo = function(e) {
   if(e) e.preventDefault();
+  playSound('click');
   const modal = document.getElementById('videoModal');
   modal.style.display = 'flex';
 }
 
 window.closeVideo = function() {
+  playSound('click');
   const modal = document.getElementById('videoModal');
   modal.style.display = 'none';
 }
@@ -1480,6 +1794,7 @@ window.showTeamMember = function(cardEl) {
 }
 
 window.closeTeamModal = function() {
+  playSound('click');
   const modal = document.getElementById('teamModal');
   if (modal) modal.style.display = 'none';
   activeCardElement = null;
@@ -1505,19 +1820,23 @@ try{if(localStorage.getItem('theme6g')==='light')setTheme(true)}catch(e){}
 
 const G='<span class="grad">';
 const EN=[
-['#navVision','Vision'],['#navSpeed','Speed & Calc'],['#navBusiness','Business (BIS)'],['#navChallenges','Challenges'],['#navAnalytics','Analytics'],['#navTech','Technology'],
-['#navUses','Use cases'],['#navCompare','Comparison'],['#navTeam','Team'],
-['#navExploreBtn','✨ Explore'],
-['#navDocBtn','🎬 Presentation'],
+['#navVision','Vision'],['#navSpeed','Speed'],['#navBusiness','Business'],['#navGallery','3D Gallery'],['#navChallenges','Challenges'],['#navAnalytics','Analytics'],['#navTech','Tech'],
+['#navUses','Uses'],['#navCompare','Compare'],['#navTeam','Team'],
+['#navDocBtn','🎬 Video'],
 ['#badgeLiveText','6G Network Simulation Active'],
 ['#heroBadgeText','🎓 Business Information Systems Students Project - Future Academy'],
 ['#heroSubText','Beyond speed and shaping the future.'],
 ['#heroLeadText','A pioneering project that breaks traditional connectivity rules. Ultra-low latency in a thousandth of a second, and an embedded AI framework thinking with you every second.'],
 ['#heroCta1','✨ Explore the project'],['#heroCta2','⚡ Speed Calculator'],['#heroDocBtn','🎬 Watch Project Video'],
 ['#visionEyebrow','Vision'],
+['#shareBtnVision','🔗 Copy Link'],
 ['#speedEyebrow','Speed & Data Calculator'],
+['#shareBtnSpeed','🔗 Copy Link'],
 ['#speedTitleHead',`Speed is no longer ${G}just browsing.</span>`],
 ['#speedLeadText','High-performance standards specifically designed to meet the needs of smart systems and real-time operations.'],
+['#speedTestBtn','🚀 Run Benchmark'],
+['#latBadgeText','Latency Target'],
+['#tpBadgeText','Throughput Peak'],
 ['#unitLatency','seconds (Instant latency target)'],
 ['#unitThroughput','Tbps (6G Network Throughput)'],
 ['#calcBoxTitle','⚡ Interactive Speed Calculator'],
@@ -1527,61 +1846,104 @@ const EN=[
 ['#calcGameTitle','AAA Heavy Game'],['#calcGameSize','Size: 300 GB'],
 ['#calcHoloTitle','Holographic Content'],['#calcHoloSize','Size: 50 GB'],
 ['#calcResultLabel','Real-time calculated download time:'],
+['#tbpsSmallText','Next-Gen Connectivity Paradigm'],
 ['#tbpsMidText','Speeds that take the world into limitless virtual and interactive reality.'],
-['#businessEyebrow','Business Impact (BIS)'],['#businessTitleHead',`How 6G reshapes ${G}the business world.</span>`],
+['#businessEyebrow','Business Impact (BIS)'],
+['#shareBtnBiz','🔗 Copy Link'],
+['#businessTitleHead',`How 6G reshapes ${G}the business world.</span>`],
 ['#businessLeadText','Since our project serves Business Information Systems (BIS), here is the financial and operational impact of 6G:'],
 ['#bizCard1Title','Operational Cost Reduction'],['#bizCard1Desc','With zero downtime and 1 Tbps speeds, cloud computing and enterprise communications operate with absolute efficiency. This eliminates costly local infrastructure and reduces server maintenance costs by up to 65%.'],
 ['#bizCard2Title','Real-Time Big Data Analytics'],['#bizCard2Desc','Businesses no longer wait for end-of-month reports. Using 6G, BIS systems can analyze customer behavior and sales in the exact same second with zero latency, enabling instant strategic decisions.'],
-['#challengesEyebrow','Challenges & Solutions'],['#challengesTitleHead',`Technical hurdles requiring ${G}engineering intelligence.</span>`],['#challengesLeadText','How our project deals with the actual challenges of sixth-generation networks.'],
-['#chal1Title','Terahertz (THz) Frequencies'],['#chal1Desc','THz waves suffer from extreme high attenuation and short transmission range due to physical obstacles.'],['#chal1Sol','<strong>Proposed Solution:</strong> Intelligent Reconfigurable Surfaces (IRS) and ultra-dense micro-cell deployment.'],
-['#chal2Title','Energy Consumption'],['#chal2Desc','Massive data rates and dense node processing can exponentially increase network power usage.'],['#chal2Sol','<strong>Proposed Solution:</strong> AI-driven green networking algorithms that dynamically put idle nodes into sleep mode.'],
-['#chal3Title','Cybersecurity & Privacy'],['#chal3Desc','Hyper-connectivity of billions of devices creates massive attack surfaces for cyber threats.'],['#chal3Sol','<strong>Proposed Solution:</strong> Zero-trust architecture with embedded quantum-resistant cryptographic protocols.'],
-['#analyticsEyebrow','BIS KPIs & Charts'],['#analyticsTitleHead',`Numbers and charts reflecting ${G}system efficiency.</span>`],
+['#galleryEyebrow','3D Holographic Viewer'],
+['#shareBtnGallery','🔗 Copy Link'],
+['#galleryTitleHead',`Practical and applied ${G}interactive design.</span>`],['#galleryLeadText','Click any element below to launch an interactive 3D viewer inspecting PCB circuits, Terahertz waves, and holographic mesh.'],
+['#challengesEyebrow','Challenges & Solutions'],
+['#shareBtnChal','🔗 Copy Link'],
+['#challengesTitleHead',`Technical hurdles requiring ${G}engineering intelligence.</span>`],['#challengesLeadText','How our project deals with the actual challenges of sixth-generation networks.'],
+['#chal1Title','Terahertz (THz) Frequencies'],['#chal1Desc','THz waves suffer from extreme high attenuation and short transmission range due to physical obstacles.'],['#chal1SolPrefix','Proposed Solution:'],['#chal1Sol','<strong>Proposed Solution:</strong> Intelligent Reconfigurable Surfaces (IRS) and ultra-dense micro-cell deployment.'],
+['#chal2Title','Energy Consumption'],['#chal2Desc','Massive data rates and dense node processing can exponentially increase network power usage.'],['#chal2SolPrefix','Proposed Solution:'],['#chal2Sol','<strong>Proposed Solution:</strong> AI-driven green networking algorithms that dynamically put idle nodes into sleep mode.'],
+['#chal3Title','Cybersecurity & Privacy'],['#chal3Desc','Hyper-connectivity of billions of devices creates massive attack surfaces for cyber threats.'],['#chal3SolPrefix','Proposed Solution:'],['#chal3Sol','<strong>Proposed Solution:</strong> Zero-trust architecture with embedded quantum-resistant cryptographic protocols.'],
+['#analyticsEyebrow','BIS KPIs & Charts'],
+['#shareBtnAnalytics','🔗 Copy Link'],
+['#analyticsTitleHead',`Numbers and charts reflecting ${G}system efficiency.</span>`],
 ['#analyticsLeadText','Live analytical preview of future network performance compared to the previous generation.'],
+['#kpiLabel1','Latency Reduction'],['#kpiLabel2','Energy Efficiency'],['#kpiLabel3','Connected Devices / Sec'],
 ['#chartTitle','Technical Performance Comparison (5G vs 6G+)'],
-['#techEyebrow','Technology'],['#techTitleHead','Everything a network of the future needs.'],
+['#techEyebrow','Technology'],
+['#shareBtnTech','🔗 Copy Link'],
+['#techTitleHead','Everything a network of the future needs.'],
 ['#techCard1Title','Embedded AI'],['#techCard1Desc','The network understands user behavior and predicts needs before they arise.'],
 ['#techCard2Title','Holographic & Immersive Interaction'],['#techCard2Desc','Students study physical or engineering layers through 3D images floating in the air.'],
 ['#techCard3Title','3D Simulation'],['#techCard3Desc','A full simulation of the 6G network, showing how data moves between devices.'],
 ['#techCard4Title','Advanced Printed Circuit Boards'],['#techCard4Desc','The hardware that carries the idea from design to a real board.'],
-['#usesEyebrow','Use Cases'],['#usesTitleHead',`Things that need a response ${G}now.</span>`],
+['#usesEyebrow','Use Cases'],
+['#shareBtnUses','🔗 Copy Link'],
+['#usesTitleHead',`Things that need a response ${G}now.</span>`],
 ['#use1Title','Self-driving cars'],['#use1Desc','They need an instant response, because any delay means a late decision on the road.'],
 ['#use2Title','Remote surgery'],['#use2Desc','Surgeons operate from afar, and every movement arrives at the same instant.'],
 ['#use3Title','Virtual worlds'],['#use3Desc','They require instant data transfer so the experience stays smooth.'],
 ['#use4Title','Smart cities'],['#use4Desc','Fast bursts of data connect every device in the city into one system.'],
 ['#compareEyebrow','Comparison'],
+['#shareBtnCompare','🔗 Copy Link'],
 ['#compareTitleHead','From 5G to <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.'],
 ['#thFeature','Feature'],
 ['#tdRow1','Peak speed target'],['#tdRow2','Latency'],
 ['#tdRow3','Artificial intelligence'],['#tdRow4','Interaction'],
 ['#compareNote','The numbers are research targets published in the public literature, not measurements from this project.'],
-['#docsEyebrow','Presentation'],['#docsTitleHead',`Project presentation ${G}video.</span>`],['#docsLeadText','You can watch the presentation video for the project directly from Google Drive.'],
+['#docsEyebrow','Presentation'],
+['#shareBtnDocs','🔗 Copy Link'],
+['#docsTitleHead',`Project presentation ${G}video.</span>`],['#docsLeadText','You can watch the presentation video for the project directly from Google Drive.'],
 ['#docsWatchBtn','🎬 Watch Project Video'],
-['#teamEyebrow','Team'],['#teamTitleHead',`The project team, ${G}together.</span>`],
+['#teamEyebrow','Team'],
+['#shareBtnTeam','🔗 Copy Link'],
+['#teamTitleHead',`The project team, ${G}together.</span>`],
 ['#teamLeadText','Students and young minds from Business Information Systems at Future Academy, working together on interactive screens to turn the 6G idea into a real project. (Click on any card to view roles and tasks)'],
+['#teamHint1','Click to view tasks & roles →'],['#teamHint2','Click to view tasks & roles →'],['#teamHint3','Click to view tasks & roles →'],['#teamHint4','Click to view tasks & roles →'],
 ['#closeMidText','Innovation does not wait for the impossible...'],['#closeHugeText','It makes it.'],
 ['#closeLeadText','The 6G+ project. Today our minds build tomorrow\'s future.'],['#backToTopBtn','🚀 Back to top'],
-['#footerText','© 2026 6G+ project · Business Information Systems Students - Future Academy'],
+['#footerText','© 2026 6G+ project · Business Information Systems Students - Future Academy[cite: 1]'],
 ['#modalCloseBtn', 'Close'],
 ['#aiHeaderTitle', '🤖 Mahmama (AI Project Assistant)'],
 ['#aiWelcomeMsg', 'Welcome doctor! I am "Mahmama", your smart assistant for the 6G+ project. Ask me about the project, speed, team, or academy and I will reply in seconds!'],
 ['#aiToggleText', '💬 Ask Mahmama (AI Assistant)'],
+['#aiInput', 'placeholder="Ask Mahmama anything..."'],
+['#aiSendBtn', 'Send'],
+['#viewer3DTitle', '3D Holographic Mesh Viewer'],
+['#viewer3DDesc', 'Inspect the simulation and rotate the interactive 3D holographic model:'],
+['#btnModeRotate', '🔄 Rotate Model'],
+['#btnModePulse', '⚡ Signal Pulse'],
+['#btnModeWire', '🌐 Network Mesh'],
 ['#qBtn1', '🎯 What is the main project goal?'],
 ['#qBtn2', '👥 Who is the team?'],
 ['#qBtn3', '💼 What is 6G business impact?'],
-['#qBtn4', '⚡ What is the data speed?']
+['#qBtn4', '⚡ What is the data speed?'],
+['#qBtn5', '🌐 What are 3D viewer features?'],
+['#qBtn6', '📈 How does the site serve BIS?']
 ];
 
-const AR=EN.map(([s])=>{const el=document.querySelector(s);return el?el.innerHTML:null});
+const AR=EN.map(([s])=>{const el=document.querySelector(s);return el?(el.getAttribute('placeholder')?el.getAttribute('placeholder'):el.innerHTML):null});
 const site=document.querySelector('.site'),lb=document.getElementById('lang');
 const teamCards=document.querySelectorAll('.team-card');
 const arNames=[...teamCards].map(c=>c.querySelector('h3').textContent);
 const kpiLabels=document.querySelectorAll('.kpi-label');
 const arKpiLabels=[...kpiLabels].map(l=>l.textContent);
+const galleryCards = document.querySelectorAll('.gallery-card');
+const arGalleryTitles = [...galleryCards].map(c => c.querySelector('h3').textContent);
+const arGalleryDescs = [...galleryCards].map(c => c.querySelector('p').textContent);
+const qBtns = document.querySelectorAll('.ai-quick-btn');
 
 function setLang(l){
   site.dir=l==='en'?'ltr':'rtl';site.lang=l;
-  EN.forEach(([s,h],i)=>{const el=document.querySelector(s);if(el&&AR[i]!==null)el.innerHTML=l==='en'?h:AR[i]});
+  EN.forEach(([s,h],i)=>{
+    const el=document.querySelector(s);
+    if(el&&AR[i]!==null){
+      if(s==='#aiInput'){
+        el.placeholder=l==='en'?'Ask Mahmama anything...':'اسأل محماااا عن أي حاجة...';
+      }else{
+        el.innerHTML=l==='en'?h:AR[i];
+      }
+    }
+  });
   
   teamCards.forEach((c, idx)=>{
     const h3 = c.querySelector('h3');
@@ -1592,8 +1954,21 @@ function setLang(l){
   const amrTag = teamCards[1].querySelector('.team-role-tag');
   if(amrTag) amrTag.textContent = l==='en' ? 'Project Leader' : 'ليدر المشروع';
 
+  galleryCards.forEach((c, idx) => {
+    const h3 = c.querySelector('h3');
+    const p = c.querySelector('p');
+    h3.textContent = l === 'en' ? c.getAttribute('data-en') : arGalleryTitles[idx];
+    p.textContent = l === 'en' ? c.getAttribute('data-en-desc') : arGalleryDescs[idx];
+  });
+
   kpiLabels.forEach((lbl, idx)=>{
     lbl.textContent = l==='en' ? lbl.getAttribute('data-en') : arKpiLabels[idx];
+  });
+
+  qBtns.forEach(btn => {
+    const text = l === 'en' ? btn.getAttribute('data-q-en') : btn.getAttribute('data-q-ar');
+    btn.textContent = text;
+    btn.setAttribute('data-q', text);
   });
 
   if(activeCardElement && document.getElementById('teamModal').style.display === 'flex'){
@@ -1610,12 +1985,25 @@ function setLang(l){
   }
 
   buildScrub(l==='en'?SCRUB_EN:SCRUB_AR);scrub();
-  lb.textContent=l==='en'?'عربي':'English';lb.setAttribute('aria-label',l==='en'?'التبديل إلى العربية':'Switch to English');
+  lb.textContent=l==='en'?'AR':'EN';lb.setAttribute('aria-label',l==='en'?'التبديل إلى العربية':'Switch to English');
+
   setTheme(isLight());
   cEl.setAttribute('aria-label',l==='en'?'0.001 seconds':'0.001 ثانية');
   initChart(l==='en');
   try{localStorage.setItem('lang6g',l)}catch(e){}
 }
+
+qBtns.forEach(btn => {
+  btn.setAttribute('data-q', btn.textContent);
+});
+
+galleryCards.forEach(c => {
+  const h3 = c.querySelector('h3');
+  const p = c.querySelector('p');
+  c.setAttribute('data-en', h3.textContent);
+  c.setAttribute('data-en-desc', p.textContent);
+});
+
 lb.addEventListener('click',()=>setLang(site.lang==='en'?'ar':'en'));
 try{if(localStorage.getItem('lang6g')==='en')setLang('en')}catch(e){}
 })();
