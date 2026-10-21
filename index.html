@@ -1,6 +1,56 @@
 <!doctype html>
-<html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>6G+</title>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="6G+ — تجربة تعليمية تفاعلية لمحاكاة مفاهيم شبكات الجيل السادس، وليست منصة قياس شبكة فعلية."><meta name="theme-color" content="#0b0d13"><title>6G+ | محاكاة تعليمية</title><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style id="reliability-and-layout-fixes">
+:root{--focus-ring:rgba(43,208,255,.9)}
+html{scroll-padding-top:100px;scroll-behavior:smooth}
+body{overflow-x:hidden}
+button,a,input,textarea{ -webkit-tap-highlight-color:transparent }
+button,a{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px}
+button:disabled{cursor:wait;opacity:.72}
+.site{min-width:0}
+.in{width:min(100% - 32px,1080px)}
+.sec{scroll-margin-top:82px}
+/* Keep all interactive content above the decorative canvas. */
+#particleCanvas{pointer-events:none!important;z-index:0!important}
+#scrollProgress{position:fixed;z-index:1000}
+#aiToggleBtn,#aiChatBox{z-index:500}
+#viewer3DModal,#videoModal,#teamModal{z-index:800}
+#aiChatBox{max-width:calc(100vw - 24px);max-height:min(75vh,680px)}
+#aiChatBody{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+#canvas3DModel{display:block;width:100%;max-width:480px;height:auto;touch-action:pan-y}
+.chart-inner{min-width:0}
+#performanceChart{max-width:100%}
+#chartFallbackNotice{display:block}
+.fallback-chart{display:grid;gap:12px;padding:18px 6px}
+.fallback-chart-row{display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,3fr);gap:12px;align-items:center;font-size:13px}
+.fallback-chart-bars{display:grid;gap:5px;min-width:0}
+.fallback-chart-bar{height:10px;border-radius:999px;min-width:2px}
+.fallback-chart-bar.g5{background:#8b93a7}.fallback-chart-bar.g6{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.fallback-chart-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px}
+.modal[aria-hidden="true"]{display:none!important}
+@media(max-width:760px){
+ .in{width:min(100% - 24px,1080px);padding-inline:0}
+ .sec{padding-block:clamp(42px,8vw,76px)}
+ .nav .in{flex-wrap:wrap}
+ .nav ul{max-width:100%;flex-wrap:wrap}
+ .hero h1{font-size:clamp(34px,9vw,58px)}
+ .chart-inner{height:260px;max-height:none}
+ .fallback-chart-row{grid-template-columns:minmax(84px,1fr) minmax(0,2fr)}
+ #viewer3DModal>div,#videoModal>div,#teamModal>div{width:calc(100% - 24px)!important;max-width:100%!important;max-height:calc(100dvh - 24px);overflow:auto}
+}
+@media(max-width:480px){
+ body{font-size:15px}
+ .in{width:calc(100% - 24px)}
+ .hero .in{padding-inline:0}
+ .calc-btn{min-height:80px}
+ .fallback-chart-row{grid-template-columns:1fr;gap:5px}
+ #aiChatBox{right:12px!important;left:12px!important;width:auto!important;bottom:76px!important}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+
+</head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600;700&display=swap">
@@ -14,7 +64,7 @@
   --ink:#1d1d1f;
   --snow:#f5f5f7;
   --grey-d:#a1a1a6;
-  --grey-l:#4a5568;
+  --grey-l:#6e6e73;
   --cyan:#2bd0ff;
   --violet:#8a6bff;
   --blue:#0a64ff;
@@ -33,8 +83,8 @@ body.light-theme{
   --white:#ffffff;
   --snow:#1a202c;
   --ink:#1a202c;
-  --grey-d:#2d3748;
-  --grey-l:#2d3748;
+  --grey-d:#4a5568;
+  --grey-l:#4a5568;
   --line-d:rgba(10,100,255,0.18);
   --line-l:rgba(10,100,255,0.12);
 }
@@ -57,7 +107,10 @@ body{
 }
 
 body.light-theme{
-  background: #f8fafc;
+  background: radial-gradient(circle at 15% 15%, rgba(10, 100, 255, 0.08), transparent 45%),
+              radial-gradient(circle at 85% 85%, rgba(43, 208, 255, 0.1), transparent 45%),
+              linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  background-attachment: fixed;
   color:var(--ink);
 }
 
@@ -69,7 +122,7 @@ a{color:inherit}
 .dark{background:transparent;color:var(--snow)}
 .light{background:transparent;color:var(--ink)}
 
-body.light-theme .dark{background:rgba(255, 255, 255, 0.95);color:var(--ink);border-top:1px solid rgba(10,100,255,0.15);border-bottom:1px solid rgba(10,100,255,0.15)}
+body.light-theme .dark{background:transparent;color:var(--ink);border-top:1px solid rgba(10,100,255,0.12);border-bottom:1px solid rgba(10,100,255,0.12)}
 body:not(.light-theme) .light{background:transparent;color:#ffffff}
 
 .center{text-align:center}
@@ -78,7 +131,7 @@ h1,h2,h3,p{margin:0}
 #scrollProgress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0%;z-index:100;transition:width 0.1s ease}
 
 .live-ticker-bar{
-  background: rgba(11, 13, 19, 0.85);
+  background: rgba(11, 13, 19, 0.7);
   border-bottom: 1px solid rgba(43, 208, 255, 0.22);
   color: var(--cyan);
   font-family: var(--f-mono);
@@ -94,7 +147,7 @@ h1,h2,h3,p{margin:0}
   -webkit-backdrop-filter: blur(16px);
 }
 body.light-theme .live-ticker-bar{
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--blue);
   border-bottom-color: rgba(10, 100, 255, 0.15);
 }
@@ -115,7 +168,7 @@ body.light-theme .live-ticker-bar{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  background:rgba(19,23,34,0.85);
+  background:rgba(19,23,34,0.7);
   backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);
   color:var(--snow);
@@ -128,7 +181,7 @@ body.light-theme .live-ticker-bar{
   transition:all .3s ease;
 }
 body.light-theme .live-sim-badge{
-  background:rgba(255,255,255,0.98);
+  background:rgba(255,255,255,0.95);
   color:var(--ink);
   border-color:rgba(10,100,255,0.3);
   box-shadow:0 10px 25px rgba(10,100,255,0.12);
@@ -190,33 +243,34 @@ body.light-theme .share-link-btn:hover{
   transform:translateY(0);
 }
 
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,13,19,0.85);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);border-bottom:1px solid var(--line-d);transition:background .35s ease, border-color .35s ease}
-body.light-theme .nav{background:rgba(255,255,255,0.95);border-bottom:1px solid rgba(10,100,255,0.15);box-shadow:0 4px 20px rgba(0,0,0,0.04)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,13,19,0.75);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);border-bottom:1px solid var(--line-d);transition:background .35s ease, border-color .35s ease}
+body.light-theme .nav{background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(10,100,255,0.15);box-shadow:0 4px 20px rgba(0,0,0,0.04)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:8px}
 .logo{font-family:var(--f-disp);font-weight:700;font-size:22px;text-decoration:none;letter-spacing:-.02em;direction:ltr;color:var(--snow)}
 body.light-theme .logo{color:var(--ink)}
 
 .nav-links{display:flex;gap:10px;list-style:none;margin:0;padding:0;font-size:11.5px;align-items:center}
-.nav-links a{text-decoration:none;opacity:.9;transition:opacity .2s;color:inherit;font-weight:500}
+.nav-links a{text-decoration:none;opacity:.85;transition:opacity .2s;color:inherit}
 .nav-links a:hover{opacity:1}
 
 .liquid-card, .card, .challenge-card, .kpi-card, .use, .chart-container-box, .tablebox, .calc-box, .business-card, .gallery-card {
   position: relative;
   border-radius: 24px;
   overflow: hidden;
-  background: rgba(22, 28, 42, 0.65);
+  background: rgba(22, 28, 42, 0.32);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(43, 208, 255, 0.25);
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s cubic-bezier(.2,.7,.2,1), border-color 0.4s ease;
   cursor: pointer;
+  /* إصلاح مشاكل الـ Glitch وتداخل الإضاءة عن طريق تحسين عزل الرسم وطبقات الـ GPU */
   transform: translateZ(0);
   will-change: transform, box-shadow;
 }
 
 body.light-theme .liquid-card, body.light-theme .card, body.light-theme .challenge-card, body.light-theme .kpi-card, body.light-theme .use, body.light-theme .chart-container-box, body.light-theme .tablebox, body.light-theme .calc-box, body.light-theme .business-card, body.light-theme .gallery-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(10, 100, 255, 0.22);
@@ -269,7 +323,7 @@ body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-th
   position: relative;
   border-radius: 24px;
   overflow: hidden;
-  background: rgba(22, 28, 42, 0.65);
+  background: rgba(22, 28, 42, 0.32);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(43, 208, 255, 0.25);
@@ -285,7 +339,7 @@ body.light-theme .liquid-card:hover, body.light-theme .card:hover, body.light-th
   transform: translateZ(0);
 }
 body.light-theme .team-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(10, 100, 255, 0.22);
@@ -307,7 +361,7 @@ body.light-theme .team-card:hover {
   align-items:center;
   justify-content:center;
   gap:8px;
-  background: rgba(22, 28, 42, 0.75);
+  background: rgba(22, 28, 42, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   color: var(--snow);
@@ -323,7 +377,7 @@ body.light-theme .team-card:hover {
   white-space: nowrap;
 }
 body.light-theme .liquid-pill{
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   color: var(--ink);
@@ -333,18 +387,18 @@ body.light-theme .liquid-pill{
 
 .liquid-pill:hover{
   transform: translateY(-3px) scale(1.04);
-  background: rgba(35, 45, 68, 0.9);
+  background: rgba(35, 45, 68, 0.75);
   border-color: var(--cyan);
   box-shadow: 0 0 30px rgba(43, 208, 255, 0.6), 0 15px 40px rgba(0, 0, 0, 0.55), inset 0 1px 4px rgba(255, 255, 255, 0.6);
 }
 body.light-theme .liquid-pill:hover{
-  background: rgba(240, 244, 252, 1);
+  background: rgba(240, 244, 252, 0.98);
   border-color: var(--blue);
   box-shadow: 0 0 25px rgba(10, 100, 255, 0.3), 0 10px 25px rgba(10, 100, 255, 0.18), inset 0 1px 3px rgba(255, 255, 255, 1);
 }
 
 .liquid-pill.primary{
-  background: linear-gradient(135deg, rgba(10, 100, 255, 0.9), rgba(43, 208, 255, 0.9));
+  background: linear-gradient(135deg, rgba(10, 100, 255, 0.85), rgba(43, 208, 255, 0.85));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   color: #fff;
@@ -352,22 +406,25 @@ body.light-theme .liquid-pill:hover{
   box-shadow: 0 12px 40px rgba(10, 100, 255, 0.55), inset 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 .liquid-pill.primary:hover{
-  background: linear-gradient(135deg, rgba(24, 114, 255, 1), rgba(69, 216, 255, 1));
+  background: linear-gradient(135deg, rgba(24, 114, 255, 0.98), rgba(69, 216, 255, 0.98));
   box-shadow: 0 0 35px rgba(43, 208, 255, 0.8), 0 18px 45px rgba(10, 100, 255, 0.8), inset 0 1px 4px rgba(255, 255, 255, 0.95);
   transform: translateY(-3px) scale(1.04);
 }
 
 .nav .acts{display:flex;gap:6px;align-items:center;flex-wrap:nowrap}
-.lang,.theme-toggle{font:inherit;font-size:11px;font-weight:600;color:#d2d2d7;background:rgba(19,23,34,0.85);border:1px solid rgba(255,255,255,0.18);border-radius:999px;padding:5px 12px;cursor:pointer;line-height:1.4;box-shadow: 2px 2px 10px rgba(0,0,0,0.25);transition:all .25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap}
-body.light-theme .lang,body.light-theme .theme-toggle{color:#1a202c;background:rgba(255,255,255,0.98);border:1px solid rgba(10,100,255,0.25);box-shadow: 2px 2px 10px rgba(10,100,255,0.06)}
-.lang:hover,.theme-toggle:hover{color:#fff;border-color:var(--cyan);background:rgba(26,32,48,0.95);transform:scale(1.03)}
+.lang,.theme-toggle{font:inherit;font-size:11px;font-weight:600;color:#d2d2d7;background:rgba(19,23,34,0.65);border:1px solid rgba(255,255,255,0.18);border-radius:999px;padding:5px 12px;cursor:pointer;line-height:1.4;box-shadow: 2px 2px 10px rgba(0,0,0,0.25);transition:all .25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap}
+body.light-theme .lang,body.light-theme .theme-toggle{color:#1a202c;background:rgba(255,255,255,0.9);border:1px solid rgba(10,100,255,0.25);box-shadow: 2px 2px 10px rgba(10,100,255,0.06)}
+.lang:hover,.theme-toggle:hover{color:#fff;border-color:var(--cyan);background:rgba(26,32,48,0.85);transform:scale(1.03)}
 body.light-theme .lang:hover,body.light-theme .theme-toggle:hover{color:#0a64ff;background:rgba(240,244,252,1);border-color:var(--blue)}
 
-@media (max-width:1200px){.nav-links{display:none}}
+.mobile-nav-toggle{display:none;align-items:center;justify-content:center;min-width:40px;min-height:40px;border:1px solid var(--line-d);border-radius:12px;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+@media (max-width:1200px){.mobile-nav-toggle{display:inline-flex}.nav .in{position:relative}.nav-links{display:none;position:absolute;top:62px;right:0;left:0;z-index:60;flex-direction:column;align-items:stretch;gap:0;padding:8px;border:1px solid var(--line-d);border-radius:16px;background:var(--black);box-shadow:0 16px 40px rgba(0,0,0,.28);max-height:70vh;overflow:auto}.nav-links.is-open{display:flex}.nav-links li a{display:block;padding:12px 14px;border-radius:10px;font-size:14px}.nav-links li a:hover{background:rgba(43,208,255,.1)}}
+body.light-theme .nav-links{background:#fff;box-shadow:0 16px 40px rgba(10,100,255,.12)}
+@media (max-width:640px){.live-ticker-bar{font-size:10px}.nav .in{gap:8px}.acts{gap:6px}.theme-toggle,.lang{min-height:38px}.chart-inner{height:260px;max-height:none}.calc-btn{min-height:92px;padding:12px 8px}}
 
 .hero{position:relative;overflow:hidden;padding-block:clamp(80px,14vw,160px) clamp(90px,15vw,160px);text-align:center}
 .blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:.55;animation:drift 18s ease-in-out infinite alternate}
-body.light-theme .blob{opacity:.15}
+body.light-theme .blob{opacity:.22}
 .b1{width:50vmax;height:50vmax;left:-10vmax;top:-15vmax;background:radial-gradient(circle,var(--cyan),transparent 65%)}
 .b2{width:45vmax;height:45vmax;right:-10vmax;top:-5vmax;background:radial-gradient(circle,var(--violet),transparent 65%);animation-delay:-6s}
 .b3{width:45vmax;height:35vmax;left:25%;bottom:-22vmax;background:radial-gradient(circle,var(--blue),transparent 65%);animation-delay:-10s;opacity:.45}
@@ -375,8 +432,8 @@ body.light-theme .blob{opacity:.15}
 
 .hero .in{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
 
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--cyan);background:rgba(43,208,255,0.18);border:1px solid rgba(43,208,255,0.35);padding:8px 20px;border-radius:999px;margin-bottom:4px;box-shadow:0 4px 20px rgba(43,208,255,0.18);backdrop-filter:blur(12px)}
-body.light-theme .hero-badge{color:#0a64ff;background:rgba(10,100,255,0.1);border-color:rgba(10,100,255,0.25);box-shadow:0 4px 15px rgba(10,100,255,0.05)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--cyan);background:rgba(43,208,255,0.15);border:1px solid rgba(43,208,255,0.35);padding:8px 20px;border-radius:999px;margin-bottom:4px;box-shadow:0 4px 20px rgba(43,208,255,0.18);backdrop-filter:blur(12px)}
+body.light-theme .hero-badge{color:#0a64ff;background:rgba(10,100,255,0.08);border-color:rgba(10,100,255,0.22);box-shadow:0 4px 15px rgba(10,100,255,0.05)}
 
 .mark {
   font-family: var(--f-disp);
@@ -419,8 +476,8 @@ body.light-theme .lead{color:var(--grey-l)}
 
 .speed-direct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;margin-top:40px;align-items:center;text-align:center}
 .speed-direct-item{display:flex;flex-direction:column;align-items:center;gap:10px}
-.speed-direct-badge{font-family:var(--f-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);background:rgba(43,208,255,0.18);padding:6px 14px;border-radius:999px;margin-bottom:6px;backdrop-filter:blur(10px)}
-body.light-theme .speed-direct-badge{color:#0a64ff;background:rgba(10,100,255,0.1);border:1px solid rgba(10,100,255,0.2)}
+.speed-direct-badge{font-family:var(--f-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);background:rgba(43,208,255,0.15);padding:6px 14px;border-radius:999px;margin-bottom:6px;backdrop-filter:blur(10px)}
+body.light-theme .speed-direct-badge{color:#0a64ff;background:rgba(10,100,255,0.08);border:1px solid rgba(10,100,255,0.18)}
 .count{font-family:var(--f-mono);font-weight:700;font-size:clamp(48px,11vw,110px);line-height:1;direction:ltr;font-variant-numeric:tabular-nums;color:var(--snow)}
 body.light-theme .count{color:var(--ink)}
 .unit{font-family:var(--f-disp);font-weight:600;font-size:clamp(16px,2.2vw,24px);color:var(--grey-d)}
@@ -440,11 +497,11 @@ body.light-theme .tbps small{color:var(--grey-l)}
 .calc-box{padding:clamp(24px,4vw,40px);margin-top:40px;text-align:start;width:100%;box-sizing:border-box}
 .calc-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
 .calc-btn{background:rgba(10,100,255,0.14);border:1px solid rgba(43,208,255,0.35);padding:16px 12px;border-radius:16px;color:inherit;font-family:var(--f-body);cursor:pointer;transition:all .3s ease;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;min-height:110px;backdrop-filter:blur(12px)}
-body.light-theme .calc-btn{background:rgba(255,255,255,0.95);border-color:rgba(10,100,255,0.25);box-shadow:0 4px 15px rgba(10,100,255,0.06)}
+body.light-theme .calc-btn{background:rgba(255,255,255,0.9);border-color:rgba(10,100,255,0.22);box-shadow:0 4px 15px rgba(10,100,255,0.05)}
 .calc-btn:hover, .calc-btn.active{background:linear-gradient(135deg, rgba(10,100,255,0.35), rgba(43,208,255,0.35));border-color:var(--cyan);transform:translateY(-2px)}
 body.light-theme .calc-btn:hover, body.light-theme .calc-btn.active{background:linear-gradient(135deg, rgba(10,100,255,0.12), rgba(43,208,255,0.12));border-color:var(--blue);color:#0a64ff}
-.calc-result-display{background:rgba(11,13,19,0.75);border:1px solid rgba(43,208,255,0.35);padding:20px;border-radius:16px;font-family:var(--f-mono);text-align:center;direction:ltr;margin-top:20px;word-break:break-word;backdrop-filter:blur(14px)}
-body.light-theme .calc-result-display{background:rgba(255,255,255,0.98);border-color:rgba(10,100,255,0.25);color:var(--ink)}
+.calc-result-display{background:rgba(11,13,19,0.55);border:1px solid rgba(43,208,255,0.35);padding:20px;border-radius:16px;font-family:var(--f-mono);text-align:center;direction:ltr;margin-top:20px;word-break:break-word;backdrop-filter:blur(14px)}
+body.light-theme .calc-result-display{background:rgba(255,255,255,0.95);border-color:rgba(10,100,255,0.22);color:var(--ink)}
 @media (max-width:768px){.calc-options{grid-template-columns:minmax(0,1fr)}}
 
 .business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:36px}
@@ -479,7 +536,7 @@ body.light-theme .card p{color:var(--grey-l)}
 .card:hover .art{transform:scale(1.03)}
 .art svg{display:block;width:100%;height:auto;max-height:180px}
 @media (max-width:768px){.bento{grid-template-columns:minmax(0,1fr)}}
-.a-line{stroke:currentColor;stroke-opacity:.25;stroke-width:1.2;fill:none}
+.a-line{stroke:currentColor;stroke-opacity:.2;stroke-width:1.2;fill:none}
 .a-node{fill:currentColor;animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 .a-rh{fill:rgba(10,100,255,.06);stroke:currentColor;stroke-width:1.6;animation:float 3.6s ease-in-out infinite}
@@ -505,8 +562,8 @@ body.light-theme .challenge-card h3{color:var(--ink)}
 .challenge-desc{font-size:14.5px;color:var(--grey-d)}
 body.light-theme .challenge-desc{color:var(--grey-l)}
 .challenge-solution{background:rgba(10,100,255,0.18);backdrop-filter:blur(12px);border-inline-start:3px solid var(--cyan);padding:12px 16px;border-radius:0 12px 12px 0;font-size:14px}
-body.light-theme .challenge-solution{background:rgba(10,100,255,0.08);color:var(--ink);border-inline-start-color:var(--blue)}
-body:not(.light-theme) .challenge-solution{background:rgba(43,208,255,0.18);color:#d2d2d7}
+body.light-theme .challenge-solution{background:rgba(10,100,255,0.06);color:var(--ink);border-inline-start-color:var(--blue)}
+body:not(.light-theme) .challenge-solution{background:rgba(43,208,255,0.15);color:#d2d2d7}
 @media (max-width:768px){.challenges-grid{grid-template-columns:minmax(0,1fr)}}
 
 .chart-container-box{border-radius:24px;padding:clamp(16px,3vw,32px);margin-top:36px;position:relative}
@@ -515,10 +572,10 @@ body:not(.light-theme) .challenge-solution{background:rgba(43,208,255,0.18);colo
 .uses-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:36px}
 .use{padding:26px;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
 .use::before{content:"";position:absolute;inset:-20% -20% 30% -20%;background:radial-gradient(circle at 50% 40%,hsl(var(--h) 100% 60% / .32),transparent 62%);filter:blur(18px);z-index:1}
-body.light-theme .use::before{background:radial-gradient(circle at 50% 40%,hsl(var(--h) 85% 55% / .22),transparent 62%)}
+body.light-theme .use::before{background:radial-gradient(circle at 50% 40%,hsl(var(--h) 85% 55% / .18),transparent 62%)}
 .use>*{position:relative;z-index:2}
 .use .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:hsl(var(--h) 100% 70%);direction:ltr;text-align:right}
-body.light-theme .use .tag{color:hsl(var(--h) 85% 45%)}
+body.light-theme .use .tag{color:hsl(var(--h) 75% 40%)}
 .use h3{font-family:var(--f-disp);font-weight:700;font-size:22px;line-height:1.3}
 body.light-theme .use h3{color:var(--ink)}
 body:not(.light-theme) .use h3{color:#fff}
@@ -531,11 +588,11 @@ body.light-theme .use p{color:var(--grey-l)}
 table{width:100%;border-collapse:collapse;min-width:480px;font-size:clamp(14px,1.6vw,17px)}
 th,td{padding:16px 14px;text-align:start;border-bottom:1px solid var(--line-l)}
 body:not(.light-theme) th,body:not(.light-theme) td{border-bottom:1px solid var(--line-d);color:#fff}
-body.light-theme th,body.light-theme td{color:var(--ink);border-bottom:1px solid rgba(10,100,255,0.12)}
+body.light-theme th,body.light-theme td{color:var(--ink);border-bottom:1px solid rgba(10,100,255,0.1)}
 tr:last-child td{border-bottom:0}
-th{font-weight:600;color:var(--grey-d);font-size:13.5px}
+th{font-weight:500;color:var(--grey-d);font-size:13.5px}
 body.light-theme th{color:var(--grey-l)}
-th.me{font-family:var(--f-mono);font-size:15px;font-weight:600}
+th.me{font-family:var(--f-mono);font-size:15px;font-weight:500}
 td:first-child{font-weight:600}
 td.me{font-weight:600}
 td .lat{direction:ltr;display:inline-block}
@@ -547,9 +604,9 @@ body.light-theme .note{color:var(--grey-l)}
 .team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,0.2);margin-bottom:4px}
 .team-card h3{font-family:var(--f-disp);font-weight:700;font-size:20px;color:var(--snow)}
 body.light-theme .team-card h3{color:var(--ink)}
-.team-role-tag{font-size:12.5px;font-family:var(--f-mono);padding:4px 12px;border-radius:999px;background:rgba(43,208,255,0.18);color:var(--cyan);backdrop-filter:blur(10px)}
-body.light-theme .team-role-tag{background:rgba(10,100,255,0.1);color:#0a64ff;border:1px solid rgba(10,100,255,0.2)}
-.team-hint{font-size:13px;color:var(--grey-d);margin-top:auto;opacity:0.9}
+.team-role-tag{font-size:12.5px;font-family:var(--f-mono);padding:4px 12px;border-radius:999px;background:rgba(43,208,255,0.15);color:var(--cyan);backdrop-filter:blur(10px)}
+body.light-theme .team-role-tag{background:rgba(10,100,255,0.08);color:#0a64ff;border:1px solid rgba(10,100,255,0.18)}
+.team-hint{font-size:13px;color:var(--grey-d);margin-top:auto;opacity:0.8}
 body.light-theme .team-hint{color:var(--grey-l)}
 @media (max-width:900px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:580px){.team-grid{grid-template-columns:minmax(0,1fr)}}
@@ -558,15 +615,15 @@ body.light-theme .team-hint{color:var(--grey-l)}
 .close .blob{opacity:.5}
 .close .in{position:relative;display:flex;flex-direction:column;gap:18px;align-items:center}
 .huge{font-family:var(--f-disp);font-weight:700;font-size:clamp(56px,14vw,170px);line-height:1.1}
-footer{background:rgba(11,13,19,0.85);border-top:1px solid var(--line-d);color:var(--grey-d);font-size:12.5px;padding-block:24px;transition:background .35s ease, color .35s ease;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-body.light-theme footer{background:rgba(244,247,250,0.98);color:var(--grey-l);border-top-color:rgba(10,100,255,0.15)}
+footer{background:rgba(11,13,19,0.75);border-top:1px solid var(--line-d);color:var(--grey-d);font-size:12.5px;padding-block:24px;transition:background .35s ease, color .35s ease;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+body.light-theme footer{background:rgba(244,247,250,0.9);color:var(--grey-l);border-top-color:rgba(10,100,255,0.12)}
 footer .in{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 #aiAssistantWidget{position:fixed;bottom:24px;left:24px;z-index:999;font-family:var(--f-body)}
 #aiToggleBtn{background:linear-gradient(135deg,#0a64ff,#2bd0ff);color:#fff;border:none;padding:14px 22px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 30px rgba(10,100,255,0.5);display:flex;align-items:center;gap:10px;transition:all .3s ease}
 #aiToggleBtn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 35px rgba(43,208,255,0.6)}
-#aiChatBox{display:none;width:340px;max-height:540px;background:rgba(19,23,34,0.95);border:1px solid rgba(255,255,255,0.25);border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,0.75);flex-direction:column;overflow:hidden;margin-bottom:12px;transition:background .35s ease;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-body.light-theme #aiChatBox{background:rgba(255,255,255,0.99);border:1px solid rgba(10,100,255,0.25);box-shadow:0 20px 50px rgba(10,100,255,0.15)}
+#aiChatBox{display:none;width:340px;max-height:540px;background:rgba(19,23,34,0.92);border:1px solid rgba(255,255,255,0.25);border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,0.75);flex-direction:column;overflow:hidden;margin-bottom:12px;transition:background .35s ease;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+body.light-theme #aiChatBox{background:rgba(255,255,255,0.98);border:1px solid rgba(10,100,255,0.25);box-shadow:0 20px 50px rgba(10,100,255,0.15)}
 #aiChatHeader{background:rgba(10,100,255,0.25);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.18)}
 body.light-theme #aiChatHeader{background:rgba(10,100,255,0.08);border-bottom-color:rgba(10,100,255,0.12)}
 #aiChatBody{padding:16px;overflow-y:auto;flex:1;max-height:260px;display:flex;flex-direction:column;gap:12px;font-size:14px}
@@ -593,7 +650,7 @@ body.light-theme #aiInput{background:rgba(10,100,255,0.04);border:1px solid rgba
   position: relative;
   width: 100%;
   max-width: 500px;
-  background: rgba(25, 30, 45, 0.98);
+  background: rgba(25, 30, 45, 0.95);
   color: #fff;
   border: 1px solid rgba(43,208,255,0.35);
   padding: 30px;
@@ -605,7 +662,7 @@ body.light-theme #aiInput{background:rgba(10,100,255,0.04);border:1px solid rgba
   transition: background .35s ease, color .35s ease, border-color .35s ease;
 }
 body.light-theme .modal-content-box {
-  background: rgba(255, 255, 255, 0.99);
+  background: rgba(255, 255, 255, 0.98);
   color: var(--ink);
   border: 1px solid rgba(10,100,255,0.25);
   box-shadow: 0 20px 50px rgba(10,100,255,0.15);
@@ -629,7 +686,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 <div class="live-ticker-bar">
   <div class="live-ticker-content">
-    [Connected] Node_ID: 6G_Core_Cairo &nbsp;&bull;&nbsp; Latency: 0.0008ms &nbsp;&bull;&nbsp; [Data Transfer] 940 Gbps &nbsp;&bull;&nbsp; Status: Secure (Quantum Encrypted) &nbsp;&bull;&nbsp; [AI Mesh Active] &nbsp;&bull;&nbsp; BIS Project Live Simulation
+    <span id="liveTickerText">محاكاة محلية • قيم توضيحية للشبكة • لا يوجد اتصال بشبكة فعلية • تجربة تعليمية لمفاهيم 6G+</span>
   </div>
 </div>
 
@@ -640,10 +697,11 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   <span id="badgeLiveText">محاكاة نظام 6G نشطة</span>
 </div>
 
-<nav class="nav" aria-label="التنقل الرئيسي">
+<nav class="nav" id="mainNav" aria-label="التنقل الرئيسي">
   <div class="in">
     <a class="logo" href="#top" onclick="playSound('click')">6G+</a>
-    <ul class="nav-links">
+    <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="primaryNavLinks">☰</button>
+    <ul class="nav-links" id="primaryNavLinks">
       <li><a href="#vision" onclick="playSound('click')" id="navVision">الرؤية</a></li>
       <li><a href="#speed" onclick="playSound('click')" id="navSpeed">السرعة</a></li>
       <li><a href="#business" onclick="playSound('click')" id="navBusiness">الأعمال (BIS)</a></li>
@@ -686,7 +744,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
       <p class="eyebrow" id="visionEyebrow" style="margin:0;">الرؤية</p>
       <button class="share-link-btn" onclick="copySectionLink('vision')" id="shareBtnVision">🔗 نسخ الرابط</button>
     </div>
-    <p id="scrub">لقد اعتقدنا أن الـ 5G وصل بالسرعة إلى نهايتها. لكن العالم يتحرك بشكل أسرع مما نتخيل. السرعة لم تعد مجرد تصفح. إنها استجابة بجزء من ألف من الثانية، وربط بلا حدود، وذكاء اصطناعي يفكر معك في كل ثانية.</p>
+    <p id="scrub">اعتقدنا أن الجيل الخامس وصل إلى حدود السرعة، لكن تقنيات الاتصال تتطور باستمرار. يستكشف هذا المشروع أهدافًا افتراضية لزمن الاستجابة والاتصال الغامر والذكاء الاصطناعي؛ وهي مفاهيم مستقبلية وليست نتائج مقاسة.</p>
   </div>
 </section>
 
@@ -700,8 +758,9 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <p class="lead" id="speedLeadText" style="margin-top:10px">معايير أداء فائقة صُممت خصيصاً لتلبي احتياجات الأنظمة الذكية والزمن الحقيقي.</p>
     
     <div style="margin-top:24px;">
-      <button class="liquid-pill primary" onclick="runRealSpeedTest()" id="speedTestBtn">🚀 فحص الأداء الحقيقي (Run Benchmark)</button>
+      <button class="liquid-pill primary" onclick="runRealSpeedTest()" id="speedTestBtn">🚀 تشغيل محاكاة الأداء</button>
       <div id="speedTestStatus" style="margin-top:12px; font-family:var(--f-mono); font-size:14px; color:var(--cyan); min-height:24px;"></div>
+      <p id="simulationNotice" style="margin:8px auto 0;max-width:720px;font-size:12px;line-height:1.8;color:var(--grey-l);">تنبيه: هذه محاكاة محلية بقيم توضيحية، وليست قياسًا فعليًا لاتصال الإنترنت أو شبكة 6G.</p>
     </div>
 
     <div class="speed-direct-grid">
@@ -722,31 +781,31 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="calc-box" onmousemove="updateCardNeon(event, this)">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <h3 id="calcBoxTitle" style="font-family:var(--f-disp); font-size:22px;">⚡ حاسبة سرعة البيانات الفورية (Interactive Speed Calculator)</h3>
-        <span class="lat" id="calcNetworkBadge" style="font-size:12px; color:var(--cyan); background:rgba(43,208,255,0.18); padding:4px 12px; border-radius:999px;">سرعة الشبكة: 1.0 Tbps</span>
+        <span class="lat" id="calcNetworkBadge" style="font-size:12px; color:var(--cyan); background:rgba(43,208,255,0.15); padding:4px 12px; border-radius:999px;">سرعة الشبكة: 1.0 Tbps</span>
       </div>
-      <p id="calcBoxDesc" style="color:var(--grey-d); font-size:15px; margin-top:8px;">اختار نوع الملف أو المحتوى، وشوف هينزل في كام جزء من ألف من الثانية بفضل تقنية الـ 6G+:</p>
+      <p id="calcBoxDesc" style="color:var(--grey-d); font-size:15px; margin-top:8px;">اختَر نوع الملف أو المحتوى لمعرفة زمن النقل النظري عند سرعة افتراضية 1 Tbps. هذه ليست سرعة مقاسة فعليًا، وقد يختلف الأداء الحقيقي.</p>
       
       <div class="calc-options">
         <button class="calc-btn active" onclick="calculateDownload('movie', 100, this)" id="calcBtnMovie">
           <span style="font-size:22px;">🎬</span>
           <strong id="calcMovieTitle">فيلم بجودة 8K</strong>
-          <span style="font-size:12px; opacity:0.9;" id="calcMovieSize">الحجم: 100 جيجابايت</span>
+          <span style="font-size:12px; opacity:0.8;" id="calcMovieSize">الحجم: 100 جيجابايت</span>
         </button>
         <button class="calc-btn" onclick="calculateDownload('game', 300, this)" id="calcBtnGame">
           <span style="font-size:22px;">🎮</span>
           <strong id="calcGameTitle">لعبة ضخمة (AAA Game)</strong>
-          <span style="font-size:12px; opacity:0.9;" id="calcGameSize">الحجم: 300 جيجابايت</span>
+          <span style="font-size:12px; opacity:0.8;" id="calcGameSize">الحجم: 300 جيجابايت</span>
         </button>
         <button class="calc-btn" onclick="calculateDownload('hologram', 50, this)" id="calcBtnHolo">
           <span style="font-size:22px;">🌐</span>
           <strong id="calcHoloTitle">محتوى هولوجرامي مجسم</strong>
-          <span style="font-size:12px; opacity:0.9;" id="calcHoloSize">الحجم: 50 جيجابايت</span>
+          <span style="font-size:12px; opacity:0.8;" id="calcHoloSize">الحجم: 50 جيجابايت</span>
         </button>
       </div>
 
       <div class="calc-result-display">
-        <div id="calcResultLabel" style="font-size:13px; color:var(--cyan); margin-bottom:4px;">وقت التحميل المحسوب بالزمن الفعلي:</div>
-        <div id="calcResultTime" style="font-size:clamp(18px,2.8vw,30px); font-weight:700; color:var(--snow);">0.8 ثانية (أو 800 جزء من ألف من الثانية)</div>
+        <div id="calcResultLabel" style="font-size:13px; color:var(--cyan); margin-bottom:4px;">زمن النقل التقديري (حساب نظري):</div>
+        <div id="calcResultTime" style="font-size:clamp(18px,2.8vw,30px); font-weight:700; color:var(--snow);">0.800 ثانية (800 مللي ثانية) — تقدير نظري عند 1 Tbps</div>
       </div>
     </div>
   </div>
@@ -775,13 +834,13 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="business-grid">
       <div class="business-card" onmousemove="updateCardNeon(event, this)">
         <div class="business-icon">📉</div>
-        <h3 id="bizCard1Title">توفير التكاليف التشغيلية (Operational Cost Reduction)</h3>
-        <p class="business-desc" id="bizCard1Desc">مع انعدام وقت توقف الشبكة (Zero Downtime) وسرعات الـ 1 Tbps، تتطور الحوسبة السحابية واتصالات الشركات لتعمل بكفاءة مطلقة. هذا يلغي الحاجة لبنية تحتية محلية مكلفة ويقلل تكاليف صيانة الخوادم بنسبة تصل إلى 65%، مع إدارة المخازن وسلاسل الإمداد (مثل منصات التجارة الإلكترونية وسوق نوون) بلحظية كاملة.</p>
+        <h3 id="bizCard1Title">خفض التكاليف التشغيلية (مفهوم افتراضي)</h3>
+        <p class="business-desc" id="bizCard1Desc">قد يدعم الاتصال المستقبلي الخدمات السحابية واتصالات المؤسسات وتحليل البيانات بسرعة أكبر. هذه أمثلة تعليمية على آثار محتملة؛ الموقع لا يقيس وفورات التكاليف أو أداء الأعمال، ولا يضمن أي نسبة توفير.</p>
       </div>
       <div class="business-card" onmousemove="updateCardNeon(event, this)">
         <div class="business-icon">📊</div>
         <h3 id="bizCard2Title">تحليل البيانات الضخمة لحظياً (Real-Time Big Data Analytics)</h3>
-        <p class="business-desc" id="bizCard2Desc">الشركات اليوم لم تعد تنتظر تقارير نهاية الشهر. باستخدام الـ 6G، تستطيع أنظمة الـ BIS تحليل سلوك العملاء، وحركة المبيعات، وتنبؤات المخزون في نفس الثانية دون أي تأخير (Latency منعدم). هذا يتيح للمؤسسات اتخاذ قرارات إستراتيجية فورية تزيد من رضا العملاء وتعظم الأرباح.</p>
+        <p class="business-desc" id="bizCard2Desc">قد تساعد شبكات مستقبلية أسرع أنظمة نظم معلومات الأعمال على تحليل سلوك العملاء والمبيعات والمخزون في وقت أقرب. هذا سيناريو توضيحي؛ النتائج الفعلية تعتمد على النظام والتطبيق والبنية التحتية ولا يضمنها هذا المشروع.</p>
       </div>
     </div>
   </div>
@@ -826,7 +885,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
         <button class="share-link-btn" onclick="copySectionLink('challenges')" id="shareBtnChal">🔗 نسخ الرابط</button>
       </div>
       <h2 class="big" id="challengesTitleHead" style="margin-top:12px;">عقبات تقنية تتطلب <span class="grad">ذكاءً هندسياً.</span></h2>
-      <p class="lead" id="challengesLeadText">كيف يتعامل مشروعنا مع التحديات الفعلية لشبكات الجيل السادس.</p>
+      <p class="lead" id="challengesLeadText">أمثلة على تحديات محتملة قد تحتاج شبكات الجيل السادس المستقبلية إلى معالجتها.</p>
     </div>
     <div class="challenges-grid">
       <div class="challenge-card" onmousemove="updateCardNeon(event, this)">
@@ -879,10 +938,11 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="chart-container-box" onmousemove="updateCardNeon(event, this)">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
         <h3 id="chartTitle" style="font-family:var(--f-disp); font-size:19px;">مقارنة الأداء التقني (5G vs 6G+)</h3>
-        <span class="lat" style="font-size:11.5px; color:var(--cyan); background:rgba(43,208,255,0.18); padding:4px 10px; border-radius:999px;">BIS Analytics Engine</span>
+        <span id="analyticsEngineLabel" class="lat" style="font-size:11.5px; color:var(--cyan); background:rgba(43,208,255,0.15); padding:4px 10px; border-radius:999px;">محرك مؤشرات نظم معلومات الأعمال</span>
       </div>
+      <p id="chartNotice" style="font-size:12px;line-height:1.8;color:var(--grey-l);margin:0 0 12px">مقارنة توضيحية افتراضية لأغراض العرض؛ القيم ليست نتائج اختبار ميداني أو معيارًا معتمدًا.</p>
       <div class="chart-inner">
-        <canvas id="performanceChart"></canvas>
+        <canvas id="performanceChart" role="img" aria-label="مخطط مقارنة توضيحي بين 5G و6G+"></canvas>
       </div>
     </div>
   </div>
@@ -899,25 +959,25 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     </div>
     <div class="bento">
       <article class="card" onmousemove="updateCardNeon(event, this)">
-        <span class="eyebrow">Embedded AI</span>
+        <span class="eyebrow" id="techCard1Tag">الذكاء الاصطناعي المدمج</span>
         <h3 id="techCard1Title">الذكاء الاصطناعي المدمج</h3>
         <p id="techCard1Desc">الشبكة تفهم سلوك المستخدم، وتتنبأ باحتياجاته قبل حدوثها.</p>
         <div class="art" data-art="ai"></div>
       </article>
       <article class="card" onmousemove="updateCardNeon(event, this)">
-        <span class="eyebrow">Hologram</span>
+        <span class="eyebrow" id="techCard2Tag">الهولوجرام</span>
         <h3 id="techCard2Title">الهولوجرام والتفاعل الغامر</h3>
         <p id="techCard2Desc">طلاب يدرسون طبقات جسدية أو هندسية عبر صور مجسمة تطفو في الهواء.</p>
         <div class="art" data-art="holo"></div>
       </article>
       <article class="card" onmousemove="updateCardNeon(event, this)">
-        <span class="eyebrow">3D simulation</span>
+        <span class="eyebrow" id="techCard3Tag">محاكاة ثلاثية الأبعاد</span>
         <h3 id="techCard3Title">محاكاة ثلاثية الأبعاد</h3>
         <p id="techCard3Desc">نظام محاكاة كامل لشبكة الـ 6G، نرى فيه كيف تنتقل البيانات بين الأجهزة.</p>
         <div class="art" data-art="sim"></div>
       </article>
       <article class="card" onmousemove="updateCardNeon(event, this)">
-        <span class="eyebrow">Printed Circuit Boards</span>
+        <span class="eyebrow" id="techCard4Tag">لوحات الدوائر المطبوعة</span>
         <h3 id="techCard4Title">لوحات دوائر إلكترونية متطورة</h3>
         <p id="techCard4Desc">الأجهزة التي تحمل الفكرة من التصميم إلى لوحة حقيقية.</p>
         <div class="art" data-art="pcb"></div>
@@ -937,22 +997,22 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     </div>
     <div class="uses-grid">
       <article class="use" style="--h:195" onmousemove="updateCardNeon(event, this)">
-        <span class="tag">AUTONOMOUS</span>
+        <span class="tag" id="use1Tag">سيارات ذاتية القيادة</span>
         <h3 id="use1Title" data-en="Self-driving cars">سيارات ذاتية القيادة</h3>
         <p id="use1Desc" data-en="They need an instant response, because any delay means a late decision on the road.">تحتاج استجابة فورية، فأي تأخير يعني قرارًا متأخرًا على الطريق.</p>
       </article>
       <article class="use" style="--h:170" onmousemove="updateCardNeon(event, this)">
-        <span class="tag">TELESURGERY</span>
+        <span class="tag" id="use2Tag">الجراحة عن بُعد</span>
         <h3 id="use2Title" data-en="Remote surgery">جراحة عن بعد</h3>
         <p id="use2Desc" data-en="Surgeons operate from afar, and every movement arrives at the same instant.">جراحون يعالجون عن بعد، ويد الجرّاح تصل في اللحظة نفسها.</p>
       </article>
       <article class="use" style="--h:275" onmousemove="updateCardNeon(event, this)">
-        <span class="tag">METAVERSE</span>
+        <span class="tag" id="use3Tag">عوالم افتراضية</span>
         <h3 id="use3Title" data-en="Virtual worlds">عوالم افتراضية</h3>
         <p id="use3Desc" data-en="They require instant data transfer so the experience stays smooth.">تتطلب نقلًا لحظيًا للبيانات حتى تبقى التجربة سلسة.</p>
       </article>
       <article class="use" style="--h:215" onmousemove="updateCardNeon(event, this)">
-        <span class="tag">SMART CITY</span>
+        <span class="tag" id="use4Tag">مدينة ذكية</span>
         <h3 id="use4Title" data-en="Smart cities">مدن ذكية</h3>
         <p id="use4Desc" data-en="Fast bursts of data connect every device in the city into one system.">ومضات بيانات سريعة تربط كل جهاز في المدينة بمنظومة واحدة.</p>
       </article>
@@ -1005,7 +1065,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
       <button class="share-link-btn" onclick="copySectionLink('team')" id="shareBtnTeam">🔗 نسخ الرابط</button>
     </div>
     <h2 class="big" id="teamTitleHead" style="margin-top:12px">فريق المشروع، <span class="grad">معًا.</span></h2>
-    <p class="lead" id="teamLeadText">طلاب وعقول شابة من قسم نظم معلومات الأعمال بأكاديمية المستقبل، يعملون معًا على شاشات تفاعلية ليحوّلوا فكرة الـ 6G إلى مشروع حقيقي. (اضغط على أي بطاقة لعرض المهام والأدوار)</p>
+    <p class="lead" id="teamLeadText">طلاب نظم معلومات الأعمال بأكاديمية المستقبل يتعاونون على مشروع مفاهيمي تفاعلي يستكشف أفكار الاتصال المستقبلي. اضغط على أي بطاقة لعرض المهام والأدوار.</p>
     
     <div class="team-grid">
       <div class="team-card" data-en="Mohab" 
@@ -1013,7 +1073,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
            data-en-role="Lead AI and Web Developer responsible for the final website design, chatbot development, presentation design, and video production."
            onclick="playSound('click'); showTeamMember(this)">
         <div class="team-avatar">💻</div>
-        <span class="team-role-tag">AI & UI Developer</span>
+        <span class="team-role-tag" id="mohabRoleTag">مطور الذكاء الاصطناعي والواجهات</span>
         <h3>مهاب</h3>
         <p class="team-hint" id="teamHint1">اضغط لعرض المهام والأدوار ←</p>
       </div>
@@ -1033,7 +1093,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
            data-en-role="Assisted in coding and UI development, data management, performance tables, presentation review, and video coordination."
            onclick="playSound('click'); showTeamMember(this)">
         <div class="team-avatar">⚡</div>
-        <span class="team-role-tag">UI & Data</span>
+        <span class="team-role-tag" id="khaledRoleTag">الواجهات والبيانات</span>
         <h3>خالد</h3>
         <p class="team-hint" id="teamHint3">اضغط لعرض المهام والأدوار ←</p>
       </div>
@@ -1043,7 +1103,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
            data-en-role="Responsible for content strategy, preparing the presentation script, system testing, and user experience evaluation."
            onclick="playSound('click'); showTeamMember(this)">
         <div class="team-avatar">🎯</div>
-        <span class="team-role-tag">Strategy & Script</span>
+        <span class="team-role-tag" id="osamaRoleTag">الاستراتيجية والسيناريو</span>
         <h3>أسامة</h3>
         <p class="team-hint" id="teamHint4">اضغط لعرض المهام والأدوار ←</p>
       </div>
@@ -1063,7 +1123,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 <footer>
   <div class="in">
-    <span id="footerText">© 2026 مشروع 6G+ · طلاب نظم معلومات الأعمال - أكاديمية المستقبل[cite: 1]</span>
+    <span id="footerText">© 2026 مشروع 6G+ · طلاب نظم معلومات الأعمال — أكاديمية المستقبل</span>
     <span class="lat" style="direction:ltr">6G+</span>
   </div>
 </footer>
@@ -1073,9 +1133,9 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 <!-- عارض الـ 3D التفاعلي -->
 <div id="viewer3DModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:1000; align-items:center; justify-content:center; padding:20px;">
   <div class="modal-content-box" style="max-width:550px; text-align:center;">
-    <button onclick="close3DViewer()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
+    <button id="viewer3DCloseBtn" onclick="close3DViewer()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
     <div style="font-size:19px; font-family:var(--f-disp); font-weight:700; color:var(--cyan); margin-bottom:6px;" id="viewer3DTitle" data-ar="عارض المحاكاة ثلاثية الأبعاد (3D Holographic Mesh)" data-en="3D Holographic Mesh Viewer">عارض المحاكاة ثلاثية الأبعاد (3D Holographic Mesh)</div>
-    <p style="font-size:13px; opacity:0.9; margin-bottom:14px;" id="viewer3DDesc" data-ar="يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D (انقر واسحب بالماوس للتحريك بـ 360 درجة):" data-en="Inspect simulation & rotate the 3D model (Click & Drag to rotate 360°):">يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D:</p>
+    <p style="font-size:13px; opacity:0.8; margin-bottom:14px;" id="viewer3DDesc" data-ar="يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D (انقر واسحب بالماوس للتحريك بـ 360 درجة):" data-en="Inspect simulation & rotate the 3D model (Click & Drag to rotate 360°):">يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D:</p>
     
     <div style="position:relative; width:100%; height:260px; background:radial-gradient(circle, rgba(43,208,255,0.2) 0%, rgba(10,12,22,0.95) 85%); border-radius:16px; border:1px solid rgba(43,208,255,0.4); display:flex; align-items:center; justify-content:center; overflow:hidden;">
       <canvas id="canvas3DModel" width="480" height="240" style="cursor:grab;"></canvas>
@@ -1093,7 +1153,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   <div id="aiChatBox">
     <div id="aiChatHeader">
       <span id="aiHeaderTitle" style="font-weight:700; font-size:14.5px; display:flex; align-items:center; gap:6px;" data-ar="🤖 محماااا (المساعد الذكي للمشروع)" data-en="🤖 Mahmama (AI Project Assistant)">🤖 محماااا (المساعد الذكي للمشروع)</span>
-      <button onclick="playSound('click'); toggleAIChat()" style="background:none; border:none; color:inherit; font-size:20px; cursor:pointer;" aria-label="إغلاق">&times;</button>
+      <button id="aiCloseBtn" onclick="playSound('click'); toggleAIChat()" style="background:none; border:none; color:inherit; font-size:20px; cursor:pointer;" aria-label="إغلاق">&times;</button>
     </div>
     <div id="aiChatBody">
       <div class="ai-msg bot" id="aiWelcomeMsg" data-ar="يا هلا بيك يا دكتور! أنا 'محماااا' مساعدك الذكي لمشروع 6G+. اسألني عن أي حاجة في المشروع، السرعة، الفريق، أو الأكاديمية وهرد عليك في ثواني!" data-en="Welcome doctor! I am 'Mahmama', your smart assistant for the 6G+ project. Ask me about the project, speed, team, or academy and I will reply in seconds!">يا هلا بيك يا دكتور! أنا "محماااا" مساعدك الذكي لمشروع 6G+. اسألني عن أي حاجة في المشروع، السرعة، الفريق، أو الأكاديمية وهرد عليك في ثواني!</div>
@@ -1117,7 +1177,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 <div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; padding:20px;">
   <div class="modal-content-box" style="max-width:900px; padding:20px;">
-    <button onclick="closeVideo()" style="position:absolute; top:12px; left:12px; background:none; border:none; color:inherit; font-size:28px; cursor:pointer; z-index:10;" aria-label="إغلاق">&times;</button>
+    <button id="videoCloseBtn" onclick="closeVideo()" style="position:absolute; top:12px; left:12px; background:none; border:none; color:inherit; font-size:28px; cursor:pointer; z-index:10;" aria-label="إغلاق">&times;</button>
     <div style="position:relative; width:100%; padding-bottom:56.25%; height:0; margin-top:20px;">
       <iframe src="https://drive.google.com/file/d/1JVxgE7JHYwcsyfO_4OgmONVGC7jUNlkg/preview" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; border-radius:12px;" allow="autoplay" allowfullscreen></iframe>
     </div>
@@ -1126,10 +1186,10 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 
 <div id="teamModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:20px;">
   <div class="modal-content-box">
-    <button onclick="closeTeamModal()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
+    <button id="teamModalCloseBtn" onclick="closeTeamModal()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;" aria-label="إغلاق">&times;</button>
     <div style="font-size:36px; margin-bottom:10px;">👤</div>
     <h3 id="memberName" style="font-family:var(--f-disp); font-size:24px; margin-bottom:12px;"></h3>
-    <p id="memberRole" style="font-size:16px; line-height:1.6; opacity:0.95;"></p>
+    <p id="memberRole" style="font-size:16px; line-height:1.6; opacity:0.85;"></p>
     <button onclick="closeTeamModal()" class="liquid-pill primary" id="modalCloseBtn" style="margin-top:24px; padding:8px 20px; font-size:14px; border:none;" data-ar="إغلاق" data-en="Close">إغلاق</button>
   </div>
 </div>
@@ -1221,6 +1281,7 @@ function start3DRenderer() {
   const canvas = document.getElementById('canvas3DModel');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
   
   if (anim3DFrame) cancelAnimationFrame(anim3DFrame);
 
@@ -1229,10 +1290,8 @@ function start3DRenderer() {
     startMouseX = e.clientX;
     canvas.style.cursor = 'grabbing';
   };
-  window.onmouseup = () => {
-    isDragging3D = false;
-    canvas.style.cursor = 'grab';
-  };
+  const stopDragging3D = () => { isDragging3D = false; canvas.style.cursor = 'grab'; };
+  window.addEventListener('mouseup', stopDragging3D);
   canvas.onmousemove = (e) => {
     if (!isDragging3D) return;
     const deltaX = e.clientX - startMouseX;
@@ -1244,9 +1303,7 @@ function start3DRenderer() {
     isDragging3D = true;
     startMouseX = e.touches[0].clientX;
   };
-  window.ontouchend = () => {
-    isDragging3D = false;
-  };
+  window.addEventListener('touchend', () => { isDragging3D = false; }, { passive: true });
   canvas.ontouchmove = (e) => {
     if (!isDragging3D) return;
     const deltaX = e.touches[0].clientX - startMouseX;
@@ -1256,7 +1313,7 @@ function start3DRenderer() {
 
   function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (!isDragging3D && mode3DState === 'rotate') {
+    if (!reduce && !isDragging3D && mode3DState === 'rotate') {
       angle3D += 0.02;
     }
     const currentAngle = angle3D + userRotationOffset;
@@ -1336,63 +1393,71 @@ function start3DRenderer() {
 }
 
 const canvas = document.getElementById('particleCanvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas ? canvas.getContext('2d') : null;
 let particles = [];
+let particleFrame = null;
+let lastParticlePaint = 0;
 function resizeCanvas() {
-  if (!canvas) return;
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  if (!canvas || !ctx) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  canvas.width = Math.round(window.innerWidth * dpr);
+  canvas.height = Math.round(window.innerHeight * dpr);
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  initParticles();
+  if (reduce) drawParticles();
 }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
 function initParticles() {
+  if (!canvas) return;
   particles = [];
-  const count = Math.floor((window.innerWidth * window.innerHeight) / 14000);
-  for(let i=0; i<Math.max(50, count); i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.9,
-      vy: (Math.random() - 0.5) * 0.9,
-      radius: Math.random() * 2.2 + 1.2
-    });
+  // Cap particle count so rendering cost stays bounded on large displays.
+  const count = Math.min(90, Math.max(24, Math.floor((window.innerWidth * window.innerHeight) / 22000)));
+  for (let i = 0; i < count; i++) {
+    particles.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * 0.45, vy: (Math.random() - 0.5) * 0.45,
+      radius: Math.random() * 1.5 + 0.8 });
   }
 }
-initParticles();
-
-function animateParticles() {
+function drawParticles() {
   if (!ctx || !canvas) return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   const isLight = document.body.classList.contains('light-theme');
-  ctx.fillStyle = isLight ? 'rgba(10, 100, 255, 0.8)' : 'rgba(43, 208, 255, 0.8)';
-  ctx.strokeStyle = isLight ? 'rgba(10, 100, 255, 0.3)' : 'rgba(43, 208, 255, 0.3)';
-
-  particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fill();
-
-    particles.forEach(p2 => {
-      let dx = p.x - p2.x;
-      let dy = p.y - p2.y;
-      let dist = Math.sqrt(dx*dx + dy*dy);
-      if(dist < 140) {
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
+  ctx.fillStyle = isLight ? 'rgba(10,100,255,.72)' : 'rgba(43,208,255,.72)';
+  ctx.strokeStyle = isLight ? 'rgba(10,100,255,.22)' : 'rgba(43,208,255,.22)';
+  for (let i = 0; i < particles.length; i++) {
+    const a = particles[i];
+    ctx.beginPath(); ctx.arc(a.x, a.y, a.radius, 0, Math.PI * 2); ctx.fill();
+    // Only inspect later particles, avoiding duplicate lines and self-links.
+    for (let j = i + 1; j < particles.length; j++) {
+      const b = particles[j], dx = a.x - b.x, dy = a.y - b.y;
+      const distSq = dx * dx + dy * dy;
+      if (distSq < 140 * 140) {
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
-    });
-  });
-  requestAnimationFrame(animateParticles);
+    }
+  }
 }
-animateParticles();
+function animateParticles(now = 0) {
+  if (!ctx || !canvas || reduce || document.hidden) { particleFrame = null; return; }
+  // Limit decorative canvas work to ~30 FPS; it is background decoration, not content.
+  if (now - lastParticlePaint >= 33) {
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+      if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+    }
+    drawParticles(); lastParticlePaint = now;
+  }
+  particleFrame = requestAnimationFrame(animateParticles);
+}
+window.addEventListener('resize', resizeCanvas, { passive: true });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && particleFrame) { cancelAnimationFrame(particleFrame); particleFrame = null; }
+  else if (!document.hidden && !reduce && !particleFrame) particleFrame = requestAnimationFrame(animateParticles);
+});
+resizeCanvas();
+if (!reduce) particleFrame = requestAnimationFrame(animateParticles);
 
 window.updateCardNeon = function(e, card) {
   const rect = card.getBoundingClientRect();
@@ -1405,19 +1470,31 @@ window.updateCardNeon = function(e, card) {
 window.addEventListener('scroll', () => {
   const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  const scrolled = (winScroll / height) * 100;
-  document.getElementById('scrollProgress').style.width = scrolled + '%';
+  const scrolled = height > 0 ? Math.max(0, Math.min(100, (winScroll / height) * 100)) : 0;
+  const progress = document.getElementById('scrollProgress');
+  if (progress) progress.style.width = scrolled + '%';
 });
 
 window.copySectionLink = function(sectionId) {
   playSound('click');
   const url = window.location.origin + window.location.pathname + '#' + sectionId;
   const lang = document.querySelector('.site').lang || 'ar';
-  navigator.clipboard.writeText(url).then(() => {
-    alert(lang === 'en' ? '✨ Section link copied successfully: ' + url : '✨ تم نسخ رابط القسم بنجاح: ' + url);
-  }).catch(err => {
-    console.error('Failed to copy: ', err);
-  });
+  const copied = () => alert(lang === 'en' ? '✨ Section link copied successfully: ' + url : '✨ تم نسخ رابط القسم بنجاح: ' + url);
+  const failed = () => {
+    window.prompt(lang === 'en' ? 'Copy this section link:' : 'انسخ رابط القسم من هنا:', url);
+  };
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+    navigator.clipboard.writeText(url).then(copied).catch(failed);
+  } else {
+    const field = document.createElement('textarea');
+    field.value = url; field.setAttribute('readonly', '');
+    field.style.position = 'fixed'; field.style.opacity = '0';
+    document.body.appendChild(field); field.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (_) {}
+    field.remove();
+    if (ok) copied(); else failed();
+  }
 }
 
 if('IntersectionObserver' in window && !reduce){
@@ -1437,79 +1514,86 @@ if('IntersectionObserver' in window && !reduce){
   document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('visible'));
 }
 
-window.calculateDownload = function(type, sizeGB, btnElement) {
-  playSound('click');
-  document.querySelectorAll('.calc-btn').forEach(b => b.classList.remove('active'));
-  btnElement.classList.add('active');
+let lastDownloadSelection = { type: 'movie', sizeGB: 100 };
+window.calculateDownload = function(type, sizeGB, btnElement, silent = false) {
+  if (!silent) playSound('click');
+  lastDownloadSelection = { type, sizeGB };
+  document.querySelectorAll('.calc-btn').forEach(b => b.classList.toggle('active', b === btnElement));
 
-  const speedTbps = 1.0;
-  const sizeBits = sizeGB * 8 * 1024 * 1024 * 1024;
-  const speedBitsPerSec = speedTbps * 1e12;
+  // Decimal units: 1 GB = 1,000,000,000 bytes; 1 Tbps = 1,000,000,000,000 bits/s.
+  // This is a theoretical local estimate, not a real-world download prediction.
+  const speedBitsPerSec = 1e12;
+  const sizeBits = Number(sizeGB) * 1e9 * 8;
   const timeSeconds = sizeBits / speedBitsPerSec;
   const timeMs = timeSeconds * 1000;
   const resultDisplay = document.getElementById('calcResultTime');
-  const lang = document.querySelector('.site').lang || 'ar';
-  
-  if (lang === 'en') {
-    if (type === 'movie') {
-      resultDisplay.textContent = `${timeSeconds.toFixed(3)} sec (${Math.round(timeMs)} ms) for 8K Movie (100GB)`;
-    } else if (type === 'game') {
-      resultDisplay.textContent = `${timeSeconds.toFixed(3)} sec (${Math.round(timeMs)} ms) for AAA Game (300GB)`;
-    } else {
-      resultDisplay.textContent = `${timeSeconds.toFixed(3)} sec (${Math.round(timeMs)} ms) for Holographic Content (50GB)`;
-    }
-  } else {
-    if (type === 'movie') {
-      resultDisplay.textContent = `${timeSeconds.toFixed(3)} ثانية (${Math.round(timeMs)} جزء من ألف من الثانية) لفيلم 8K (100GB)`;
-    } else if (type === 'game') {
-      resultDisplay.textContent = `${timeSeconds.toFixed(3)} ثانية (${Math.round(timeMs)} جزء من ألف من الثانية) للعبة ضخمة (300GB)`;
-    } else {
-      resultDisplay.textContent = `${timeSeconds.toFixed(3)} ثانية (${Math.round(timeMs)} جزء من ألف من الثانية) لمحتوى هولوجرامي (50GB)`;
-    }
-  }
-}
+  const lang = document.querySelector('.site')?.lang || 'ar';
+  if (!resultDisplay || !Number.isFinite(timeSeconds)) return;
 
+  const labels = lang === 'en'
+    ? { movie: '8K movie (100 GB)', game: 'AAA game (300 GB)', hologram: 'holographic content (50 GB)' }
+    : { movie: 'فيلم 8K (100 جيجابايت)', game: 'لعبة AAA (300 جيجابايت)', hologram: 'محتوى هولوجرامي (50 جيجابايت)' };
+  const item = labels[type] || labels.movie;
+  const secText = timeSeconds.toFixed(3);
+  const msText = timeMs.toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', { maximumFractionDigits: 1 });
+  resultDisplay.textContent = lang === 'en'
+    ? `Estimated ${secText} seconds (${msText} ms) for ${item}. Theoretical at 1 Tbps; actual time may be longer.`
+    : `الزمن النظري ${secText} ثانية (${msText} مللي ثانية) لـ ${item}. الحساب على سرعة افتراضية 1 Tbps؛ وقد يستغرق النقل الفعلي وقتًا أطول.`;
+};
+
+let speedSimulationTimer = null;
 window.runRealSpeedTest = function() {
   playSound('whoosh');
   const btn = document.getElementById('speedTestBtn');
   const status = document.getElementById('speedTestStatus');
   const latEl = document.getElementById('count');
   const tpEl = document.getElementById('throughputCount');
-  const lang = document.querySelector('.site').lang || 'ar';
-  
+  if (!btn || !status || !latEl || !tpEl) return;
+  if (speedSimulationTimer) clearInterval(speedSimulationTimer);
   btn.disabled = true;
   btn.style.opacity = '0.6';
-  status.textContent = lang === 'en' ? '⏳ Scanning Terahertz (THz) spectrum and Future Academy node...' : '⏳ جاري فحص استقرار نطاق التردد الفائق (THz) ومحطة أكاديمية المستقبل...';
-  
   let step = 0;
-  const interval = setInterval(() => {
-    step++;
-    if(step === 1) {
-      status.textContent = lang === 'en' ? '📡 Checking Intelligent Reconfigurable Surfaces (IRS)...' : '📡 فحص الأسطح الذكية القابلة لإعادة التشكيل (IRS)...';
-      latEl.textContent = '0.500';
-      tpEl.textContent = '0.2';
-    } else if(step === 2) {
-      status.textContent = lang === 'en' ? '⚡ Measuring instant sixth-generation network latency...' : '⚡ قياس زمن الاستجابة اللحظي لشبكات الجيل السادس...';
-      latEl.textContent = '0.050';
-      tpEl.textContent = '0.6';
-    } else if(step === 3) {
-      status.textContent = lang === 'en' ? '✨ Success! Target speed 1.0 Tbps and latency 0.001s.' : '✨ تم بنجاح! السرعة المستهدفة 1.0 Tbps وزمن استجابة 0.001 ثانية.';
-      latEl.textContent = '0.001';
-      tpEl.textContent = '1.0';
-      clearInterval(interval);
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      if(typeof confetti === 'function') {
-        confetti({ particleCount: 130, spread: 90, origin: { y: 0.5 } });
-      }
+  const stepsFor = (lang) => lang === 'en' ? [
+    '📡 Simulating a connection setup…',
+    '⚙️ Generating illustrative latency and throughput values…'
+  ] : [
+    '📡 محاكاة بدء الاتصال…',
+    '⚙️ توليد قيم توضيحية لزمن الاستجابة ومعدل النقل…'
+  ];
+  const currentLang = () => document.querySelector('.site')?.lang || 'ar';
+  status.textContent = currentLang() === 'en'
+    ? '🧪 Running local demonstration… no network packets are sent.'
+    : '🧪 تشغيل محاكاة محلية… لا يتم إرسال أو قياس أي بيانات عبر الشبكة.';
+  speedSimulationTimer = setInterval(() => {
+    const lang = currentLang();
+    const steps = stepsFor(lang);
+    if (step < steps.length) {
+      status.textContent = steps[step++];
+      // Randomized values are explicitly illustrative, not measured network performance.
+      latEl.textContent = (0.02 + Math.random() * 0.18).toFixed(3);
+      tpEl.textContent = (0.2 + Math.random() * 0.8).toFixed(2);
+      return;
     }
-  }, 700);
-}
+    clearInterval(speedSimulationTimer);
+    speedSimulationTimer = null;
+    status.textContent = lang === 'en'
+      ? '✓ Local simulation complete. Values are illustrative, not measured network performance.'
+      : '✓ اكتملت المحاكاة المحلية. القيم توضيحية وليست قياسات فعلية لأداء الشبكة.';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }, 650);
+};
 
 window.toggleAIChat = function() {
   playSound('click');
   const box = document.getElementById('aiChatBox');
-  box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+  const toggle = document.getElementById('aiToggleBtn');
+  if (!box) return;
+  const opening = getComputedStyle(box).display === 'none';
+  box.style.display = opening ? 'flex' : 'none';
+  box.setAttribute('aria-hidden', String(!opening));
+  if (toggle) toggle.setAttribute('aria-expanded', String(opening));
+  if (opening) document.getElementById('aiInput')?.focus();
 }
 
 window.sendQuickQuery = function(queryText) {
@@ -1522,6 +1606,7 @@ window.sendAIQuery = function() {
   playSound('click');
   const input = document.getElementById('aiInput');
   const body = document.getElementById('aiChatBody');
+  if (!input || !body) return;
   const query = input.value.trim();
   if(!query) return;
 
@@ -1546,44 +1631,44 @@ window.sendAIQuery = function() {
 
     if (lang === 'en') {
       if (hasWord(['goal', 'purpose', 'objective', 'هدف'])) {
-        reply = "The main goal of the project is to break traditional connectivity limits, delivering 6G ultra-speed with 0.001s latency, integrating AI and holograms for smart business systems.";
+        reply = "This is an educational concept exploring future connectivity, AI, and immersive interfaces. Any speed or latency figures shown by the site are illustrative targets, not measured or verified 6G performance.";
       } else if (hasWord(['team', 'members', 'who', 'فريق'])) {
         reply = "The project team consists of BIS students at Future Academy: Amr (Project Leader), Mohab (AI & Web Developer), Khaled (Data & UI), and Osama (Strategy & Script).";
       } else if (hasWord(['business', 'bis', 'cost', 'بزنس'])) {
-        reply = "6G reduces enterprise operational costs by 65% through cloud computing and zero downtime, enabling real-time big data analytics in the exact same second!";
+        reply = "Future connectivity could support cloud services and real-time analytics, but this demo does not verify cost savings or business outcomes. Any figures shown are hypothetical examples, not guarantees.";
       } else if (hasWord(['speed', 'tbps', 'latency', 'سرعة'])) {
-        reply = "Data throughput reaches 1.0 Tbps with an instant latency of just 0.001 seconds!";
+        reply = "The calculator uses 1.0 Tbps as a hypothetical input and displays illustrative latency targets. These are demo assumptions, not measurements of a real network or a confirmed 6G service.";
       } else if (hasWord(['3d', 'viewer', 'عرض'])) {
-        reply = "The 3D viewer lets you inspect PCB circuits, Terahertz wave propagation, and holographic mesh nodes interactively in a 3D space with rotation and pulse modes!";
+        reply = "The local 3D canvas demonstrates PCB, terahertz-wave, and holographic-mesh concepts. You can rotate the visual and switch its display modes; it is not a physical network model.";
       } else if (hasWord(['site', 'website', 'features', 'موقع'])) {
-        reply = "This website features a bilingual interface (AR/EN), light/dark themes, interactive calculators, 3D holographic viewers, and live AI assistant support!";
+        reply = "This site includes Arabic and English interfaces, light/dark themes, a theoretical transfer-time calculator, local visual simulations, and a scripted assistant. It does not measure a live network or use a live AI service.";
       } else {
         reply = `Hello! As 'Mahmama' AI assistant, your query about "${query}" is at the heart of 6G+. Let me know if you need any other technical details!`;
       }
     } else {
       if (hasWord(['هدف', 'المشروع', 'أهم هدف', 'goal'])) {
-        reply = "أهم هدف في المشروع هو كسر قيود الاتصال التقليدية وتقديم شبكة 6G فائقة السرعة بزمن استجابة (0.001 ثانية) ودمج الذكاء الاصطناعي والهولوجرام لخدمة قطاع الأعمال والأنظمة الذكية.";
+        reply = "المشروع تجربة تعليمية تستكشف مفاهيم الاتصال المستقبلي والذكاء الاصطناعي والتفاعل الغامر. أرقام السرعة وزمن الاستجابة المعروضة افتراضية للتوضيح، وليست قياسات فعلية أو أداءً مؤكدًا لشبكة 6G.";
       }
       else if (hasWord(['فريق', 'العمل', 'مين الفريق', 'team'])) {
         reply = "فريق المشروع عمالقة من نظم معلومات الأعمال بأكاديمية المستقبل: عمرو (ليدر المشروع)، مهاب (مطور الـ AI والواجهات)، خالد (البيانات والجداول)، وأسامة (الاستراتيجية والسيناريو).";
       }
       else if (hasWord(['بزنس', 'الـ 6g بالبزنس', 'أعمال', 'bis', 'business'])) {
-        reply = "شبكة 6G بتوفر تكاليف تشغيل الشركات بنسبة 65% من خلال الحوسبة السحابية وانعدام وقت التوقف، وبتتيح تحليل البيانات الضخمة (Big Data Analytics) للعملاء لحظياً في نفس الثانية!";
+        reply = "الاتصال المستقبلي قد يدعم الخدمات السحابية وتحليل البيانات لحظيًا، لكن الموقع لا يقيس وفورات التكاليف أو نتائج الأعمال. أي أرقام تظهر هنا افتراضية وليست نتائج مؤكدة أو مضمونة.";
       }
       else if (hasWord(['مهاب', 'مطور', 'برمج'])) {
-        reply = "مهاب هو العبقري اللي برمج الشات بوت (أنا تطبيقي!) وصمم واجهات الموقع بالكامل، وكمان عمل الباوربوينت ومونتاج الفيديو!";
+        reply = "مهاب هو العبقري اللي برمج الشات بوت (أنا تطبيعي!) وصمم واجهات الموقع بالكامل، وكمان عمل الباوربوينت ومونتاج الفيديو!";
       } 
       else if (hasWord(['عمرو', 'ليدر', 'قائد'])) {
         reply = "عمرو هو ليدر المشروع الكفء، ومسؤول عن محاكاة النظام، قياسات الأداء التقني، وظبط الشغل كله مع الفريق.";
       }
       else if (hasWord(['سرعة', 'سرعه', 'tbps', 'ثانية', 'استجابة', 'كام', 'speed'])) {
-        reply = "يا ريس سرعة نقل البيانات بتوصل لـ 1 Tbps، وزمن الاستجابة (Latency) خارق وبيوصل لـ 0.001 ثانية بس! يعني مفيش أي تقطيع نهائياً.";
+        reply = "الحاسبة بتستخدم سرعة افتراضية قدرها 1 تيرابت/ثانية لعرض مثال نظري، وقيم زمن الاستجابة توضيحية فقط. الموقع لا يقيس اتصال الإنترنت ولا يضمن أداء شبكة 6G فعلية.";
       }
       else if (hasWord(['3d', 'عارض', 'دوار', 'محاكاة'])) {
-        reply = "عارض الـ 3D التفاعلي بيتيح ليك تفقد دوائر الـ PCB، موجات التيرابت، وبنية الهولوجرام مع إمكانية التدوير، تكبير المجسم، والتحكم في نبضات الإشارة!";
+        reply = "عارض 3D بيعرض رسومات توضيحية لمفاهيم لوحات الدوائر وموجات التيراهيرتز والشبكات الهولوجرامية، مع تدوير المجسم وتغيير نمط العرض. هو رسم محلي وليس نموذجًا لشبكة فعلية.";
       }
       else if (hasWord(['مميزات', 'موقع', 'إمكانيات', 'الموقع'])) {
-        reply = "الموقع بيدعم اللغتين العربية والإنجليزية، الوضع الفاتح والداكن، حاسبة سرعة فورية، وكمان مساعد ذكي (أنا!) عشان يرد على كل أسئلة لجنة المناقشة بذكاء واحترافية!";
+        reply = "الموقع بيدعم العربية والإنجليزية والوضعين الفاتح والداكن، وبيحتوي على حاسبة نظرية ومحاكاة محلية ومساعد بردود مبرمجة مسبقًا. المساعد ليس خدمة ذكاء اصطناعي مباشرة ولا يقيس شبكة فعلية.";
       }
       else {
         reply = `يا هلا! بصفتي المساعد الذكي "محماااا", أحب أقولك إن سؤالك عن "${query}" في قلب مشروع 6G+. لو عندك أي استفسار تاني عن السرعة أو الفريق اسألني فوراً!`;
@@ -1639,7 +1724,7 @@ for(let i=0;i<26;i++){
 
 const sp=document.getElementById('scrub');
 const SCRUB_AR=sp.textContent.trim();
-const SCRUB_EN='We thought 5G had reached the limit of speed. But the world is moving faster than we imagine. Speed is no longer just browsing. It is a response within a thousandth of a second, limitless connection, and an AI that thinks with you every second.';
+const SCRUB_EN='We thought 5G had reached the limit of speed, but connectivity continues to evolve. This project explores illustrative future targets for latency, immersive connectivity, and AI; these are concepts, not measured results.';
 let ws=[];
 function buildScrub(txt){sp.innerHTML=txt.split(/\s+/).map(w=>`<span>${w}</span>`).join(' ');ws=[...sp.children]}
 buildScrub(SCRUB_AR);
@@ -1666,15 +1751,60 @@ if('IntersectionObserver' in window&&!reduce){
 }
 
 let perfChart = null;
+function showChartFallback(isEn, chartCanvas) {
+  if (!chartCanvas) return;
+  chartCanvas.style.display = 'none';
+  let fallback = document.getElementById('chartFallbackNotice');
+  if (!fallback) {
+    fallback = document.createElement('p');
+    fallback.id = 'chartFallbackNotice';
+    fallback.className = 'note';
+    fallback.style.cssText = 'padding:16px;border:1px solid var(--line-d);border-radius:12px;text-align:center;line-height:1.8';
+    chartCanvas.parentElement.appendChild(fallback);
+  }
+  fallback.innerHTML = '';
+  const note = document.createElement('p');
+  note.textContent = isEn
+    ? 'Chart library unavailable — showing a local illustrative comparison instead.'
+    : 'مكتبة الرسم غير متاحة — يتم عرض مقارنة توضيحية محلية بدلًا منها.';
+  fallback.appendChild(note);
+  const chart = document.createElement('div');
+  chart.className = 'fallback-chart';
+  const rows = isEn
+    ? [['Peak speed (index)',20,100],['Latency target (index)',10,100],['Energy efficiency (index)',100,140],['Device density (index)',10,100]]
+    : [['مؤشر السرعة القصوى',20,100],['مؤشر زمن الاستجابة',10,100],['مؤشر كفاءة الطاقة',100,140],['مؤشر كثافة الأجهزة',10,100]];
+  rows.forEach(([label, a, b]) => {
+    const row = document.createElement('div'); row.className = 'fallback-chart-row';
+    const title = document.createElement('span'); title.textContent = label; row.appendChild(title);
+    const bars = document.createElement('div'); bars.className = 'fallback-chart-bars';
+    [[a,'g5'],[b,'g6']].forEach(([value, cls]) => {
+      const bar = document.createElement('div'); bar.className = 'fallback-chart-bar ' + cls;
+      bar.style.width = (Number(value) / 140 * 100) + '%'; bar.title = String(value); bars.appendChild(bar);
+    });
+    row.appendChild(bars); chart.appendChild(row);
+  });
+  const legend = document.createElement('div'); legend.className = 'fallback-chart-legend';
+  legend.textContent = isEn ? 'Grey: 5G · Cyan: 6G+ (illustrative indices, not measured results)' : 'الرمادي: 5G · التركواز: 6G+ (مؤشرات توضيحية وليست نتائج قياس)';
+  chart.appendChild(legend); fallback.appendChild(chart);
+}
 function initChart(isEn) {
-  const ctx = document.getElementById('performanceChart').getContext('2d');
+  const chartCanvas = document.getElementById('performanceChart');
+  if (!chartCanvas) return;
+  if (typeof Chart === 'undefined') { showChartFallback(isEn, chartCanvas); return; }
+  const ctx = chartCanvas.getContext('2d');
+  if (!ctx) { showChartFallback(isEn, chartCanvas); return; }
+  const fallback = document.getElementById('chartFallbackNotice');
+  if (fallback) fallback.remove();
+  chartCanvas.style.display = '';
   if (perfChart) {
     perfChart.destroy();
+    perfChart = null;
   }
   
-  const labels = isEn ? ['Speed (Gbps)', 'Latency (ms)', 'Energy Efficiency', 'Device Density'] : ['السرعة (Gbps)', 'زمن الاستجابة (ms)', 'كفاءة الطاقة (%)', 'كثافة الأجهزة (ملايين)'];
-  const data5G = [20, 1.0, 100, 1];
-  const data6G = [1000, 0.1, 350, 10];
+  const labels = isEn ? ['Peak speed (illustrative)', 'Latency target (illustrative)', 'Energy efficiency index', 'Device density index'] : ['السرعة القصوى (توضيحي)', 'هدف زمن الاستجابة (توضيحي)', 'مؤشر كفاءة الطاقة', 'مؤشر كثافة الأجهزة'];
+  // Normalized illustrative indices; latency is inverted so higher is better. These are not measured values.
+  const data5G = [20, 10, 100, 10];
+  const data6G = [100, 100, 140, 100];
 
   perfChart = new Chart(ctx, {
     type: 'bar',
@@ -1713,14 +1843,14 @@ function initChart(isEn) {
       scales: {
         x: {
           ticks: {
-            color: document.body.classList.contains('light-theme') ? '#2d3748' : '#a1a1a6',
+            color: document.body.classList.contains('light-theme') ? '#4a5568' : '#a1a1a6',
             font: { family: 'IBM Plex Sans Arabic', size: 11 }
           },
           grid: { display: false }
         },
         y: {
           ticks: {
-            color: document.body.classList.contains('light-theme') ? '#2d3748' : '#a1a1a6',
+            color: document.body.classList.contains('light-theme') ? '#4a5568' : '#a1a1a6',
             font: { family: 'IBM Plex Sans Arabic', size: 11 }
           },
           grid: { color: document.body.classList.contains('light-theme') ? 'rgba(10,100,255,0.06)' : 'rgba(255,255,255,0.08)' }
@@ -1729,7 +1859,6 @@ function initChart(isEn) {
     }
   });
 }
-window.addEventListener('DOMContentLoaded', () => initChart(false));
 
 function triggerConfetti(){
   if(typeof confetti==='function'){
@@ -1801,6 +1930,23 @@ window.closeTeamModal = function() {
   activeCardElement = null;
 }
 
+const mobileNavToggle = document.getElementById('mobileNavToggle');
+const primaryNavLinks = document.getElementById('primaryNavLinks');
+if (mobileNavToggle && primaryNavLinks) {
+  mobileNavToggle.addEventListener('click', () => {
+    const open = primaryNavLinks.classList.toggle('is-open');
+    mobileNavToggle.setAttribute('aria-expanded', String(open));
+    mobileNavToggle.setAttribute('aria-label', open ? (site.lang === 'en' ? 'Close navigation menu' : 'إغلاق قائمة التنقل') : (site.lang === 'en' ? 'Open navigation menu' : 'فتح قائمة التنقل'));
+    mobileNavToggle.textContent = open ? '×' : '☰';
+  });
+  primaryNavLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    primaryNavLinks.classList.remove('is-open');
+    mobileNavToggle.setAttribute('aria-expanded', 'false');
+    mobileNavToggle.setAttribute('aria-label', site.lang === 'en' ? 'Open navigation menu' : 'فتح قائمة التنقل');
+    mobileNavToggle.textContent = '☰';
+  }));
+}
+
 const themeBtn=document.getElementById('themeToggle');
 const isLight=()=>document.body.classList.contains('light-theme');
 function setTheme(light){
@@ -1821,10 +1967,31 @@ try{if(localStorage.getItem('theme6g')==='light')setTheme(true)}catch(e){}
 
 const G='<span class="grad">';
 const EN=[
+['#badgeLiveText','6G+ system simulation active'],
+['#simulationNotice','Notice: this is a local simulation with illustrative values, not a real measurement of internet speed or a 6G network.'],
+['#latBadgeText','Illustrative latency target'],
+['#tpBadgeText','Illustrative peak throughput'],
+['#unitLatency','seconds (illustrative latency target)'],
+['#unitThroughput','Tbps (illustrative network throughput)'],
+['#calcBoxTitle','⚡ Interactive Data Speed Calculator'],
+['#calcNetworkBadge','Illustrative network speed: 1.0 Tbps'],
+['#calcBoxDesc','Choose a file or content type to estimate transfer time at the illustrative rate of 1 Tbps. Actual speeds vary and are not measured by this demo.'],
+['#calcMovieTitle','8K movie'],['#calcMovieSize','Size: 100 GB'],
+['#calcGameTitle','Large AAA game'],['#calcGameSize','Size: 300 GB'],
+['#calcHoloTitle','Holographic content'],['#calcHoloSize','Size: 50 GB'],
+['#calcResultLabel','Estimated transfer time (illustrative):'],
+['#tbpsSmallText','Next-generation connectivity concept'],
+['#tbpsMidText','Illustrative speeds for immersive and interactive experiences.'],
+['#speedEyebrow','Illustrative speed & data calculator'],
+['#speedTitleHead',`Speed is no longer ${G}just browsing.</span>`],
+['#speedLeadText','Explore illustrative performance targets for future intelligent, real-time systems.'],
+['#speedTestBtn','🚀 Run local performance simulation'],
 ['#navVision','Vision'],['#navSpeed','Speed'],['#navBusiness','Business'],['#navGallery','3D Gallery'],['#navChallenges','Challenges'],['#navAnalytics','Analytics'],['#navTech','Tech'],
 ['#navUses','Uses'],['#navCompare','Compare'],['#navTeam','Team'],
 ['#navDocBtn','🎬 Video'],
 ['#badgeLiveText','6G Network Simulation Active'],
+['#simulationNotice','Notice: this is a local simulation with illustrative values, not a real measurement of an internet connection or 6G network.'],
+['#chartNotice','Illustrative hypothetical comparison for demonstration; values are not field-test results or an approved standard.'],
 ['#heroBadgeText','🎓 Business Information Systems Students Project - Future Academy'],
 ['#heroSubText','Beyond speed and shaping the future.'],
 ['#heroLeadText','A pioneering project that breaks traditional connectivity rules. Ultra-low latency in a thousandth of a second, and an embedded AI framework thinking with you every second.'],
@@ -1902,7 +2069,7 @@ const EN=[
 ['#teamHint1','Click to view tasks & roles →'],['#teamHint2','Click to view tasks & roles →'],['#teamHint3','Click to view tasks & roles →'],['#teamHint4','Click to view tasks & roles →'],
 ['#closeMidText','Innovation does not wait for the impossible...'],['#closeHugeText','It makes it.'],
 ['#closeLeadText','The 6G+ project. Today our minds build tomorrow\'s future.'],['#backToTopBtn','🚀 Back to top'],
-['#footerText','© 2026 6G+ project · Business Information Systems Students - Future Academy[cite: 1]'],
+['#footerText','© 2026 6G+ project · Business Information Systems Students — Future Academy'],
 ['#modalCloseBtn', 'Close'],
 ['#aiHeaderTitle', '🤖 Mahmama (AI Project Assistant)'],
 ['#aiWelcomeMsg', 'Welcome doctor! I am "Mahmama", your smart assistant for the 6G+ project. Ask me about the project, speed, team, or academy and I will reply in seconds!'],
@@ -1923,6 +2090,29 @@ const EN=[
 ];
 
 const AR=EN.map(([s])=>{const el=document.querySelector(s);return el?(el.getAttribute('placeholder')?el.getAttribute('placeholder'):el.innerHTML):null});
+// Some labels were originally hard-coded in English; provide their real Arabic originals explicitly.
+const AR_FIX = new Map([
+  ['#badgeLiveText','محاكاة نظام 6G نشطة'],
+  ['#simulationNotice','تنبيه: هذه محاكاة محلية بقيم توضيحية، وليست قياسًا فعليًا لسرعة الإنترنت أو لشبكة 6G.'],
+  ['#latBadgeText','هدف توضيحي لزمن الاستجابة'],
+  ['#tpBadgeText','معدل نقل أقصى توضيحي'],
+  ['#unitLatency','ثانية (هدف توضيحي لزمن الاستجابة)'],
+  ['#unitThroughput','تيرابت في الثانية (معدل نقل توضيحي للشبكة)'],
+  ['#calcBoxTitle','⚡ حاسبة سرعة نقل البيانات التفاعلية'],
+  ['#calcNetworkBadge','سرعة الشبكة الافتراضية: 1.0 تيرابت/ثانية'],
+  ['#calcBoxDesc','اختَر نوع الملف أو المحتوى لمعرفة زمن النقل النظري عند سرعة افتراضية 1 تيرابت/ثانية. هذه ليست سرعة مقاسة فعليًا، وقد يختلف الأداء الحقيقي.'],
+  ['#calcMovieTitle','فيلم بجودة 8K'],['#calcMovieSize','الحجم: 100 جيجابايت'],
+  ['#calcGameTitle','لعبة ضخمة (AAA)'],['#calcGameSize','الحجم: 300 جيجابايت'],
+  ['#calcHoloTitle','محتوى هولوجرامي'],['#calcHoloSize','الحجم: 50 جيجابايت'],
+  ['#calcResultLabel','زمن النقل التقديري (حساب نظري):'],
+  ['#tbpsSmallText','مفهوم الاتصال من الجيل التالي'],
+  ['#tbpsMidText','سرعات افتراضية لتجارب غامرة وتفاعلية.'],
+  ['#speedEyebrow','السرعة التوضيحية وحاسبة البيانات'],
+  ['#speedTitleHead','السرعة لم تعد <span class="grad">مجرد تصفح.</span>'],
+  ['#speedLeadText','استكشف أهداف أداء توضيحية لأنظمة المستقبل الذكية والآنية.'],
+  ['#speedTestBtn','🚀 تشغيل محاكاة الأداء محليًا']
+]);
+EN.forEach(([selector], index) => { if (AR_FIX.has(selector)) AR[index] = AR_FIX.get(selector); });
 const site=document.querySelector('.site'),lb=document.getElementById('lang');
 const teamCards=document.querySelectorAll('.team-card');
 const arNames=[...teamCards].map(c=>c.querySelector('h3').textContent);
@@ -1933,8 +2123,79 @@ const arGalleryTitles = [...galleryCards].map(c => c.querySelector('h3').textCon
 const arGalleryDescs = [...galleryCards].map(c => c.querySelector('p').textContent);
 const qBtns = document.querySelectorAll('.ai-quick-btn');
 
+// Accessible modal dismissal: Escape closes the top-most open modal or assistant.
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  const lang = site.lang || 'ar';
+  const viewer = document.getElementById('viewer3DModal');
+  const video = document.getElementById('videoModal');
+  const team = document.getElementById('teamModal');
+  const chat = document.getElementById('aiChatBox');
+  if (viewer && viewer.style.display === 'flex') close3DViewer();
+  else if (video && video.style.display === 'flex') closeVideo();
+  else if (team && team.style.display === 'flex') closeTeamModal();
+  else if (chat && chat.style.display === 'flex') toggleAIChat();
+});
+[['viewer3DModal', close3DViewer], ['videoModal', closeVideo], ['teamModal', closeTeamModal]].forEach(([id, close]) => {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+  modal.addEventListener('click', event => { if (event.target === modal) close(); });
+});
+
+
+const EXTRA_EN = {
+  liveTickerText:'LOCAL SIMULATION • Illustrative network values • No live network connection • Educational 6G+ demo', analyticsEngineLabel:'BIS Analytics Engine', mohabRoleTag:'AI & UI Developer', khaledRoleTag:'UI & Data', osamaRoleTag:'Strategy & Script', use1Tag:'AUTONOMOUS', use2Tag:'TELESURGERY', use3Tag:'METAVERSE', use4Tag:'SMART CITY', techCard1Tag:'Embedded AI', techCard2Tag:'Hologram', techCard3Tag:'3D simulation', techCard4Tag:'Printed Circuit Boards',
+  badgeLiveText:'6G+ local simulation active', navVision:'Vision', navSpeed:'Speed', navBusiness:'Business (BIS)', navGallery:'3D Gallery', navChallenges:'Challenges', navAnalytics:'Analytics', navTech:'Technology', navUses:'Use cases', navCompare:'Comparison', navTeam:'Team', navDocBtn:'🎬 Video',
+  heroBadgeText:'🎓 Business Information Systems Students Project — Future Academy', heroSubText:'Beyond speed, shaping the future.', heroLeadText:'A concept project exploring future connectivity, low latency, AI, and immersive interaction. All performance values shown here are illustrative, not real network measurements.', heroCta1:'✨ Explore the project', heroCta2:'⚡ Interactive speed calculator', heroDocBtn:'🎬 Watch project video',
+  visionEyebrow:'Vision', shareBtnVision:'🔗 Copy link', speedEyebrow:'Illustrative speed & data calculator', shareBtnSpeed:'🔗 Copy link', speedTitleHead:'Speed is no longer <span class="grad">just browsing.</span>', speedLeadText:'Explore illustrative performance targets for future intelligent, real-time systems.', speedTestBtn:'🚀 Run local performance simulation', simulationNotice:'Notice: this is a local simulation with illustrative values, not a real measurement of internet speed or a 6G network.', unitLatency:'Seconds (illustrative latency target)', unitThroughput:'Tbps (illustrative network throughput)',
+  calcBoxTitle:'⚡ Interactive data speed calculator', calcNetworkBadge:'Illustrative network speed: 1.0 Tbps', calcBoxDesc:'Choose a file or content type to estimate transfer time at the illustrative rate of 1 Tbps. Actual speeds vary; this demo does not measure a real connection.', calcMovieTitle:'8K movie', calcMovieSize:'Size: 100 GB', calcGameTitle:'Large AAA game', calcGameSize:'Size: 300 GB', calcHoloTitle:'Holographic content', calcHoloSize:'Size: 50 GB', calcResultLabel:'Estimated transfer time (theoretical):', tbpsSmallText:'Next-generation connectivity concept', tbpsMidText:'Illustrative speeds for immersive and interactive experiences.',
+  businessEyebrow:'Business impact (BIS)', shareBtnBiz:'🔗 Copy link', businessTitleHead:'How 6G could reshape <span class="grad">the business world.</span>', businessLeadText:'This student project explores possible implications for Business Information Systems (BIS). The figures are illustrative, not verified business outcomes.', bizCard1Title:'Operational cost reduction (concept)', bizCard1Desc:'Future connectivity could support cloud services and enterprise communication. The claimed savings shown in speculative examples are not measured or guaranteed.', bizCard2Title:'Real-time big data analytics',
+  galleryEyebrow:'3D simulation gallery', shareBtnGallery:'🔗 Copy link', galleryTitleHead:'Practical, interactive <span class="grad">design.</span>', galleryLeadText:'Select an item below to open the interactive 3D viewer and explore circuit boards, terahertz waves, and holographic mesh concepts.', challengesEyebrow:'Challenges & proposed solutions', shareBtnChal:'🔗 Copy link', challengesTitleHead:'Technical challenges require <span class="grad">engineering.</span>', challengesLeadText:'Examples of challenges that future sixth-generation networks may need to address.',
+  analyticsEyebrow:'BIS KPIs & charts', shareBtnAnalytics:'🔗 Copy link', analyticsTitleHead:'Illustrative system indicators and charts.', analyticsLeadText:'A hypothetical comparison of future network concepts with the previous generation.', chartTitle:'Illustrative performance comparison (5G vs 6G+)', chartNotice:'Hypothetical comparison for demonstration only; values are not field-test results or an approved standard.', techEyebrow:'Technology', shareBtnTech:'🔗 Copy link', techTitleHead:'Concepts for a future network.', techCard1Title:'Embedded AI', techCard1Desc:'AI could help a network interpret patterns and anticipate demand.', techCard2Title:'Holographic and immersive interaction', techCard2Desc:'3D imagery could support immersive learning and visualization.', techCard3Title:'3D simulation', techCard3Desc:'A local simulation illustrates how data may move between devices.', techCard4Title:'Advanced printed circuit boards', techCard4Desc:'Hardware concepts that connect design ideas with physical circuit boards.',
+  usesEyebrow:'Use cases', shareBtnUses:'🔗 Copy link', usesTitleHead:'Applications that need a response <span class="grad">now.</span>', compareEyebrow:'Comparison', shareBtnCompare:'🔗 Copy link', compareTitleHead:'From 5G to <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.', thFeature:'Feature', tdRow1:'Peak speed target', tdRow2:'Latency', tdRow3:'Artificial intelligence', tdRow4:'Interaction method', compareNote:'These are illustrative research targets, not measurements from this project.', docsEyebrow:'Presentation', shareBtnDocs:'🔗 Copy link', docsTitleHead:'Project presentation <span class="grad">video.</span>', docsLeadText:'Watch the project presentation video through Google Drive.', docsWatchBtn:'🎬 Watch project video', teamEyebrow:'Team', shareBtnTeam:'🔗 Copy link', teamTitleHead:'The project team, <span class="grad">together.</span>', teamLeadText:'Business Information Systems students at Future Academy collaborating on an interactive concept project. Select a card to view roles and tasks.', teamHint1:'Click to view tasks & roles →', teamHint2:'Click to view tasks & roles →', teamHint3:'Click to view tasks & roles →', teamHint4:'Click to view tasks & roles →', amrRoleTag:'Project Leader', closeMidText:'Innovation does not wait for the impossible...', closeHugeText:'It creates it.', closeLeadText:'The 6G+ project: building tomorrow’s ideas today.', backToTopBtn:'🚀 Back to top', footerText:'© 2026 6G+ project · Business Information Systems Students — Future Academy',
+  viewer3DTitle:'3D Holographic Mesh Viewer', viewer3DDesc:'Inspect the simulation and rotate the interactive 3D model (click and drag to rotate 360°).', btnModeRotate:'🔄 Rotate model', btnModePulse:'⚡ Signal pulse', btnModeWire:'🌐 Network mesh', aiHeaderTitle:'🤖 Mahmama (AI project assistant)', aiWelcomeMsg:'Welcome! I am Mahmama, the scripted assistant for this 6G+ concept project. Ask about the project, illustrative speed, team, or academy.', qBtn1:'🎯 What is the main project goal?', qBtn2:'👥 Who is on the team?', qBtn3:'💼 What is the business impact of 6G?', qBtn4:'⚡ What is the data speed?', qBtn5:'🌐 What can the 3D viewer do?', qBtn6:'📈 How does the site relate to BIS?', aiSendBtn:'Send', aiToggleText:'💬 Ask Mahmama (assistant)', modalCloseBtn:'Close',
+  themeToggle:'Light mode'
+};
+const EXTRA_AR = {
+  liveTickerText:'محاكاة محلية • قيم توضيحية للشبكة • لا يوجد اتصال بشبكة فعلية • تجربة تعليمية لمفاهيم 6G+', analyticsEngineLabel:'محرك مؤشرات نظم معلومات الأعمال', mohabRoleTag:'مطور الذكاء الاصطناعي والواجهات', khaledRoleTag:'الواجهات والبيانات', osamaRoleTag:'الاستراتيجية والسيناريو', use1Tag:'سيارات ذاتية القيادة', use2Tag:'الجراحة عن بُعد', use3Tag:'عوالم افتراضية', use4Tag:'مدينة ذكية', techCard1Tag:'الذكاء الاصطناعي المدمج', techCard2Tag:'الهولوجرام', techCard3Tag:'محاكاة ثلاثية الأبعاد', techCard4Tag:'لوحات الدوائر المطبوعة',
+  badgeLiveText:'محاكاة محلية لنظام 6G+ نشطة', navVision:'الرؤية', navSpeed:'السرعة', navBusiness:'الأعمال (BIS)', navGallery:'معرض 3D', navChallenges:'التحديات', navAnalytics:'المؤشرات', navTech:'التقنيات', navUses:'الاستخدامات', navCompare:'المقارنة', navTeam:'الفريق', navDocBtn:'🎬 الفيديو',
+  heroBadgeText:'🎓 مشروع طلاب نظم معلومات الأعمال — أكاديمية المستقبل', heroSubText:'ما بعد السرعة واستشراف المستقبل.', heroLeadText:'مشروع مفاهيمي يستكشف الاتصال المستقبلي وزمن الاستجابة المنخفض والذكاء الاصطناعي والتفاعل الغامر. جميع قيم الأداء المعروضة توضيحية وليست قياسات فعلية للشبكة.', heroCta1:'✨ اكتشف المشروع', heroCta2:'⚡ حاسبة السرعة التفاعلية', heroDocBtn:'🎬 مشاهدة فيديو المشروع', visionEyebrow:'الرؤية', shareBtnVision:'🔗 نسخ الرابط', speedEyebrow:'السرعة التوضيحية وحاسبة البيانات', shareBtnSpeed:'🔗 نسخ الرابط', speedTitleHead:'السرعة لم تعد <span class="grad">مجرد تصفح.</span>', speedLeadText:'استكشف أهداف أداء توضيحية لأنظمة المستقبل الذكية والآنية.', speedTestBtn:'🚀 تشغيل محاكاة الأداء محليًا', simulationNotice:'تنبيه: هذه محاكاة محلية بقيم توضيحية، وليست قياسًا فعليًا لسرعة الإنترنت أو لشبكة 6G.', unitLatency:'ثانية (هدف توضيحي لزمن الاستجابة)', unitThroughput:'تيرابت في الثانية (معدل نقل توضيحي للشبكة)',
+  calcBoxTitle:'⚡ حاسبة سرعة نقل البيانات التفاعلية', calcNetworkBadge:'سرعة الشبكة الافتراضية: 1.0 تيرابت/ثانية', calcBoxDesc:'اختر نوع الملف أو المحتوى لتقدير زمن النقل النظري عند سرعة افتراضية قدرها 1 تيرابت/ثانية. السرعات الفعلية تختلف وهذه المحاكاة لا تقيس اتصالًا حقيقيًا.', calcMovieTitle:'فيلم بجودة 8K', calcMovieSize:'الحجم: 100 جيجابايت', calcGameTitle:'لعبة ضخمة (AAA)', calcGameSize:'الحجم: 300 جيجابايت', calcHoloTitle:'محتوى هولوجرامي', calcHoloSize:'الحجم: 50 جيجابايت', calcResultLabel:'زمن النقل التقديري (حساب نظري):', tbpsSmallText:'مفهوم الاتصال من الجيل التالي', tbpsMidText:'سرعات افتراضية لتجارب غامرة وتفاعلية.',
+  businessEyebrow:'أثر الأعمال (BIS)', shareBtnBiz:'🔗 نسخ الرابط', businessTitleHead:'كيف يمكن لشبكات 6G إعادة تشكيل <span class="grad">عالم الأعمال؟</span>', businessLeadText:'يستكشف هذا المشروع الطلابي آثارًا محتملة على نظم معلومات الأعمال. الأرقام توضيحية وليست نتائج أعمال مؤكدة.', bizCard1Title:'خفض التكاليف التشغيلية (مفهوم افتراضي)', bizCard1Desc:'قد يدعم الاتصال المستقبلي الخدمات السحابية واتصالات المؤسسات. أي نسب توفير افتراضية ليست نتائج مقاسة أو مضمونة.', bizCard2Title:'تحليل البيانات الضخمة في الوقت الفعلي',
+  galleryEyebrow:'معرض المحاكاة ثلاثية الأبعاد', shareBtnGallery:'🔗 نسخ الرابط', galleryTitleHead:'تصميم عملي <span class="grad">وتفاعلي.</span>', galleryLeadText:'اختر عنصرًا لفتح عارض ثلاثي الأبعاد تفاعلي واستكشاف مفاهيم لوحات الدوائر وموجات التيراهيرتز والشبكات الهولوجرامية.', challengesEyebrow:'التحديات والحلول المقترحة', shareBtnChal:'🔗 نسخ الرابط', challengesTitleHead:'تحديات تقنية تتطلب <span class="grad">هندسة متقدمة.</span>', challengesLeadText:'أمثلة على تحديات قد تحتاج شبكات الجيل السادس المستقبلية إلى معالجتها.',
+  analyticsEyebrow:'مؤشرات ورسوم نظم معلومات الأعمال', shareBtnAnalytics:'🔗 نسخ الرابط', analyticsTitleHead:'مؤشرات ورسوم توضيحية للنظام.', analyticsLeadText:'مقارنة افتراضية بين مفاهيم شبكات المستقبل والجيل السابق.', chartTitle:'مقارنة أداء توضيحية (5G مقابل 6G+)', chartNotice:'مقارنة افتراضية للعرض فقط؛ القيم ليست نتائج اختبار ميداني أو معيارًا معتمدًا.', techEyebrow:'التقنيات', shareBtnTech:'🔗 نسخ الرابط', techTitleHead:'مفاهيم لشبكة المستقبل.', techCard1Title:'الذكاء الاصطناعي المدمج', techCard1Desc:'قد يساعد الذكاء الاصطناعي الشبكة على فهم الأنماط وتوقع الطلب.', techCard2Title:'الهولوجرام والتفاعل الغامر', techCard2Desc:'قد تدعم الصور ثلاثية الأبعاد التعلم والتصور التفاعلي.', techCard3Title:'محاكاة ثلاثية الأبعاد', techCard3Desc:'توضح المحاكاة المحلية كيف يمكن أن تنتقل البيانات بين الأجهزة.', techCard4Title:'لوحات دوائر مطبوعة متطورة', techCard4Desc:'مفاهيم للأجهزة تربط التصميم بلوحات الدوائر الفعلية.',
+  usesEyebrow:'الاستخدامات', shareBtnUses:'🔗 نسخ الرابط', usesTitleHead:'تطبيقات تحتاج إلى استجابة <span class="grad">فورية.</span>', compareEyebrow:'المقارنة', shareBtnCompare:'🔗 نسخ الرابط', compareTitleHead:'من 5G إلى <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.', thFeature:'الخاصية', tdRow1:'أعلى سرعة مستهدفة', tdRow2:'زمن الاستجابة', tdRow3:'الذكاء الاصطناعي', tdRow4:'طريقة التفاعل', compareNote:'هذه مستهدفات بحثية توضيحية وليست قياسات من هذا المشروع.', docsEyebrow:'العرض التقديمي', shareBtnDocs:'🔗 نسخ الرابط', docsTitleHead:'فيديو <span class="grad">عرض المشروع.</span>', docsLeadText:'شاهد فيديو العرض التقديمي للمشروع عبر Google Drive.', docsWatchBtn:'🎬 مشاهدة فيديو المشروع', teamEyebrow:'الفريق', shareBtnTeam:'🔗 نسخ الرابط', teamTitleHead:'فريق المشروع <span class="grad">معًا.</span>', teamLeadText:'طلاب نظم معلومات الأعمال بأكاديمية المستقبل يتعاونون على مشروع مفاهيمي تفاعلي. اضغط على بطاقة لعرض المهام والأدوار.', teamHint1:'اضغط لعرض المهام والأدوار ←', teamHint2:'اضغط لعرض المهام والأدوار ←', teamHint3:'اضغط لعرض المهام والأدوار ←', teamHint4:'اضغط لعرض المهام والأدوار ←', amrRoleTag:'قائد المشروع', closeMidText:'الابتكار لا ينتظر المستحيل...', closeHugeText:'بل يصنعه.', closeLeadText:'مشروع 6G+: نبني أفكار الغد اليوم.', backToTopBtn:'🚀 العودة إلى الأعلى', footerText:'© 2026 مشروع 6G+ · طلاب نظم معلومات الأعمال — أكاديمية المستقبل',
+  viewer3DTitle:'عارض المحاكاة ثلاثية الأبعاد', viewer3DDesc:'استكشف المحاكاة ودوّر المجسم ثلاثي الأبعاد (اضغط واسحب للتدوير 360 درجة).', btnModeRotate:'🔄 تدوير المجسم', btnModePulse:'⚡ نبض الإشارة', btnModeWire:'🌐 شبكة الاتصال', aiHeaderTitle:'🤖 محماااا (مساعد المشروع)', aiWelcomeMsg:'أهلًا بك! أنا محماااا، مساعد مبرمج مسبقًا لمشروع 6G+. اسألني عن المشروع أو السرعة التوضيحية أو الفريق أو الأكاديمية.', qBtn1:'🎯 ما الهدف الرئيسي للمشروع؟', qBtn2:'👥 من أعضاء الفريق؟', qBtn3:'💼 ما أثر 6G على الأعمال؟', qBtn4:'⚡ ما سرعة نقل البيانات؟', qBtn5:'🌐 ما مميزات عارض 3D؟', qBtn6:'📈 كيف يخدم الموقع تخصص BIS؟', aiSendBtn:'إرسال', aiToggleText:'💬 اسأل محماااا (المساعد)', modalCloseBtn:'إغلاق', themeToggle:'الوضع الفاتح'
+};
+const applyLanguagePass = (l) => {
+  // Elements explicitly carrying both translations always take precedence over legacy mappings.
+  document.querySelectorAll('[data-en]').forEach(el => {
+    if (el.matches('.team-card, .gallery-card') || el.children.length > 0) return;
+    const value = l === 'en' ? el.getAttribute('data-en') : (el.getAttribute('data-ar') || null);
+    if (value !== null) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = value;
+      else el.textContent = value;
+    }
+  });
+  const dict = l === 'en' ? EXTRA_EN : EXTRA_AR;
+  Object.entries(dict).forEach(([id, value]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (id === 'themeToggle') return; // handled by setTheme below
+    if (id === 'aiInput') el.placeholder = value;
+    else el.innerHTML = value;
+  });
+  const cells = l === 'en' ? ['Runs above the network','Built into the network','Screens','Holograms and natural control'] : ['يعمل فوق الشبكة','مدمج داخل الشبكة','شاشات','هولوجرام وتحكم طبيعي'];
+  const rows = document.querySelectorAll('#compare table tbody tr');
+  [[3,1],[3,2],[4,1],[4,2]].forEach((pos,i)=>{ const cell=rows[pos[0]-1]?.querySelectorAll('td')[pos[1]]; if(cell) cell.textContent=cells[i]; });
+  const themeBtn=document.getElementById('themeToggle');
+  if(themeBtn) themeBtn.textContent = l === 'en' ? (document.body.classList.contains('light-theme') ? 'Dark mode' : 'Light mode') : (document.body.classList.contains('light-theme') ? 'الوضع الداكن' : 'الوضع الفاتح');
+};
 function setLang(l){
+  document.title = l === 'en' ? '6G+ | Educational Simulation' : '6G+ | محاكاة تعليمية';
   site.dir=l==='en'?'ltr':'rtl';site.lang=l;
+  document.documentElement.dir = l==='en'?'ltr':'rtl';
+  document.documentElement.lang = l;
   EN.forEach(([s,h],i)=>{
     const el=document.querySelector(s);
     if(el&&AR[i]!==null){
@@ -1953,7 +2214,7 @@ function setLang(l){
     if(hint) hint.textContent = l==='en' ? 'Click to view tasks & roles →' : 'اضغط لعرض المهام والأدوار ←';
   });
   const amrTag = teamCards[1].querySelector('.team-role-tag');
-  if(amrTag) amrTag.textContent = l==='en' ? 'Project Leader' : 'ليدر المشروع';
+  if(amrTag) amrTag.textContent = l==='en' ? 'Project Leader' : 'قائد المشروع';
 
   galleryCards.forEach((c, idx) => {
     const h3 = c.querySelector('h3');
@@ -1979,24 +2240,41 @@ function setLang(l){
       document.getElementById('memberName').textContent = l === 'en' ? name + ' (Project Leader)' : name + ' (قائد المشروع)';
     } else if (name === 'Mohab') {
       document.getElementById('memberName').textContent = l === 'en' ? name + ' (AI Developer)' : name + ' (مهاب مطور الـ AI)';
+    } else if (name === 'Khaled') {
+      document.getElementById('memberName').textContent = l === 'en' ? 'Khaled' : 'خالد';
+    } else if (name === 'Osama') {
+      document.getElementById('memberName').textContent = l === 'en' ? 'Osama' : 'أسامة';
     } else {
-      document.getElementById('memberName').textContent = name;
+      document.getElementById('memberName').textContent = name || (l === 'en' ? 'Team member' : 'عضو بالفريق');
     }
     document.getElementById('memberRole').textContent = role;
   }
 
   buildScrub(l==='en'?SCRUB_EN:SCRUB_AR);scrub();
-  lb.textContent=l==='en'?'AR':'EN';lb.setAttribute('aria-label',l==='en'?'التبديل إلى العربية':'Switch to English');
+  lb.textContent=l==='en'?'AR':'EN';lb.setAttribute('aria-label',l==='en'?'Switch to Arabic':'التبديل إلى الإنجليزية');
+  if(mobileNavToggle) mobileNavToggle.setAttribute('aria-label', primaryNavLinks.classList.contains('is-open') ? (l==='en'?'Close navigation menu':'إغلاق قائمة التنقل') : (l==='en'?'Open navigation menu':'فتح قائمة التنقل'));
 
+  applyLanguagePass(l);
   setTheme(isLight());
-  cEl.setAttribute('aria-label',l==='en'?'0.001 seconds':'0.001 ثانية');
+  const mainNav = document.getElementById('mainNav');
+  if (mainNav) mainNav.setAttribute('aria-label', l === 'en' ? 'Main navigation' : 'التنقل الرئيسي');
+  const chartCanvas = document.getElementById('performanceChart');
+  if (chartCanvas) chartCanvas.setAttribute('aria-label', l === 'en' ? 'Illustrative comparison chart for 5G and 6G+' : 'مخطط مقارنة توضيحي بين 5G و6G+');
+  ['viewer3DCloseBtn','aiCloseBtn','videoCloseBtn','teamModalCloseBtn'].forEach(id => { const closeBtn = document.getElementById(id); if (closeBtn) closeBtn.setAttribute('aria-label', l === 'en' ? 'Close' : 'إغلاق'); });
+  cEl.setAttribute('aria-label',l==='en'?'Illustrative latency target: 0.001 seconds':'هدف توضيحي لزمن الاستجابة: 0.001 ثانية');
   initChart(l==='en');
+  const selectedCalcBtn = document.querySelector('.calc-btn.active') || document.getElementById('calcBtnMovie');
+  if (selectedCalcBtn && lastDownloadSelection) calculateDownload(lastDownloadSelection.type, lastDownloadSelection.sizeGB, selectedCalcBtn, true);
   try{localStorage.setItem('lang6g',l)}catch(e){}
 }
 
 qBtns.forEach(btn => {
   btn.setAttribute('data-q', btn.textContent);
 });
+const initialChatBox = document.getElementById('aiChatBox');
+const initialChatToggle = document.getElementById('aiToggleBtn');
+if (initialChatBox) initialChatBox.setAttribute('aria-hidden', getComputedStyle(initialChatBox).display === 'none' ? 'true' : 'false');
+if (initialChatToggle) initialChatToggle.setAttribute('aria-expanded', String(!!initialChatBox && getComputedStyle(initialChatBox).display !== 'none'));
 
 galleryCards.forEach(c => {
   const h3 = c.querySelector('h3');
@@ -2006,7 +2284,33 @@ galleryCards.forEach(c => {
 });
 
 lb.addEventListener('click',()=>setLang(site.lang==='en'?'ar':'en'));
-try{if(localStorage.getItem('lang6g')==='en')setLang('en')}catch(e){}
+
+// Keyboard and backdrop dismissal for all site dialogs.
+(function installDialogBehavior(){
+  const dialogIds = ['viewer3DModal','videoModal','teamModal'];
+  const closeById = {viewer3DModal: close3DViewer, videoModal: closeVideo, teamModal: closeTeamModal};
+  dialogIds.forEach(id => {
+    const dialog = document.getElementById(id);
+    if (!dialog) return;
+    dialog.setAttribute('aria-hidden', dialog.style.display === 'flex' ? 'false' : 'true');
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog && typeof closeById[id] === 'function') closeById[id]();
+    });
+    const observer = new MutationObserver(() => dialog.setAttribute('aria-hidden', getComputedStyle(dialog).display === 'none' ? 'true' : 'false'));
+    observer.observe(dialog, {attributes:true, attributeFilter:['style','class']});
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    for (const id of dialogIds) {
+      const dialog = document.getElementById(id);
+      if (dialog && getComputedStyle(dialog).display !== 'none') { closeById[id](); return; }
+    }
+    const chat = document.getElementById('aiChatBox');
+    if (chat && getComputedStyle(chat).display !== 'none') toggleAIChat();
+  });
+})();
+
+try { setLang(localStorage.getItem('lang6g') === 'en' ? 'en' : 'ar'); } catch (e) { setLang('ar'); }
 })();
 </script>
 
