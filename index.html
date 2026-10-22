@@ -15,7 +15,7 @@ button:disabled{cursor:wait;opacity:.72}
 #particleCanvas{pointer-events:none!important;z-index:0!important}
 #scrollProgress{position:fixed;z-index:1000}
 #aiToggleBtn,#aiChatBox{z-index:500}
-#viewer3DModal,#videoModal,#teamModal{z-index:800}
+#viewer3DModal,#teamModal{z-index:800}
 #aiChatBox{max-width:calc(100vw - 24px);max-height:min(75vh,680px)}
 #aiChatBody{min-height:0;overflow-y:auto;overscroll-behavior:contain}
 #canvas3DModel{display:block;width:100%;max-width:480px;height:auto;touch-action:pan-y}
@@ -37,7 +37,7 @@ button:disabled{cursor:wait;opacity:.72}
  .hero h1{font-size:clamp(34px,9vw,58px)}
  .chart-inner{height:260px;max-height:none}
  .fallback-chart-row{grid-template-columns:minmax(84px,1fr) minmax(0,2fr)}
- #viewer3DModal>div,#videoModal>div,#teamModal>div{width:calc(100% - 24px)!important;max-width:100%!important;max-height:calc(100dvh - 24px);overflow:auto}
+ #viewer3DModal>div,#teamModal>div{width:calc(100% - 24px)!important;max-width:100%!important;max-height:calc(100dvh - 24px);overflow:auto}
 }
 @media(max-width:480px){
  body{font-size:15px}
@@ -50,6 +50,27 @@ button:disabled{cursor:wait;opacity:.72}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 
+
+<style id="6g-native-dropdown-theme-fix">
+/* Keep native dropdown menus readable in both themes, including option lists. */
+body:not(.light-theme) select,
+body:not(.light-theme) select option,
+body:not(.light-theme) select optgroup {
+  color-scheme: dark;
+  background-color: #101827;
+  color: #f5f7ff;
+}
+body.light-theme select,
+body.light-theme select option,
+body.light-theme select optgroup {
+  color-scheme: light;
+  background-color: #ffffff;
+  color: #172033;
+}
+select option:checked { background-color: #174a78; color: #ffffff; }
+body.light-theme select option:checked { background-color: #dbeafe; color: #172033; }
+select:focus-visible { outline-color: var(--focus-ring, #2bd0ff); }
+</style>
 </head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -716,7 +737,6 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="acts">
       <button class="theme-toggle" id="themeToggle" type="button" onclick="playSound('click')" aria-label="تبديل المظهر">الوضع الفاتح</button>
       <button class="lang" id="lang" type="button" onclick="playSound('click')" aria-label="Switch to English">EN</button>
-      <a class="liquid-pill" href="#docs" onclick="playSound('click')" style="font-size:11px;padding:5px 10px;" id="navDocBtn">🎬 الفيديو</a>
     </div>
   </div>
 </nav>
@@ -732,7 +752,6 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <div class="cta">
       <a class="liquid-pill primary" href="#tech" onclick="playSound('click')" id="heroCta1">✨ اكتشف المشروع</a>
       <a class="liquid-pill" href="#speedCalcSection" onclick="playSound('click')" id="heroCta2">⚡ حاسبة السرعة التفاعلية</a>
-      <a class="liquid-pill" href="#" onclick="openVideo(event)" id="heroDocBtn">🎬 عرض فيديو المشروع</a>
     </div>
 
   </div>
@@ -758,16 +777,16 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
     <p class="lead" id="speedLeadText" style="margin-top:10px">معايير أداء فائقة صُممت خصيصاً لتلبي احتياجات الأنظمة الذكية والزمن الحقيقي.</p>
     
     <div style="margin-top:24px;">
-      <button class="liquid-pill primary" onclick="runRealSpeedTest()" id="speedTestBtn">🚀 تشغيل محاكاة الأداء</button>
+      <button class="liquid-pill primary" onclick="runRealSpeedTest()" id="speedTestBtn">🚀 اختبار سرعة الإنترنت الفعلية</button>
       <div id="speedTestStatus" style="margin-top:12px; font-family:var(--f-mono); font-size:14px; color:var(--cyan); min-height:24px;"></div>
-      <p id="simulationNotice" style="margin:8px auto 0;max-width:720px;font-size:12px;line-height:1.8;color:var(--grey-l);">تنبيه: هذه محاكاة محلية بقيم توضيحية، وليست قياسًا فعليًا لاتصال الإنترنت أو شبكة 6G.</p>
+      <p id="simulationNotice" style="margin:8px auto 0;max-width:720px;font-size:12px;line-height:1.8;color:var(--grey-l);">الاختبار يقيس استجابة الاتصال وسرعة التنزيل عند توفر الإنترنت؛ ولا يقيس أداء شبكة 6G نفسها.</p>
     </div>
 
     <div class="speed-direct-grid">
       <div class="speed-direct-item">
         <span class="speed-direct-badge" id="latBadgeText">Latency Target</span>
         <div class="count grad" id="count" aria-label="0.001 ثانية">0.001</div>
-        <div class="unit" id="unitLatency">ثانية (زمن الاستجابة اللحظي المستهدف)</div>
+        <div class="unit" id="unitLatency">مللي ثانية (زمن الاستجابة المقاس)</div>
       </div>
       <div class="speed-direct-item">
         <span class="speed-direct-badge" id="tpBadgeText">Throughput Peak</span>
@@ -803,9 +822,24 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
         </button>
       </div>
 
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px;text-align:start">
+        <label style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)" for="customFileSize"><span id="customFileSizeLabel">حجم الملف</span>
+          <input id="customFileSize" type="number" min="0.001" step="any" value="100" inputmode="decimal" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit">
+        </label>
+        <label style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)" for="customFileUnit"><span id="customFileUnitLabel">وحدة الحجم</span>
+          <select id="customFileUnit" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit"><option value="MB">MB</option><option value="GB" selected>GB</option><option value="TB">TB</option></select>
+        </label>
+        <label style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)" for="customSpeed"><span id="customSpeedLabel">سرعة الاتصال المفترضة</span>
+          <input id="customSpeed" type="number" min="0.001" step="any" value="1" inputmode="decimal" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit">
+        </label>
+        <label style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)" for="customSpeedUnit"><span id="customSpeedUnitLabel">وحدة السرعة</span>
+          <select id="customSpeedUnit" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit"><option value="Mbps">Mbps</option><option value="Gbps">Gbps</option><option value="Tbps" selected>Tbps</option></select>
+        </label>
+      </div>
+      <button class="liquid-pill primary" type="button" id="calcCustomBtn" style="margin-top:14px" onclick="calculateCustomDownload()">احسب زمن النقل</button>
       <div class="calc-result-display">
-        <div id="calcResultLabel" style="font-size:13px; color:var(--cyan); margin-bottom:4px;">زمن النقل التقديري (حساب نظري):</div>
-        <div id="calcResultTime" style="font-size:clamp(18px,2.8vw,30px); font-weight:700; color:var(--snow);">0.800 ثانية (800 مللي ثانية) — تقدير نظري عند 1 Tbps</div>
+        <div id="calcResultLabel" style="font-size:13px; color:var(--cyan); margin-bottom:4px;">زمن النقل النظري حسب الحجم والسرعة المختارين:</div>
+        <div id="calcResultTime" aria-live="polite" style="font-size:clamp(18px,2.8vw,30px); font-weight:700; color:var(--snow);">0.800 ثانية — تقدير نظري عند 1 Tbps</div>
       </div>
     </div>
   </div>
@@ -1044,20 +1078,6 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   </div>
 </section>
 
-<section class="sec light scroll-reveal" id="docs">
-  <div class="in center">
-    <div class="section-title-wrapper">
-      <p class="eyebrow" id="docsEyebrow" style="margin:0;">العرض التقديمي</p>
-      <button class="share-link-btn" onclick="copySectionLink('docs')" id="shareBtnDocs">🔗 نسخ الرابط</button>
-    </div>
-    <h2 class="big" id="docsTitleHead" style="margin-top:12px">فيديو عرض <span class="grad">المشروع.</span></h2>
-    <p class="lead" id="docsLeadText">يمكنك مشاهدة فيديو العرض التقديمي التوضيحي للمشروع مباشرة من جوجل درايف.</p>
-    <div style="display: flex; justify-content: center; margin-top: 24px; width: 100%;">
-      <a class="liquid-pill primary" href="#" onclick="openVideo(event)" id="docsWatchBtn">🎬 عرض فيديو المشروع</a>
-    </div>
-  </div>
-</section>
-
 <section class="sec dark team scroll-reveal" id="team">
   <div class="in center">
     <div class="section-title-wrapper">
@@ -1175,13 +1195,6 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   <button id="aiToggleBtn" onclick="playSound('click'); toggleAIChat()"><span id="aiToggleText" data-ar="💬 اسأل محماااا (AI Assistant)" data-en="💬 Ask Mahmama (AI Assistant)">💬 اسأل محماااا (AI Assistant)</span></button>
 </div>
 
-<div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; padding:20px;">
-  <div class="modal-content-box" style="max-width:900px; padding:20px;">
-    <button id="videoCloseBtn" onclick="closeVideo()" style="position:absolute; top:12px; left:12px; background:none; border:none; color:inherit; font-size:28px; cursor:pointer; z-index:10;" aria-label="إغلاق">&times;</button>
-    <div style="position:relative; width:100%; padding-bottom:56.25%; height:0; margin-top:20px;">
-      <iframe src="https://drive.google.com/file/d/1JVxgE7JHYwcsyfO_4OgmONVGC7jUNlkg/preview" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; border-radius:12px;" allow="autoplay" allowfullscreen></iframe>
-    </div>
-  </div>
 </div>
 
 <div id="teamModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:20px;">
@@ -1519,69 +1532,88 @@ window.calculateDownload = function(type, sizeGB, btnElement, silent = false) {
   if (!silent) playSound('click');
   lastDownloadSelection = { type, sizeGB };
   document.querySelectorAll('.calc-btn').forEach(b => b.classList.toggle('active', b === btnElement));
-
-  // Decimal units: 1 GB = 1,000,000,000 bytes; 1 Tbps = 1,000,000,000,000 bits/s.
-  // This is a theoretical local estimate, not a real-world download prediction.
-  const speedBitsPerSec = 1e12;
-  const sizeBits = Number(sizeGB) * 1e9 * 8;
-  const timeSeconds = sizeBits / speedBitsPerSec;
-  const timeMs = timeSeconds * 1000;
-  const resultDisplay = document.getElementById('calcResultTime');
+  const sizeInput = document.getElementById('customFileSize');
+  const sizeUnit = document.getElementById('customFileUnit');
+  const speedInput = document.getElementById('customSpeed');
+  const speedUnit = document.getElementById('customSpeedUnit');
+  if (sizeInput) sizeInput.value = sizeGB;
+  if (sizeUnit) sizeUnit.value = 'GB';
+  if (speedInput) speedInput.value = '1';
+  if (speedUnit) speedUnit.value = 'Tbps';
+  window.calculateCustomDownload(true);
+};
+window.calculateCustomDownload = function(silent = false) {
+  if (!silent) playSound('click');
+  const sizeInput = document.getElementById('customFileSize');
+  const sizeUnit = document.getElementById('customFileUnit');
+  const speedInput = document.getElementById('customSpeed');
+  const speedUnit = document.getElementById('customSpeedUnit');
+  const result = document.getElementById('calcResultTime');
   const lang = document.querySelector('.site')?.lang || 'ar';
-  if (!resultDisplay || !Number.isFinite(timeSeconds)) return;
-
-  const labels = lang === 'en'
-    ? { movie: '8K movie (100 GB)', game: 'AAA game (300 GB)', hologram: 'holographic content (50 GB)' }
-    : { movie: 'فيلم 8K (100 جيجابايت)', game: 'لعبة AAA (300 جيجابايت)', hologram: 'محتوى هولوجرامي (50 جيجابايت)' };
-  const item = labels[type] || labels.movie;
-  const secText = timeSeconds.toFixed(3);
-  const msText = timeMs.toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', { maximumFractionDigits: 1 });
-  resultDisplay.textContent = lang === 'en'
-    ? `Estimated ${secText} seconds (${msText} ms) for ${item}. Theoretical at 1 Tbps; actual time may be longer.`
-    : `الزمن النظري ${secText} ثانية (${msText} مللي ثانية) لـ ${item}. الحساب على سرعة افتراضية 1 Tbps؛ وقد يستغرق النقل الفعلي وقتًا أطول.`;
+  if (!sizeInput || !sizeUnit || !speedInput || !speedUnit || !result) return;
+  const size = Number(sizeInput.value);
+  const speed = Number(speedInput.value);
+  if (!Number.isFinite(size) || size <= 0 || !Number.isFinite(speed) || speed <= 0) {
+    result.textContent = lang === 'en' ? 'Enter a file size and speed greater than zero.' : 'من فضلك أدخل حجم ملف وسرعة أكبر من صفر.';
+    return;
+  }
+  const sizeMultipliers = { MB: 1e6, GB: 1e9, TB: 1e12 };
+  const speedMultipliers = { Mbps: 1e6, Gbps: 1e9, Tbps: 1e12 };
+  const seconds = (size * sizeMultipliers[sizeUnit.value] * 8) / (speed * speedMultipliers[speedUnit.value]);
+  if (!Number.isFinite(seconds)) { result.textContent = lang === 'en' ? 'Unable to calculate this value.' : 'تعذر حساب القيمة دي.'; return; }
+  let timeText;
+  if (seconds < 0.001) timeText = `${(seconds * 1e6).toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', {maximumFractionDigits:2})} ${lang === 'en' ? 'µs' : 'ميكروثانية'}`;
+  else if (seconds < 1) timeText = `${(seconds * 1000).toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', {maximumFractionDigits:2})} ${lang === 'en' ? 'ms' : 'مللي ثانية'}`;
+  else if (seconds < 60) timeText = `${seconds.toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', {maximumFractionDigits:3})} ${lang === 'en' ? 'seconds' : 'ثانية'}`;
+  else if (seconds < 3600) timeText = `${(seconds/60).toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', {maximumFractionDigits:2})} ${lang === 'en' ? 'minutes' : 'دقيقة'}`;
+  else if (seconds < 86400) timeText = `${(seconds/3600).toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', {maximumFractionDigits:2})} ${lang === 'en' ? 'hours' : 'ساعة'}`;
+  else timeText = `${(seconds/86400).toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG', {maximumFractionDigits:2})} ${lang === 'en' ? 'days' : 'يوم'}`;
+  const rateText = `${speed.toLocaleString(lang === 'en' ? 'en-US' : 'ar-EG')} ${speedUnit.value}`;
+  result.textContent = lang === 'en'
+    ? `Estimated transfer time: ${timeText} at ${rateText}. Ideal calculation; real transfer may be slower.`
+    : `زمن النقل النظري: ${timeText} عند سرعة ${rateText}. النقل الفعلي ممكن يستغرق وقتًا أطول.`;
 };
 
-let speedSimulationTimer = null;
-window.runRealSpeedTest = function() {
-  playSound('whoosh');
+let speedTestController = null;
+window.runRealSpeedTest = async function() {
   const btn = document.getElementById('speedTestBtn');
   const status = document.getElementById('speedTestStatus');
   const latEl = document.getElementById('count');
   const tpEl = document.getElementById('throughputCount');
-  if (!btn || !status || !latEl || !tpEl) return;
-  if (speedSimulationTimer) clearInterval(speedSimulationTimer);
-  btn.disabled = true;
-  btn.style.opacity = '0.6';
-  let step = 0;
-  const stepsFor = (lang) => lang === 'en' ? [
-    '📡 Simulating a connection setup…',
-    '⚙️ Generating illustrative latency and throughput values…'
-  ] : [
-    '📡 محاكاة بدء الاتصال…',
-    '⚙️ توليد قيم توضيحية لزمن الاستجابة ومعدل النقل…'
-  ];
-  const currentLang = () => document.querySelector('.site')?.lang || 'ar';
-  status.textContent = currentLang() === 'en'
-    ? '🧪 Running local demonstration… no network packets are sent.'
-    : '🧪 تشغيل محاكاة محلية… لا يتم إرسال أو قياس أي بيانات عبر الشبكة.';
-  speedSimulationTimer = setInterval(() => {
-    const lang = currentLang();
-    const steps = stepsFor(lang);
-    if (step < steps.length) {
-      status.textContent = steps[step++];
-      // Randomized values are explicitly illustrative, not measured network performance.
-      latEl.textContent = (0.02 + Math.random() * 0.18).toFixed(3);
-      tpEl.textContent = (0.2 + Math.random() * 0.8).toFixed(2);
-      return;
-    }
-    clearInterval(speedSimulationTimer);
-    speedSimulationTimer = null;
-    status.textContent = lang === 'en'
-      ? '✓ Local simulation complete. Values are illustrative, not measured network performance.'
-      : '✓ اكتملت المحاكاة المحلية. القيم توضيحية وليست قياسات فعلية لأداء الشبكة.';
-    btn.disabled = false;
-    btn.style.opacity = '1';
-  }, 650);
+  const lang = () => document.querySelector('.site')?.lang || 'ar';
+  if (!btn || !status || !latEl || !tpEl || btn.disabled) return;
+  if (speedTestController) speedTestController.abort();
+  speedTestController = new AbortController();
+  const signal = speedTestController.signal;
+  btn.disabled = true; btn.style.opacity = '0.6';
+  const say = (ar, en) => { status.textContent = lang() === 'en' ? en : ar; };
+  say('📡 جاري قياس زمن الاستجابة…', '📡 Measuring response time…');
+  try {
+    // A small request measures round-trip response; no randomized values are displayed.
+    const pingStart = performance.now();
+    const pingResponse = await fetch(`https://speed.cloudflare.com/__down?bytes=1000&cb=${Date.now()}`, { cache: 'no-store', signal });
+    if (!pingResponse.ok) throw new Error('Test endpoint unavailable');
+    await pingResponse.arrayBuffer();
+    const latencyMs = performance.now() - pingStart;
+    say('⬇️ جاري قياس سرعة التنزيل (حوالي 5 ميجابايت)…', '⬇️ Measuring download speed (about 5 MB)…');
+    const downloadBytes = 5_000_000;
+    const downStart = performance.now();
+    const downResponse = await fetch(`https://speed.cloudflare.com/__down?bytes=${downloadBytes}&cb=${Date.now()}`, { cache: 'no-store', signal });
+    if (!downResponse.ok) throw new Error('Download test failed');
+    const data = await downResponse.arrayBuffer();
+    const downSeconds = (performance.now() - downStart) / 1000;
+    const mbps = (data.byteLength * 8) / Math.max(downSeconds, 0.001) / 1e6;
+    if (!data.byteLength || !Number.isFinite(mbps)) throw new Error('Invalid test result');
+    latEl.textContent = latencyMs.toFixed(0);
+    tpEl.textContent = mbps.toLocaleString(lang() === 'en' ? 'en-US' : 'ar-EG', { maximumFractionDigits: 2 });
+    say(`✓ تم القياس: زمن استجابة تقريبي ${latencyMs.toFixed(0)} مللي ثانية، وسرعة تنزيل ${mbps.toFixed(2)} Mbps. النتيجة تتأثر بالشبكة والخادم.`, `✓ Measured: approx. ${latencyMs.toFixed(0)} ms response time and ${mbps.toFixed(2)} Mbps download. Results vary with network and server.`);
+  } catch (error) {
+    if (error && error.name === 'AbortError') return;
+    say('تعذر إجراء الاختبار. تأكد من الإنترنت، ثم افتح الموقع عبر متصفح يسمح بالاتصال الخارجي. لو الملف مفتوح دون إنترنت فلن يعمل القياس.', 'Test failed. Check your internet connection and open the site in a browser that allows external requests. Offline mode cannot measure internet speed.');
+  } finally {
+    speedTestController = null;
+    btn.disabled = false; btn.style.opacity = '1';
+  }
 };
 
 window.toggleAIChat = function() {
@@ -1882,19 +1914,6 @@ document.getElementById('backToTopBtn').addEventListener('click', (e)=>{
   triggerConfetti();
 });
 
-window.openVideo = function(e) {
-  if(e) e.preventDefault();
-  playSound('click');
-  const modal = document.getElementById('videoModal');
-  modal.style.display = 'flex';
-}
-
-window.closeVideo = function() {
-  playSound('click');
-  const modal = document.getElementById('videoModal');
-  modal.style.display = 'none';
-}
-
 let activeCardElement = null;
 window.showTeamMember = function(cardEl) {
   activeCardElement = cardEl;
@@ -1951,7 +1970,8 @@ const themeBtn=document.getElementById('themeToggle');
 const isLight=()=>document.body.classList.contains('light-theme');
 function setTheme(light){
   document.body.classList.toggle('light-theme',light);
-  const lang=site.lang;
+  // Read language from the DOM so restoring a saved theme works before later constants initialize.
+  const lang=document.querySelector('.site')?.lang || document.documentElement.lang || 'ar';
   if(light){
     themeBtn.textContent=lang==='en'?'Dark Mode':'الوضع الداكن';
     themeBtn.setAttribute('aria-label',lang==='en'?'Switch to Dark Mode':'التبديل إلى الوضع الداكن');
@@ -1968,14 +1988,14 @@ try{if(localStorage.getItem('theme6g')==='light')setTheme(true)}catch(e){}
 const G='<span class="grad">';
 const EN=[
 ['#badgeLiveText','6G+ system simulation active'],
-['#simulationNotice','Notice: this is a local simulation with illustrative values, not a real measurement of internet speed or a 6G network.'],
-['#latBadgeText','Illustrative latency target'],
-['#tpBadgeText','Illustrative peak throughput'],
-['#unitLatency','seconds (illustrative latency target)'],
-['#unitThroughput','Tbps (illustrative network throughput)'],
+['#simulationNotice','This test measures connection response and download speed when online; it does not measure a 6G network itself.'],
+['#latBadgeText','Response time'],
+['#tpBadgeText','Download speed'],
+['#unitLatency','milliseconds (measured response time)'],
+['#unitThroughput','Mbps (measured download speed)'],
 ['#calcBoxTitle','⚡ Interactive Data Speed Calculator'],
-['#calcNetworkBadge','Illustrative network speed: 1.0 Tbps'],
-['#calcBoxDesc','Choose a file or content type to estimate transfer time at the illustrative rate of 1 Tbps. Actual speeds vary and are not measured by this demo.'],
+['#calcNetworkBadge','Editable illustrative speed: 1 Tbps'],
+['#calcBoxDesc','Choose a preset or enter a custom file size and assumed connection speed. The result is a theoretical estimate, not a live transfer.'],
 ['#calcMovieTitle','8K movie'],['#calcMovieSize','Size: 100 GB'],
 ['#calcGameTitle','Large AAA game'],['#calcGameSize','Size: 300 GB'],
 ['#calcHoloTitle','Holographic content'],['#calcHoloSize','Size: 50 GB'],
@@ -1985,31 +2005,29 @@ const EN=[
 ['#speedEyebrow','Illustrative speed & data calculator'],
 ['#speedTitleHead',`Speed is no longer ${G}just browsing.</span>`],
 ['#speedLeadText','Explore illustrative performance targets for future intelligent, real-time systems.'],
-['#speedTestBtn','🚀 Run local performance simulation'],
+['#speedTestBtn','🚀 Test real internet speed'],
 ['#navVision','Vision'],['#navSpeed','Speed'],['#navBusiness','Business'],['#navGallery','3D Gallery'],['#navChallenges','Challenges'],['#navAnalytics','Analytics'],['#navTech','Tech'],
 ['#navUses','Uses'],['#navCompare','Compare'],['#navTeam','Team'],
-['#navDocBtn','🎬 Video'],
 ['#badgeLiveText','6G Network Simulation Active'],
-['#simulationNotice','Notice: this is a local simulation with illustrative values, not a real measurement of an internet connection or 6G network.'],
+['#simulationNotice','This test measures connection response and download speed when online; it does not measure a 6G network itself.'],
 ['#chartNotice','Illustrative hypothetical comparison for demonstration; values are not field-test results or an approved standard.'],
 ['#heroBadgeText','🎓 Business Information Systems Students Project - Future Academy'],
 ['#heroSubText','Beyond speed and shaping the future.'],
 ['#heroLeadText','A pioneering project that breaks traditional connectivity rules. Ultra-low latency in a thousandth of a second, and an embedded AI framework thinking with you every second.'],
-['#heroCta1','✨ Explore the project'],['#heroCta2','⚡ Speed Calculator'],['#heroDocBtn','🎬 Watch Project Video'],
-['#visionEyebrow','Vision'],
+['#heroCta1','✨ Explore the project'],['#heroCta2','⚡ Speed Calculator'],['#visionEyebrow','Vision'],
 ['#shareBtnVision','🔗 Copy Link'],
 ['#speedEyebrow','Speed & Data Calculator'],
 ['#shareBtnSpeed','🔗 Copy Link'],
 ['#speedTitleHead',`Speed is no longer ${G}just browsing.</span>`],
 ['#speedLeadText','High-performance standards specifically designed to meet the needs of smart systems and real-time operations.'],
-['#speedTestBtn','🚀 Run Benchmark'],
+['#speedTestBtn','🚀 Test internet speed'],
 ['#latBadgeText','Latency Target'],
 ['#tpBadgeText','Throughput Peak'],
-['#unitLatency','seconds (Instant latency target)'],
-['#unitThroughput','Tbps (6G Network Throughput)'],
+['#unitLatency','milliseconds (measured response time)'],
+['#unitThroughput','Mbps (measured download speed)'],
 ['#calcBoxTitle','⚡ Interactive Speed Calculator'],
-['#calcNetworkBadge','Network Speed: 1.0 Tbps'],
-['#calcBoxDesc','Select a file type or content to calculate instant download time with 6G+ technology:'],
+['#calcNetworkBadge','Editable illustrative speed: 1 Tbps'],
+['#calcBoxDesc','Choose a preset or enter a custom file size and assumed connection speed. This is a theoretical estimate, not a live 6G+ measurement:'],
 ['#calcMovieTitle','8K Movie Quality'],['#calcMovieSize','Size: 100 GB'],
 ['#calcGameTitle','AAA Heavy Game'],['#calcGameSize','Size: 300 GB'],
 ['#calcHoloTitle','Holographic Content'],['#calcHoloSize','Size: 50 GB'],
@@ -2058,10 +2076,6 @@ const EN=[
 ['#tdRow1','Peak speed target'],['#tdRow2','Latency'],
 ['#tdRow3','Artificial intelligence'],['#tdRow4','Interaction'],
 ['#compareNote','The numbers are research targets published in the public literature, not measurements from this project.'],
-['#docsEyebrow','Presentation'],
-['#shareBtnDocs','🔗 Copy Link'],
-['#docsTitleHead',`Project presentation ${G}video.</span>`],['#docsLeadText','You can watch the presentation video for the project directly from Google Drive.'],
-['#docsWatchBtn','🎬 Watch Project Video'],
 ['#teamEyebrow','Team'],
 ['#shareBtnTeam','🔗 Copy Link'],
 ['#teamTitleHead',`The project team, ${G}together.</span>`],
@@ -2093,14 +2107,14 @@ const AR=EN.map(([s])=>{const el=document.querySelector(s);return el?(el.getAttr
 // Some labels were originally hard-coded in English; provide their real Arabic originals explicitly.
 const AR_FIX = new Map([
   ['#badgeLiveText','محاكاة نظام 6G نشطة'],
-  ['#simulationNotice','تنبيه: هذه محاكاة محلية بقيم توضيحية، وليست قياسًا فعليًا لسرعة الإنترنت أو لشبكة 6G.'],
-  ['#latBadgeText','هدف توضيحي لزمن الاستجابة'],
-  ['#tpBadgeText','معدل نقل أقصى توضيحي'],
-  ['#unitLatency','ثانية (هدف توضيحي لزمن الاستجابة)'],
-  ['#unitThroughput','تيرابت في الثانية (معدل نقل توضيحي للشبكة)'],
+  ['#simulationNotice','الاختبار يقيس استجابة الاتصال وسرعة التنزيل عند توفر الإنترنت؛ ولا يقيس أداء شبكة 6G نفسها.'],
+  ['#latBadgeText','زمن الاستجابة'],
+  ['#tpBadgeText','سرعة التنزيل'],
+  ['#unitLatency','مللي ثانية (زمن الاستجابة المقاس)'],
+  ['#unitThroughput','ميجابت في الثانية (سرعة التنزيل المقاسة)'],
   ['#calcBoxTitle','⚡ حاسبة سرعة نقل البيانات التفاعلية'],
-  ['#calcNetworkBadge','سرعة الشبكة الافتراضية: 1.0 تيرابت/ثانية'],
-  ['#calcBoxDesc','اختَر نوع الملف أو المحتوى لمعرفة زمن النقل النظري عند سرعة افتراضية 1 تيرابت/ثانية. هذه ليست سرعة مقاسة فعليًا، وقد يختلف الأداء الحقيقي.'],
+  ['#calcNetworkBadge','سرعة افتراضية قابلة للتعديل: 1 تيرابت/ثانية'],
+  ['#calcBoxDesc','اختر نوع ملف أو أدخل حجمًا وسرعة اتصال افتراضيين لحساب زمن النقل النظري. النتيجة ليست قياسًا لسرعة حقيقية.'],
   ['#calcMovieTitle','فيلم بجودة 8K'],['#calcMovieSize','الحجم: 100 جيجابايت'],
   ['#calcGameTitle','لعبة ضخمة (AAA)'],['#calcGameSize','الحجم: 300 جيجابايت'],
   ['#calcHoloTitle','محتوى هولوجرامي'],['#calcHoloSize','الحجم: 50 جيجابايت'],
@@ -2110,7 +2124,7 @@ const AR_FIX = new Map([
   ['#speedEyebrow','السرعة التوضيحية وحاسبة البيانات'],
   ['#speedTitleHead','السرعة لم تعد <span class="grad">مجرد تصفح.</span>'],
   ['#speedLeadText','استكشف أهداف أداء توضيحية لأنظمة المستقبل الذكية والآنية.'],
-  ['#speedTestBtn','🚀 تشغيل محاكاة الأداء محليًا']
+  ['#speedTestBtn','🚀 اختبار سرعة الإنترنت الفعلية']
 ]);
 EN.forEach(([selector], index) => { if (AR_FIX.has(selector)) AR[index] = AR_FIX.get(selector); });
 const site=document.querySelector('.site'),lb=document.getElementById('lang');
@@ -2128,15 +2142,13 @@ document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
   const lang = site.lang || 'ar';
   const viewer = document.getElementById('viewer3DModal');
-  const video = document.getElementById('videoModal');
   const team = document.getElementById('teamModal');
   const chat = document.getElementById('aiChatBox');
   if (viewer && viewer.style.display === 'flex') close3DViewer();
-  else if (video && video.style.display === 'flex') closeVideo();
   else if (team && team.style.display === 'flex') closeTeamModal();
   else if (chat && chat.style.display === 'flex') toggleAIChat();
 });
-[['viewer3DModal', close3DViewer], ['videoModal', closeVideo], ['teamModal', closeTeamModal]].forEach(([id, close]) => {
+[['viewer3DModal', close3DViewer], ['teamModal', closeTeamModal]].forEach(([id, close]) => {
   const modal = document.getElementById(id);
   if (!modal) return;
   modal.addEventListener('click', event => { if (event.target === modal) close(); });
@@ -2145,26 +2157,26 @@ document.addEventListener('keydown', (event) => {
 
 const EXTRA_EN = {
   liveTickerText:'LOCAL SIMULATION • Illustrative network values • No live network connection • Educational 6G+ demo', analyticsEngineLabel:'BIS Analytics Engine', mohabRoleTag:'AI & UI Developer', khaledRoleTag:'UI & Data', osamaRoleTag:'Strategy & Script', use1Tag:'AUTONOMOUS', use2Tag:'TELESURGERY', use3Tag:'METAVERSE', use4Tag:'SMART CITY', techCard1Tag:'Embedded AI', techCard2Tag:'Hologram', techCard3Tag:'3D simulation', techCard4Tag:'Printed Circuit Boards',
-  badgeLiveText:'6G+ local simulation active', navVision:'Vision', navSpeed:'Speed', navBusiness:'Business (BIS)', navGallery:'3D Gallery', navChallenges:'Challenges', navAnalytics:'Analytics', navTech:'Technology', navUses:'Use cases', navCompare:'Comparison', navTeam:'Team', navDocBtn:'🎬 Video',
-  heroBadgeText:'🎓 Business Information Systems Students Project — Future Academy', heroSubText:'Beyond speed, shaping the future.', heroLeadText:'A concept project exploring future connectivity, low latency, AI, and immersive interaction. All performance values shown here are illustrative, not real network measurements.', heroCta1:'✨ Explore the project', heroCta2:'⚡ Interactive speed calculator', heroDocBtn:'🎬 Watch project video',
-  visionEyebrow:'Vision', shareBtnVision:'🔗 Copy link', speedEyebrow:'Illustrative speed & data calculator', shareBtnSpeed:'🔗 Copy link', speedTitleHead:'Speed is no longer <span class="grad">just browsing.</span>', speedLeadText:'Explore illustrative performance targets for future intelligent, real-time systems.', speedTestBtn:'🚀 Run local performance simulation', simulationNotice:'Notice: this is a local simulation with illustrative values, not a real measurement of internet speed or a 6G network.', unitLatency:'Seconds (illustrative latency target)', unitThroughput:'Tbps (illustrative network throughput)',
-  calcBoxTitle:'⚡ Interactive data speed calculator', calcNetworkBadge:'Illustrative network speed: 1.0 Tbps', calcBoxDesc:'Choose a file or content type to estimate transfer time at the illustrative rate of 1 Tbps. Actual speeds vary; this demo does not measure a real connection.', calcMovieTitle:'8K movie', calcMovieSize:'Size: 100 GB', calcGameTitle:'Large AAA game', calcGameSize:'Size: 300 GB', calcHoloTitle:'Holographic content', calcHoloSize:'Size: 50 GB', calcResultLabel:'Estimated transfer time (theoretical):', tbpsSmallText:'Next-generation connectivity concept', tbpsMidText:'Illustrative speeds for immersive and interactive experiences.',
+  badgeLiveText:'6G+ local simulation active', navVision:'Vision', navSpeed:'Speed', navBusiness:'Business (BIS)', navGallery:'3D Gallery', navChallenges:'Challenges', navAnalytics:'Analytics', navTech:'Technology', navUses:'Use cases', navCompare:'Comparison', navTeam:'Team',
+  heroBadgeText:'🎓 Business Information Systems Students Project — Future Academy', heroSubText:'Beyond speed, shaping the future.', heroLeadText:'A concept project exploring future connectivity, low latency, AI, and immersive interaction. All performance values shown here are illustrative, not real network measurements.', heroCta1:'✨ Explore the project', heroCta2:'⚡ Interactive speed calculator',
+  visionEyebrow:'Vision', shareBtnVision:'🔗 Copy link', speedEyebrow:'Internet speed test & data calculator', shareBtnSpeed:'🔗 Copy link', speedTitleHead:'Speed is no longer <span class="grad">just browsing.</span>', speedLeadText:'Explore illustrative performance targets for future intelligent, real-time systems.', speedTestBtn:'🚀 Test real internet speed', customFileSizeLabel:'File size', customFileUnitLabel:'Size unit', customSpeedLabel:'Assumed connection speed', customSpeedUnitLabel:'Speed unit', calcCustomBtn:'Calculate transfer time', simulationNotice:'This test measures connection response and download speed when online; it does not measure a 6G network itself.', unitLatency:'Milliseconds (measured response time)', unitThroughput:'Mbps (measured download speed)',
+  calcBoxTitle:'⚡ Interactive data speed calculator', calcNetworkBadge:'Editable illustrative speed: 1 Tbps', calcBoxDesc:'Choose a file or content type to estimate transfer time at the illustrative rate of 1 Tbps. Actual speeds vary; this demo does not measure a real connection.', calcMovieTitle:'8K movie', calcMovieSize:'Size: 100 GB', calcGameTitle:'Large AAA game', calcGameSize:'Size: 300 GB', calcHoloTitle:'Holographic content', calcHoloSize:'Size: 50 GB', calcResultLabel:'Estimated transfer time (theoretical):', tbpsSmallText:'Next-generation connectivity concept', tbpsMidText:'Illustrative speeds for immersive and interactive experiences.',
   businessEyebrow:'Business impact (BIS)', shareBtnBiz:'🔗 Copy link', businessTitleHead:'How 6G could reshape <span class="grad">the business world.</span>', businessLeadText:'This student project explores possible implications for Business Information Systems (BIS). The figures are illustrative, not verified business outcomes.', bizCard1Title:'Operational cost reduction (concept)', bizCard1Desc:'Future connectivity could support cloud services and enterprise communication. The claimed savings shown in speculative examples are not measured or guaranteed.', bizCard2Title:'Real-time big data analytics',
   galleryEyebrow:'3D simulation gallery', shareBtnGallery:'🔗 Copy link', galleryTitleHead:'Practical, interactive <span class="grad">design.</span>', galleryLeadText:'Select an item below to open the interactive 3D viewer and explore circuit boards, terahertz waves, and holographic mesh concepts.', challengesEyebrow:'Challenges & proposed solutions', shareBtnChal:'🔗 Copy link', challengesTitleHead:'Technical challenges require <span class="grad">engineering.</span>', challengesLeadText:'Examples of challenges that future sixth-generation networks may need to address.',
   analyticsEyebrow:'BIS KPIs & charts', shareBtnAnalytics:'🔗 Copy link', analyticsTitleHead:'Illustrative system indicators and charts.', analyticsLeadText:'A hypothetical comparison of future network concepts with the previous generation.', chartTitle:'Illustrative performance comparison (5G vs 6G+)', chartNotice:'Hypothetical comparison for demonstration only; values are not field-test results or an approved standard.', techEyebrow:'Technology', shareBtnTech:'🔗 Copy link', techTitleHead:'Concepts for a future network.', techCard1Title:'Embedded AI', techCard1Desc:'AI could help a network interpret patterns and anticipate demand.', techCard2Title:'Holographic and immersive interaction', techCard2Desc:'3D imagery could support immersive learning and visualization.', techCard3Title:'3D simulation', techCard3Desc:'A local simulation illustrates how data may move between devices.', techCard4Title:'Advanced printed circuit boards', techCard4Desc:'Hardware concepts that connect design ideas with physical circuit boards.',
-  usesEyebrow:'Use cases', shareBtnUses:'🔗 Copy link', usesTitleHead:'Applications that need a response <span class="grad">now.</span>', compareEyebrow:'Comparison', shareBtnCompare:'🔗 Copy link', compareTitleHead:'From 5G to <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.', thFeature:'Feature', tdRow1:'Peak speed target', tdRow2:'Latency', tdRow3:'Artificial intelligence', tdRow4:'Interaction method', compareNote:'These are illustrative research targets, not measurements from this project.', docsEyebrow:'Presentation', shareBtnDocs:'🔗 Copy link', docsTitleHead:'Project presentation <span class="grad">video.</span>', docsLeadText:'Watch the project presentation video through Google Drive.', docsWatchBtn:'🎬 Watch project video', teamEyebrow:'Team', shareBtnTeam:'🔗 Copy link', teamTitleHead:'The project team, <span class="grad">together.</span>', teamLeadText:'Business Information Systems students at Future Academy collaborating on an interactive concept project. Select a card to view roles and tasks.', teamHint1:'Click to view tasks & roles →', teamHint2:'Click to view tasks & roles →', teamHint3:'Click to view tasks & roles →', teamHint4:'Click to view tasks & roles →', amrRoleTag:'Project Leader', closeMidText:'Innovation does not wait for the impossible...', closeHugeText:'It creates it.', closeLeadText:'The 6G+ project: building tomorrow’s ideas today.', backToTopBtn:'🚀 Back to top', footerText:'© 2026 6G+ project · Business Information Systems Students — Future Academy',
+  usesEyebrow:'Use cases', shareBtnUses:'🔗 Copy link', usesTitleHead:'Applications that need a response <span class="grad">now.</span>', compareEyebrow:'Comparison', shareBtnCompare:'🔗 Copy link', compareTitleHead:'From 5G to <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.', thFeature:'Feature', tdRow1:'Peak speed target', tdRow2:'Latency', tdRow3:'Artificial intelligence', tdRow4:'Interaction method', compareNote:'These are illustrative research targets, not measurements from this project.', teamEyebrow:'Team', shareBtnTeam:'🔗 Copy link', teamTitleHead:'The project team, <span class="grad">together.</span>', teamLeadText:'Business Information Systems students at Future Academy collaborating on an interactive concept project. Select a card to view roles and tasks.', teamHint1:'Click to view tasks & roles →', teamHint2:'Click to view tasks & roles →', teamHint3:'Click to view tasks & roles →', teamHint4:'Click to view tasks & roles →', amrRoleTag:'Project Leader', closeMidText:'Innovation does not wait for the impossible...', closeHugeText:'It creates it.', closeLeadText:'The 6G+ project: building tomorrow’s ideas today.', backToTopBtn:'🚀 Back to top', footerText:'© 2026 6G+ project · Business Information Systems Students — Future Academy',
   viewer3DTitle:'3D Holographic Mesh Viewer', viewer3DDesc:'Inspect the simulation and rotate the interactive 3D model (click and drag to rotate 360°).', btnModeRotate:'🔄 Rotate model', btnModePulse:'⚡ Signal pulse', btnModeWire:'🌐 Network mesh', aiHeaderTitle:'🤖 Mahmama (AI project assistant)', aiWelcomeMsg:'Welcome! I am Mahmama, the scripted assistant for this 6G+ concept project. Ask about the project, illustrative speed, team, or academy.', qBtn1:'🎯 What is the main project goal?', qBtn2:'👥 Who is on the team?', qBtn3:'💼 What is the business impact of 6G?', qBtn4:'⚡ What is the data speed?', qBtn5:'🌐 What can the 3D viewer do?', qBtn6:'📈 How does the site relate to BIS?', aiSendBtn:'Send', aiToggleText:'💬 Ask Mahmama (assistant)', modalCloseBtn:'Close',
   themeToggle:'Light mode'
 };
 const EXTRA_AR = {
   liveTickerText:'محاكاة محلية • قيم توضيحية للشبكة • لا يوجد اتصال بشبكة فعلية • تجربة تعليمية لمفاهيم 6G+', analyticsEngineLabel:'محرك مؤشرات نظم معلومات الأعمال', mohabRoleTag:'مطور الذكاء الاصطناعي والواجهات', khaledRoleTag:'الواجهات والبيانات', osamaRoleTag:'الاستراتيجية والسيناريو', use1Tag:'سيارات ذاتية القيادة', use2Tag:'الجراحة عن بُعد', use3Tag:'عوالم افتراضية', use4Tag:'مدينة ذكية', techCard1Tag:'الذكاء الاصطناعي المدمج', techCard2Tag:'الهولوجرام', techCard3Tag:'محاكاة ثلاثية الأبعاد', techCard4Tag:'لوحات الدوائر المطبوعة',
-  badgeLiveText:'محاكاة محلية لنظام 6G+ نشطة', navVision:'الرؤية', navSpeed:'السرعة', navBusiness:'الأعمال (BIS)', navGallery:'معرض 3D', navChallenges:'التحديات', navAnalytics:'المؤشرات', navTech:'التقنيات', navUses:'الاستخدامات', navCompare:'المقارنة', navTeam:'الفريق', navDocBtn:'🎬 الفيديو',
-  heroBadgeText:'🎓 مشروع طلاب نظم معلومات الأعمال — أكاديمية المستقبل', heroSubText:'ما بعد السرعة واستشراف المستقبل.', heroLeadText:'مشروع مفاهيمي يستكشف الاتصال المستقبلي وزمن الاستجابة المنخفض والذكاء الاصطناعي والتفاعل الغامر. جميع قيم الأداء المعروضة توضيحية وليست قياسات فعلية للشبكة.', heroCta1:'✨ اكتشف المشروع', heroCta2:'⚡ حاسبة السرعة التفاعلية', heroDocBtn:'🎬 مشاهدة فيديو المشروع', visionEyebrow:'الرؤية', shareBtnVision:'🔗 نسخ الرابط', speedEyebrow:'السرعة التوضيحية وحاسبة البيانات', shareBtnSpeed:'🔗 نسخ الرابط', speedTitleHead:'السرعة لم تعد <span class="grad">مجرد تصفح.</span>', speedLeadText:'استكشف أهداف أداء توضيحية لأنظمة المستقبل الذكية والآنية.', speedTestBtn:'🚀 تشغيل محاكاة الأداء محليًا', simulationNotice:'تنبيه: هذه محاكاة محلية بقيم توضيحية، وليست قياسًا فعليًا لسرعة الإنترنت أو لشبكة 6G.', unitLatency:'ثانية (هدف توضيحي لزمن الاستجابة)', unitThroughput:'تيرابت في الثانية (معدل نقل توضيحي للشبكة)',
-  calcBoxTitle:'⚡ حاسبة سرعة نقل البيانات التفاعلية', calcNetworkBadge:'سرعة الشبكة الافتراضية: 1.0 تيرابت/ثانية', calcBoxDesc:'اختر نوع الملف أو المحتوى لتقدير زمن النقل النظري عند سرعة افتراضية قدرها 1 تيرابت/ثانية. السرعات الفعلية تختلف وهذه المحاكاة لا تقيس اتصالًا حقيقيًا.', calcMovieTitle:'فيلم بجودة 8K', calcMovieSize:'الحجم: 100 جيجابايت', calcGameTitle:'لعبة ضخمة (AAA)', calcGameSize:'الحجم: 300 جيجابايت', calcHoloTitle:'محتوى هولوجرامي', calcHoloSize:'الحجم: 50 جيجابايت', calcResultLabel:'زمن النقل التقديري (حساب نظري):', tbpsSmallText:'مفهوم الاتصال من الجيل التالي', tbpsMidText:'سرعات افتراضية لتجارب غامرة وتفاعلية.',
+  badgeLiveText:'محاكاة محلية لنظام 6G+ نشطة', navVision:'الرؤية', navSpeed:'السرعة', navBusiness:'الأعمال (BIS)', navGallery:'معرض 3D', navChallenges:'التحديات', navAnalytics:'المؤشرات', navTech:'التقنيات', navUses:'الاستخدامات', navCompare:'المقارنة', navTeam:'الفريق',
+  heroBadgeText:'🎓 مشروع طلاب نظم معلومات الأعمال — أكاديمية المستقبل', heroSubText:'ما بعد السرعة واستشراف المستقبل.', heroLeadText:'مشروع مفاهيمي يستكشف الاتصال المستقبلي وزمن الاستجابة المنخفض والذكاء الاصطناعي والتفاعل الغامر. جميع قيم الأداء المعروضة توضيحية وليست قياسات فعلية للشبكة.', heroCta1:'✨ اكتشف المشروع', heroCta2:'⚡ حاسبة السرعة التفاعلية', visionEyebrow:'الرؤية', shareBtnVision:'🔗 نسخ الرابط', speedEyebrow:'اختبار سرعة الإنترنت وحاسبة البيانات', shareBtnSpeed:'🔗 نسخ الرابط', speedTitleHead:'السرعة لم تعد <span class="grad">مجرد تصفح.</span>', speedLeadText:'استكشف أهداف أداء توضيحية لأنظمة المستقبل الذكية والآنية.', speedTestBtn:'🚀 اختبار سرعة الإنترنت الفعلية', customFileSizeLabel:'حجم الملف', customFileUnitLabel:'وحدة الحجم', customSpeedLabel:'سرعة الاتصال المفترضة', customSpeedUnitLabel:'وحدة السرعة', calcCustomBtn:'احسب زمن النقل', simulationNotice:'الاختبار يقيس استجابة الاتصال وسرعة التنزيل عند توفر الإنترنت؛ ولا يقيس أداء شبكة 6G نفسها.', unitLatency:'مللي ثانية (زمن الاستجابة المقاس)', unitThroughput:'ميجابت في الثانية (سرعة التنزيل المقاسة)',
+  calcBoxTitle:'⚡ حاسبة سرعة نقل البيانات التفاعلية', calcNetworkBadge:'سرعة افتراضية قابلة للتعديل: 1 تيرابت/ثانية', calcBoxDesc:'اختر نوع ملف أو أدخل حجمًا وسرعة اتصال افتراضيين لحساب زمن النقل النظري. النتيجة ليست قياسًا لسرعة حقيقية.', calcMovieTitle:'فيلم بجودة 8K', calcMovieSize:'الحجم: 100 جيجابايت', calcGameTitle:'لعبة ضخمة (AAA)', calcGameSize:'الحجم: 300 جيجابايت', calcHoloTitle:'محتوى هولوجرامي', calcHoloSize:'الحجم: 50 جيجابايت', calcResultLabel:'زمن النقل التقديري (حساب نظري):', tbpsSmallText:'مفهوم الاتصال من الجيل التالي', tbpsMidText:'سرعات افتراضية لتجارب غامرة وتفاعلية.',
   businessEyebrow:'أثر الأعمال (BIS)', shareBtnBiz:'🔗 نسخ الرابط', businessTitleHead:'كيف يمكن لشبكات 6G إعادة تشكيل <span class="grad">عالم الأعمال؟</span>', businessLeadText:'يستكشف هذا المشروع الطلابي آثارًا محتملة على نظم معلومات الأعمال. الأرقام توضيحية وليست نتائج أعمال مؤكدة.', bizCard1Title:'خفض التكاليف التشغيلية (مفهوم افتراضي)', bizCard1Desc:'قد يدعم الاتصال المستقبلي الخدمات السحابية واتصالات المؤسسات. أي نسب توفير افتراضية ليست نتائج مقاسة أو مضمونة.', bizCard2Title:'تحليل البيانات الضخمة في الوقت الفعلي',
   galleryEyebrow:'معرض المحاكاة ثلاثية الأبعاد', shareBtnGallery:'🔗 نسخ الرابط', galleryTitleHead:'تصميم عملي <span class="grad">وتفاعلي.</span>', galleryLeadText:'اختر عنصرًا لفتح عارض ثلاثي الأبعاد تفاعلي واستكشاف مفاهيم لوحات الدوائر وموجات التيراهيرتز والشبكات الهولوجرامية.', challengesEyebrow:'التحديات والحلول المقترحة', shareBtnChal:'🔗 نسخ الرابط', challengesTitleHead:'تحديات تقنية تتطلب <span class="grad">هندسة متقدمة.</span>', challengesLeadText:'أمثلة على تحديات قد تحتاج شبكات الجيل السادس المستقبلية إلى معالجتها.',
   analyticsEyebrow:'مؤشرات ورسوم نظم معلومات الأعمال', shareBtnAnalytics:'🔗 نسخ الرابط', analyticsTitleHead:'مؤشرات ورسوم توضيحية للنظام.', analyticsLeadText:'مقارنة افتراضية بين مفاهيم شبكات المستقبل والجيل السابق.', chartTitle:'مقارنة أداء توضيحية (5G مقابل 6G+)', chartNotice:'مقارنة افتراضية للعرض فقط؛ القيم ليست نتائج اختبار ميداني أو معيارًا معتمدًا.', techEyebrow:'التقنيات', shareBtnTech:'🔗 نسخ الرابط', techTitleHead:'مفاهيم لشبكة المستقبل.', techCard1Title:'الذكاء الاصطناعي المدمج', techCard1Desc:'قد يساعد الذكاء الاصطناعي الشبكة على فهم الأنماط وتوقع الطلب.', techCard2Title:'الهولوجرام والتفاعل الغامر', techCard2Desc:'قد تدعم الصور ثلاثية الأبعاد التعلم والتصور التفاعلي.', techCard3Title:'محاكاة ثلاثية الأبعاد', techCard3Desc:'توضح المحاكاة المحلية كيف يمكن أن تنتقل البيانات بين الأجهزة.', techCard4Title:'لوحات دوائر مطبوعة متطورة', techCard4Desc:'مفاهيم للأجهزة تربط التصميم بلوحات الدوائر الفعلية.',
-  usesEyebrow:'الاستخدامات', shareBtnUses:'🔗 نسخ الرابط', usesTitleHead:'تطبيقات تحتاج إلى استجابة <span class="grad">فورية.</span>', compareEyebrow:'المقارنة', shareBtnCompare:'🔗 نسخ الرابط', compareTitleHead:'من 5G إلى <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.', thFeature:'الخاصية', tdRow1:'أعلى سرعة مستهدفة', tdRow2:'زمن الاستجابة', tdRow3:'الذكاء الاصطناعي', tdRow4:'طريقة التفاعل', compareNote:'هذه مستهدفات بحثية توضيحية وليست قياسات من هذا المشروع.', docsEyebrow:'العرض التقديمي', shareBtnDocs:'🔗 نسخ الرابط', docsTitleHead:'فيديو <span class="grad">عرض المشروع.</span>', docsLeadText:'شاهد فيديو العرض التقديمي للمشروع عبر Google Drive.', docsWatchBtn:'🎬 مشاهدة فيديو المشروع', teamEyebrow:'الفريق', shareBtnTeam:'🔗 نسخ الرابط', teamTitleHead:'فريق المشروع <span class="grad">معًا.</span>', teamLeadText:'طلاب نظم معلومات الأعمال بأكاديمية المستقبل يتعاونون على مشروع مفاهيمي تفاعلي. اضغط على بطاقة لعرض المهام والأدوار.', teamHint1:'اضغط لعرض المهام والأدوار ←', teamHint2:'اضغط لعرض المهام والأدوار ←', teamHint3:'اضغط لعرض المهام والأدوار ←', teamHint4:'اضغط لعرض المهام والأدوار ←', amrRoleTag:'قائد المشروع', closeMidText:'الابتكار لا ينتظر المستحيل...', closeHugeText:'بل يصنعه.', closeLeadText:'مشروع 6G+: نبني أفكار الغد اليوم.', backToTopBtn:'🚀 العودة إلى الأعلى', footerText:'© 2026 مشروع 6G+ · طلاب نظم معلومات الأعمال — أكاديمية المستقبل',
+  usesEyebrow:'الاستخدامات', shareBtnUses:'🔗 نسخ الرابط', usesTitleHead:'تطبيقات تحتاج إلى استجابة <span class="grad">فورية.</span>', compareEyebrow:'المقارنة', shareBtnCompare:'🔗 نسخ الرابط', compareTitleHead:'من 5G إلى <span class="lat" style="direction:ltr;display:inline-block">6G+</span>.', thFeature:'الخاصية', tdRow1:'أعلى سرعة مستهدفة', tdRow2:'زمن الاستجابة', tdRow3:'الذكاء الاصطناعي', tdRow4:'طريقة التفاعل', compareNote:'هذه مستهدفات بحثية توضيحية وليست قياسات من هذا المشروع.', teamEyebrow:'الفريق', shareBtnTeam:'🔗 نسخ الرابط', teamTitleHead:'فريق المشروع <span class="grad">معًا.</span>', teamLeadText:'طلاب نظم معلومات الأعمال بأكاديمية المستقبل يتعاونون على مشروع مفاهيمي تفاعلي. اضغط على بطاقة لعرض المهام والأدوار.', teamHint1:'اضغط لعرض المهام والأدوار ←', teamHint2:'اضغط لعرض المهام والأدوار ←', teamHint3:'اضغط لعرض المهام والأدوار ←', teamHint4:'اضغط لعرض المهام والأدوار ←', amrRoleTag:'قائد المشروع', closeMidText:'الابتكار لا ينتظر المستحيل...', closeHugeText:'بل يصنعه.', closeLeadText:'مشروع 6G+: نبني أفكار الغد اليوم.', backToTopBtn:'🚀 العودة إلى الأعلى', footerText:'© 2026 مشروع 6G+ · طلاب نظم معلومات الأعمال — أكاديمية المستقبل',
   viewer3DTitle:'عارض المحاكاة ثلاثية الأبعاد', viewer3DDesc:'استكشف المحاكاة ودوّر المجسم ثلاثي الأبعاد (اضغط واسحب للتدوير 360 درجة).', btnModeRotate:'🔄 تدوير المجسم', btnModePulse:'⚡ نبض الإشارة', btnModeWire:'🌐 شبكة الاتصال', aiHeaderTitle:'🤖 محماااا (مساعد المشروع)', aiWelcomeMsg:'أهلًا بك! أنا محماااا، مساعد مبرمج مسبقًا لمشروع 6G+. اسألني عن المشروع أو السرعة التوضيحية أو الفريق أو الأكاديمية.', qBtn1:'🎯 ما الهدف الرئيسي للمشروع؟', qBtn2:'👥 من أعضاء الفريق؟', qBtn3:'💼 ما أثر 6G على الأعمال؟', qBtn4:'⚡ ما سرعة نقل البيانات؟', qBtn5:'🌐 ما مميزات عارض 3D؟', qBtn6:'📈 كيف يخدم الموقع تخصص BIS؟', aiSendBtn:'إرسال', aiToggleText:'💬 اسأل محماااا (المساعد)', modalCloseBtn:'إغلاق', themeToggle:'الوضع الفاتح'
 };
 const applyLanguagePass = (l) => {
@@ -2260,8 +2272,8 @@ function setLang(l){
   if (mainNav) mainNav.setAttribute('aria-label', l === 'en' ? 'Main navigation' : 'التنقل الرئيسي');
   const chartCanvas = document.getElementById('performanceChart');
   if (chartCanvas) chartCanvas.setAttribute('aria-label', l === 'en' ? 'Illustrative comparison chart for 5G and 6G+' : 'مخطط مقارنة توضيحي بين 5G و6G+');
-  ['viewer3DCloseBtn','aiCloseBtn','videoCloseBtn','teamModalCloseBtn'].forEach(id => { const closeBtn = document.getElementById(id); if (closeBtn) closeBtn.setAttribute('aria-label', l === 'en' ? 'Close' : 'إغلاق'); });
-  cEl.setAttribute('aria-label',l==='en'?'Illustrative latency target: 0.001 seconds':'هدف توضيحي لزمن الاستجابة: 0.001 ثانية');
+  ['viewer3DCloseBtn','aiCloseBtn','teamModalCloseBtn'].forEach(id => { const closeBtn = document.getElementById(id); if (closeBtn) closeBtn.setAttribute('aria-label', l === 'en' ? 'Close' : 'إغلاق'); });
+  cEl.setAttribute('aria-label',l==='en'?'Measured response time in milliseconds':'زمن الاستجابة المقاس بالمللي ثانية');
   initChart(l==='en');
   const selectedCalcBtn = document.querySelector('.calc-btn.active') || document.getElementById('calcBtnMovie');
   if (selectedCalcBtn && lastDownloadSelection) calculateDownload(lastDownloadSelection.type, lastDownloadSelection.sizeGB, selectedCalcBtn, true);
@@ -2287,8 +2299,8 @@ lb.addEventListener('click',()=>setLang(site.lang==='en'?'ar':'en'));
 
 // Keyboard and backdrop dismissal for all site dialogs.
 (function installDialogBehavior(){
-  const dialogIds = ['viewer3DModal','videoModal','teamModal'];
-  const closeById = {viewer3DModal: close3DViewer, videoModal: closeVideo, teamModal: closeTeamModal};
+  const dialogIds = ['viewer3DModal','teamModal'];
+  const closeById = {viewer3DModal: close3DViewer, teamModal: closeTeamModal};
   dialogIds.forEach(id => {
     const dialog = document.getElementById(id);
     if (!dialog) return;
@@ -2311,6 +2323,65 @@ lb.addEventListener('click',()=>setLang(site.lang==='en'?'ar':'en'));
 })();
 
 try { setLang(localStorage.getItem('lang6g') === 'en' ? 'en' : 'ar'); } catch (e) { setLang('ar'); }
+})();
+</script>
+
+
+<style id="6g-theme-language-polish">
+/* Unified palette and readable controls in both themes */
+:root{--focus-ring:rgba(43,208,255,.95);--accent-cyan:#2bd0ff;--accent-blue:#0a64ff;--accent-violet:#8a6bff}
+html{color-scheme:dark;}
+body{font-family:var(--f-body,"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif);text-rendering:optimizeLegibility}
+.site{font-family:var(--f-body,"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif);min-width:0}
+.site[lang="en"]{font-family:var(--f-body,"Inter","Segoe UI",Arial,sans-serif);line-height:1.65}
+.site[lang="en"] h1,.site[lang="en"] h2,.site[lang="en"] h3,.site[lang="en"] .logo{font-family:var(--f-disp,"Readex Pro","Segoe UI",Arial,sans-serif)}
+.site[lang="ar"]{direction:rtl}
+.site[lang="en"]{direction:ltr}
+body.light-theme,body.light-theme .site{color:var(--ink)}
+body.light-theme{color-scheme:light}
+body:not(.light-theme){color-scheme:dark}
+/* Improve contrast where old hard-coded colors leaked between themes */
+body.light-theme .hero,body.light-theme .dark,body.light-theme .light{color:var(--ink)}
+body:not(.light-theme) .hero,body:not(.light-theme) .dark,body:not(.light-theme) .light{color:#f5f7ff}
+body.light-theme .sub,body.light-theme .lead,body.light-theme .note,body.light-theme .business-desc,body.light-theme .gallery-card p,body.light-theme .card p,body.light-theme .challenge-desc,body.light-theme .team-hint{color:#4a5568}
+body:not(.light-theme) .sub,body:not(.light-theme) .lead,body:not(.light-theme) .note,body:not(.light-theme) .business-desc,body:not(.light-theme) .gallery-card p,body:not(.light-theme) .card p,body:not(.light-theme) .challenge-desc,body:not(.light-theme) .team-hint{color:#c5ccda}
+body.light-theme input,body.light-theme select,body.light-theme textarea{background:#fff;color:#172033;border-color:rgba(10,100,255,.28)}
+body:not(.light-theme) input,body:not(.light-theme) select,body:not(.light-theme) textarea{background:rgba(9,14,27,.86);color:#f5f7ff;border-color:rgba(43,208,255,.3)}
+input,select,textarea{font:inherit;max-width:100%;border-radius:12px;padding:10px 12px}
+input::placeholder,textarea::placeholder{color:#8792a6;opacity:1}
+body.light-theme .tablebox,body.light-theme .chart-container-box,body.light-theme .calc-result-display{color:var(--ink)}
+body:not(.light-theme) .tablebox,body:not(.light-theme) .chart-container-box,body:not(.light-theme) .calc-result-display{color:#f5f7ff}
+body.light-theme .team-card{color:var(--ink)}
+body:not(.light-theme) .team-card{color:#f5f7ff}
+.lang,.theme-toggle{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;font-size:12px}
+button,a,input,select,textarea{transition-color:.2s ease}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px}
+[dir="ltr"] .live-ticker-bar{direction:ltr}
+[dir="rtl"] .live-ticker-bar{direction:ltr}
+@media(max-width:760px){.site[lang="en"] .hero h1{font-size:clamp(34px,9vw,58px)}.nav-links{inset-inline:0}.nav .in{height:auto;min-height:68px;padding-block:10px}.acts{margin-inline-start:auto}}
+</style>
+<script id="6g-language-theme-final-fix">
+(function(){
+  const root=document.documentElement;
+  const site=document.querySelector('.site');
+  const themeBtn=document.getElementById('themeToggle');
+  const langBtn=document.getElementById('lang');
+  function syncLabels(){
+    const lang=(site&&site.lang)||root.lang||'ar';
+    const light=document.body.classList.contains('light-theme');
+    if(themeBtn){
+      themeBtn.textContent=lang==='en'?(light?'Dark mode':'Light mode'):(light?'الوضع الداكن':'الوضع الفاتح');
+      themeBtn.setAttribute('aria-label',lang==='en'?(light?'Switch to dark mode':'Switch to light mode'):(light?'التبديل إلى الوضع الداكن':'التبديل إلى الوضع الفاتح'));
+    }
+    if(langBtn){langBtn.textContent=lang==='en'?'AR':'EN';langBtn.setAttribute('aria-label',lang==='en'?'Switch to Arabic':'التبديل إلى الإنجليزية');}
+    root.style.colorScheme=light?'light':'dark';
+  }
+  if(themeBtn){themeBtn.addEventListener('click',()=>requestAnimationFrame(syncLabels));}
+  if(langBtn){langBtn.addEventListener('click',()=>requestAnimationFrame(syncLabels));}
+  const observer=new MutationObserver(syncLabels);
+  observer.observe(root,{attributes:true,attributeFilter:['lang','dir']});
+  observer.observe(document.body,{attributes:true,attributeFilter:['class']});
+  syncLabels();
 })();
 </script>
 
