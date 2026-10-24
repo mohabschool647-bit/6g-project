@@ -76,6 +76,64 @@ select option:checked { background-color: #174a78; color: #ffffff; }
 body.light-theme select option:checked { background-color: #dbeafe; color: #172033; }
 select:focus-visible { outline-color: var(--focus-ring, #2bd0ff); }
 </style>
+
+<style id="speed-lab-redesign">
+.speed-lab{padding:clamp(18px,3.5vw,34px)!important;border:1px solid rgba(43,208,255,.32)!important;background:linear-gradient(145deg,rgba(12,22,39,.96),rgba(15,20,37,.9) 55%,rgba(28,19,53,.92))!important;box-shadow:0 24px 70px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.08)!important;overflow:hidden}
+.speed-lab:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(43,208,255,.035),transparent 75%);pointer-events:none}
+.speed-lab-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:2}
+.speed-lab-kicker{display:block;color:#70eaff;font:500 10px var(--f-mono);letter-spacing:.17em;margin-bottom:10px;direction:ltr;text-align:right}
+.speed-lab-head h3{font:700 clamp(21px,3vw,29px) var(--f-disp);color:#f5fbff;line-height:1.35}
+.speed-lab-head p{max-width:650px;margin-top:10px;color:#a9b9cd;font-size:14px;line-height:1.8}
+.speed-lab-chip{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(43,208,255,.35);background:rgba(43,208,255,.08);border-radius:12px;padding:10px 13px;color:#83edff;font:12px var(--f-mono);direction:ltr;white-space:nowrap}
+.speed-lab-pulse{width:7px;height:7px;border-radius:50%;background:#49f6bf;box-shadow:0 0 12px #49f6bf}
+.speed-lab-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:26px 0;position:relative;z-index:2}
+.speed-preset{min-width:0;display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;text-align:start;padding:15px;border:1px solid rgba(148,178,214,.18);border-radius:16px;background:rgba(255,255,255,.035);color:#f5f8ff;cursor:pointer;transition:transform .2s,border-color .2s,background .2s;font:inherit}
+.speed-preset:hover,.speed-preset.active{transform:translateY(-2px);border-color:#2bd0ff;background:linear-gradient(135deg,rgba(43,208,255,.13),rgba(138,107,255,.1));box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.speed-preset-icon{grid-row:span 2;display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:rgba(43,208,255,.1);font-size:22px}
+.speed-preset-name{font-weight:700;font-size:14px;line-height:1.5}
+.speed-preset-meta{font:11px var(--f-mono);color:#8ca6c3;direction:ltr;text-align:right}
+.speed-lab-workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(230px,.75fr);gap:16px;position:relative;z-index:2}
+.speed-lab-fields{padding:20px;border:1px solid rgba(148,178,214,.15);border-radius:18px;background:rgba(4,10,21,.36)}
+.speed-lab-section-title{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:17px;color:#e8f5ff}
+.speed-lab-section-title span:first-child{font:12px var(--f-mono);color:#2bd0ff;border:1px solid rgba(43,208,255,.35);border-radius:7px;padding:4px 7px}
+.speed-lab-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.speed-field{display:grid;gap:7px;color:#aebed1;font-size:12px;min-width:0}
+.speed-field input,.speed-field select{width:100%;min-width:0;min-height:46px;padding:10px 12px;border-radius:10px;border:1px solid rgba(142,169,203,.25);background:#101a2b;color:#f6f9ff;font:500 14px var(--f-mono);outline:none;transition:border-color .2s,box-shadow .2s}
+.speed-field input:focus,.speed-field select:focus{border-color:#2bd0ff;box-shadow:0 0 0 3px rgba(43,208,255,.1)}
+.speed-field select option{background:#101a2b;color:#f6f9ff}
+.speed-calc-action{width:100%;margin-top:17px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 17px;border:0;border-radius:12px;background:linear-gradient(100deg,#087cff,#20c9ee);color:#fff;font:700 14px var(--f-body);cursor:pointer;box-shadow:0 8px 22px rgba(10,100,255,.24);transition:transform .2s,filter .2s}
+.speed-calc-action:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.speed-calc-action span:last-child{font-size:20px;direction:ltr}
+.speed-lab-footnote{margin-top:12px;color:#8193aa;font-size:11px;line-height:1.7}
+.speed-result-panel{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:270px;padding:25px;border:1px solid rgba(43,208,255,.27);border-radius:18px;background:radial-gradient(ellipse at 80% 10%,rgba(43,208,255,.15),transparent 52%),linear-gradient(155deg,rgba(8,20,39,.98),rgba(17,15,42,.98));}
+.speed-result-orbit{position:absolute;z-index:-1;width:150px;height:150px;top:-50px;left:-35px;border:1px solid rgba(43,208,255,.14);border-radius:50%}
+.speed-result-orbit span{position:absolute;inset:18px;border:1px solid rgba(138,107,255,.22);border-radius:50%}
+.speed-result-orbit span:nth-child(2){inset:38px;border-color:rgba(43,208,255,.3)}
+.speed-result-orbit span:nth-child(3){inset:58px;background:rgba(43,208,255,.08);border-color:rgba(43,208,255,.35)}
+.speed-result-label{font-size:13px;color:#a8bed3}
+.speed-result-time{margin-top:12px;color:#78edff;font:700 clamp(23px,3vw,34px) var(--f-mono);line-height:1.4;overflow-wrap:anywhere;direction:rtl}
+.speed-result-divider{width:100%;height:1px;background:linear-gradient(90deg,rgba(43,208,255,.45),transparent);margin:24px 0 15px}
+.speed-result-bottom{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font:10px var(--f-mono);color:#7d93ad;direction:ltr}
+.speed-result-bottom strong{color:#a7bbd1;font-weight:500;letter-spacing:.07em}
+body.light-theme .speed-lab{background:linear-gradient(145deg,#fff,#f1f7ff 60%,#f5f1ff)!important;border-color:rgba(10,100,255,.2)!important;box-shadow:0 20px 50px rgba(26,77,145,.1)!important}
+body.light-theme .speed-lab-head h3{color:#17253b}
+body.light-theme .speed-lab-head p{color:#53657d}
+body.light-theme .speed-lab-kicker{color:#0878b8}
+body.light-theme .speed-preset{color:#1d2a40;background:rgba(255,255,255,.8);border-color:rgba(10,100,255,.14)}
+body.light-theme .speed-preset-meta{color:#647c98}
+body.light-theme .speed-lab-fields{background:rgba(255,255,255,.72);border-color:rgba(10,100,255,.13)}
+body.light-theme .speed-lab-section-title{color:#1d2a40}
+body.light-theme .speed-field{color:#53657d}
+body.light-theme .speed-field input,body.light-theme .speed-field select,body.light-theme .speed-field select option{background:#fff;color:#17253b;border-color:rgba(10,100,255,.2);color-scheme:light}
+body.light-theme .speed-lab-footnote{color:#687d95}
+body.light-theme .speed-result-panel{background:radial-gradient(ellipse at 80% 10%,rgba(43,208,255,.14),transparent 52%),linear-gradient(155deg,#f5fbff,#f4f1ff);border-color:rgba(10,100,255,.2)}
+body.light-theme .speed-result-label{color:#586b84}
+body.light-theme .speed-result-time{color:#075ca9}
+body.light-theme .speed-result-bottom{color:#71839a}
+body.light-theme .speed-result-bottom strong{color:#4b617b}
+@media(max-width:680px){.speed-lab-workspace{grid-template-columns:1fr}.speed-lab-presets{gap:8px}.speed-preset{grid-template-columns:1fr;text-align:center;justify-items:center;padding:12px 6px;gap:6px}.speed-preset-icon{grid-row:auto;width:38px;height:38px}.speed-preset-meta{text-align:center}.speed-result-panel{min-height:220px}.speed-lab-chip{white-space:normal}}
+@media(max-width:430px){.speed-lab-form-grid{grid-template-columns:1fr}.speed-lab-presets{grid-template-columns:1fr}.speed-preset{grid-template-columns:auto 1fr;justify-items:stretch;text-align:start;padding:12px}.speed-preset-icon{grid-row:span 2}.speed-preset-meta{text-align:right}.speed-lab-fields{padding:14px}}
+</style>
 </head><body>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -544,6 +602,29 @@ body.light-theme .business-desc{color:var(--grey-l)}
 .gallery-img-box{width:100%;height:180px;border-radius:16px;background:linear-gradient(135deg,rgba(43,208,255,0.18),rgba(138,107,255,0.18));display:flex;align-items:center;justify-content:center;font-size:42px;border:1px solid rgba(43,208,255,0.3);box-shadow:inset 0 1px 3px rgba(255,255,255,0.2);position:relative;overflow:hidden;transition:transform .4s ease}
 body.light-theme .gallery-img-box{background:linear-gradient(135deg,rgba(10,100,255,0.08),rgba(43,208,255,0.1));border-color:rgba(10,100,255,0.2)}
 .gallery-card:hover .gallery-img-box{transform:scale(1.04)}
+
+/* Custom technical previews for the 3D gallery */
+.gallery-img-box{height:210px!important;background:radial-gradient(ellipse at 50% 45%,rgba(20,112,160,.22),rgba(4,13,27,.96) 72%)!important;isolation:isolate}
+.gallery-img-box:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(66,216,255,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(66,216,255,.075) 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(transparent,#000 25%,#000 75%,transparent);z-index:-1}
+.art-caption{position:absolute;bottom:10px;left:12px;font:600 9px/1.2 var(--f-disp);letter-spacing:2px;color:#8beeff;text-shadow:0 0 12px rgba(56,223,255,.7)}
+.pcb-board{position:absolute;width:72%;height:57%;top:20%;left:14%;border:1px solid #35d6b2;border-radius:8px;transform:perspective(450px) rotateX(54deg) rotateZ(-17deg);background:linear-gradient(135deg,#0c614d,#06352f 55%,#0b705b);box-shadow:0 15px 26px #0009,0 0 22px #13d8b255,inset 0 0 0 5px #2aa98733}
+.pcb-board:before,.pcb-board:after{content:"";position:absolute;inset:8px;border:1px solid #c6a45a66;border-radius:4px;background:repeating-linear-gradient(0deg,transparent 0 12px,#dbb55b66 13px 14px,transparent 15px 24px),repeating-linear-gradient(90deg,transparent 0 17px,#42e9c277 18px 19px,transparent 20px 30px)}
+.pcb-chip{position:absolute;z-index:2;display:block;background:linear-gradient(135deg,#3d4a57,#111b28 50%,#556574);border:2px solid #aabac5;box-shadow:0 4px 0 #06141b,0 0 10px #53dfff44;border-radius:3px}
+.chip-main{width:31%;height:42%;left:34%;top:27%;background:linear-gradient(135deg,#657582,#18232e 40%,#354453);border:3px solid #c1cbd2}
+.chip-main:after{content:"6G+";position:absolute;inset:0;display:grid;place-items:center;color:#6cecff;font:700 9px var(--f-disp);text-shadow:0 0 8px #1bbfff}
+.chip-small{width:15%;height:22%;left:10%;top:22%}.chip-side{width:16%;height:26%;right:9%;bottom:15%}
+.pcb-heatsink{position:absolute;z-index:3;width:19%;height:30%;right:13%;top:16%;border:1px solid #aab9c6;background:repeating-linear-gradient(90deg,#aab9c6 0 3px,#3c4b58 3px 6px);box-shadow:0 3px 5px #0009}
+.pcb-trace{position:absolute;z-index:2;height:2px;background:#f2c66c;box-shadow:0 0 5px #ffce72;transform-origin:left center}.trace-a{width:28%;left:15%;top:68%;transform:rotate(-20deg)}.trace-b{width:24%;left:54%;top:19%;transform:rotate(28deg)}.trace-c{width:20%;left:55%;top:75%;transform:rotate(-36deg)}
+.pcb-led{position:absolute;z-index:4;width:5px;height:5px;border-radius:50%;background:#62fff0;box-shadow:0 0 10px 3px #28ffe688;animation:ledPulse 1.8s infinite alternate}.led-a{left:22%;top:35%}.led-b{right:23%;bottom:25%;animation-delay:.8s}@keyframes ledPulse{to{opacity:.35;box-shadow:0 0 3px 1px #28ffe655}}
+.wave-source,.wave-target{position:absolute;top:39%;width:20px;height:42px;border-radius:7px;background:linear-gradient(90deg,#213e61,#5fe8ff,#15314c);border:1px solid #74ecff;box-shadow:0 0 17px #25cfff77}.wave-source{left:14%}.wave-target{right:14%;background:linear-gradient(90deg,#174d4b,#64ffc4,#174d4b);border-color:#78ffd3;box-shadow:0 0 17px #25ffc477}
+.wave-rings{position:absolute;left:24%;right:24%;top:22%;height:55%;display:flex;align-items:center;justify-content:center;perspective:350px}.wave-rings i{position:absolute;width:25%;height:100%;border:1px solid #47eaff;border-radius:50%;transform:rotateY(62deg);box-shadow:0 0 9px #22cfff55;animation:waveExpand 2.2s ease-in-out infinite}.wave-rings i:nth-child(2){width:42%;animation-delay:.35s;border-color:#9a85ff}.wave-rings i:nth-child(3){width:59%;animation-delay:.7s}.wave-rings i:nth-child(4){width:76%;animation-delay:1.05s;border-color:#9a85ff}.wave-rings i:nth-child(5){width:94%;animation-delay:1.4s}@keyframes waveExpand{0%,100%{opacity:.35;transform:rotateY(62deg) scaleY(.9)}50%{opacity:1;transform:rotateY(62deg) scaleY(1.08)}}
+.holo-globe{position:absolute;width:104px;height:104px;left:calc(50% - 52px);top:calc(43% - 52px);border-radius:50%;border:1px solid #69eaff;background:radial-gradient(circle at 32% 25%,#b8f9ff55,#0a6b9c22 35%,#07132655 75%);box-shadow:inset -12px -8px 24px #1f9fff33,0 0 25px #1bcfff44;overflow:hidden;transform:rotate(-18deg)}
+.holo-lat,.holo-lon{position:absolute;display:block;border:1px solid #42e3ff99;border-radius:50%}.lat-one{inset:23% -5%}.lat-two{inset:42% -5%}.lon-one{inset:-5% 24%}.lon-two{inset:-5% 39%}
+.holo-node{position:absolute;width:6px;height:6px;border-radius:50%;background:#b6f7ff;box-shadow:0 0 10px 3px #3ce6ff}.node-one{top:24%;left:63%}.node-two{top:55%;left:23%}.node-three{top:68%;left:70%}
+.holo-orbit{position:absolute;width:145px;height:56px;left:calc(50% - 72px);top:calc(43% - 28px);border:1px solid #a38bff;border-radius:50%;transform:rotate(-27deg);box-shadow:0 0 10px #9272ff55}.orbit-two{transform:rotate(54deg);border-color:#49eaff; width:124px;left:calc(50% - 62px)}
+.gallery-card{cursor:pointer;overflow:hidden;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}.gallery-card:hover{transform:translateY(-5px);border-color:rgba(56,223,255,.5);box-shadow:0 18px 45px #0004,0 0 24px #16cfff12}
+@media(max-width:600px){.gallery-img-box{height:190px!important}.modal-content-box{padding:18px!important}#viewer3DModal{padding:10px!important}#viewer3DTitle{padding:0 24px}}
+
 .gallery-card h3{font-family:var(--f-disp);font-weight:700;font-size:18px;color:var(--snow)}
 body.light-theme .gallery-card h3{color:var(--ink)}
 .gallery-card p{font-size:14px;color:var(--grey-d)}
@@ -789,59 +870,57 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 <div class="speed-direct-grid">
 <div class="speed-direct-item">
 <span class="speed-direct-badge" id="latBadgeText">Latency Target</span>
-<div aria-label="0.001 ثانية" class="count grad" id="count">0.001</div>
-<div class="unit" id="unitLatency">مللي ثانية (زمن الاستجابة المقاس)</div>
+<div aria-label="0.001 ثانية" class="count grad" id="count">—</div>
+<div class="unit" id="unitLatency">تظهر النتيجة بعد الاختبار</div>
 </div>
 <div class="speed-direct-item">
 <span class="speed-direct-badge" id="tpBadgeText">Throughput Peak</span>
-<div class="count grad" id="throughputCount">1.0</div>
-<div class="unit" id="unitThroughput">Tbps (نقل بيانات شبكة الجيل السادس)</div>
+<div class="count grad" id="throughputCount">—</div>
+<div class="unit" id="unitThroughput">تظهر النتيجة بعد الاختبار</div>
 </div>
 </div>
 </div>
 <div class="in" id="speedCalcSection" style="margin-top:60px;">
-<div class="calc-box" onmousemove="updateCardNeon(event, this)">
-<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-<h3 id="calcBoxTitle" style="font-family:var(--f-disp); font-size:22px;">⚡ حاسبة سرعة البيانات الفورية (Interactive Speed Calculator)</h3>
-<span class="lat" id="calcNetworkBadge" style="font-size:12px; color:var(--cyan); background:rgba(43,208,255,0.15); padding:4px 12px; border-radius:999px;">سرعة الشبكة: 1.0 Tbps</span>
-</div>
-<p id="calcBoxDesc" style="color:var(--grey-d); font-size:15px; margin-top:8px;">اختَر نوع الملف أو المحتوى لمعرفة زمن النقل النظري عند سرعة افتراضية 1 Tbps. هذه ليست سرعة مقاسة فعليًا، وقد يختلف الأداء الحقيقي.</p>
-<div class="calc-options">
-<button class="calc-btn active" id="calcBtnMovie" onclick="calculateDownload('movie', 100, this)">
-<span style="font-size:22px;">🎬</span>
-<strong id="calcMovieTitle">فيلم بجودة 8K</strong>
-<span id="calcMovieSize" style="font-size:12px; opacity:0.8;">الحجم: 100 جيجابايت</span>
-</button>
-<button class="calc-btn" id="calcBtnGame" onclick="calculateDownload('game', 300, this)">
-<span style="font-size:22px;">🎮</span>
-<strong id="calcGameTitle">لعبة ضخمة (AAA Game)</strong>
-<span id="calcGameSize" style="font-size:12px; opacity:0.8;">الحجم: 300 جيجابايت</span>
-</button>
-<button class="calc-btn" id="calcBtnHolo" onclick="calculateDownload('hologram', 50, this)">
-<span style="font-size:22px;">🌐</span>
-<strong id="calcHoloTitle">محتوى هولوجرامي مجسم</strong>
-<span id="calcHoloSize" style="font-size:12px; opacity:0.8;">الحجم: 50 جيجابايت</span>
-</button>
-</div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px;text-align:start">
-<label for="customFileSize" style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)"><span id="customFileSizeLabel">حجم الملف</span>
-<input id="customFileSize" inputmode="decimal" min="0.001" step="any" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit" type="number" value="100"/>
-</label>
-<label for="customFileUnit" style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)"><span id="customFileUnitLabel">وحدة الحجم</span>
-<select id="customFileUnit" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit"><option value="MB">MB</option><option selected="" value="GB">GB</option><option value="TB">TB</option></select>
-</label>
-<label for="customSpeed" style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)"><span id="customSpeedLabel">سرعة الاتصال المفترضة</span>
-<input id="customSpeed" inputmode="decimal" min="0.001" step="any" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit" type="number" value="1"/>
-</label>
-<label for="customSpeedUnit" style="display:grid;gap:6px;font-size:13px;color:var(--grey-l)"><span id="customSpeedUnitLabel">وحدة السرعة</span>
-<select id="customSpeedUnit" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--snow);font:inherit"><option value="Mbps">Mbps</option><option value="Gbps">Gbps</option><option selected="" value="Tbps">Tbps</option></select>
-</label>
-</div>
-<button class="liquid-pill primary" id="calcCustomBtn" onclick="calculateCustomDownload()" style="margin-top:14px" type="button">احسب زمن النقل</button>
-<div class="calc-result-display">
-<div id="calcResultLabel" style="font-size:13px; color:var(--cyan); margin-bottom:4px;">زمن النقل النظري حسب الحجم والسرعة المختارين:</div>
-<div aria-live="polite" id="calcResultTime" style="font-size:clamp(18px,2.8vw,30px); font-weight:700; color:var(--snow);">0.800 ثانية — تقدير نظري عند 1 Tbps</div>
-</div>
+<div class="calc-box speed-lab" onmousemove="updateCardNeon(event, this)">
+  <div class="speed-lab-head">
+    <div>
+      <span class="speed-lab-kicker">6G+ DATA LAB / 01</span>
+      <h3 id="calcBoxTitle">⚡ مختبر حساب زمن نقل البيانات</h3>
+      <p id="calcBoxDesc">اختَر سيناريو جاهزًا أو أدخل بياناتك بنفسك، وشاهد تقديرًا نظريًا لزمن النقل. الأرقام افتراضية وليست قياسًا مباشرًا للإنترنت.</p>
+    </div>
+    <div class="speed-lab-chip"><span class="speed-lab-pulse"></span><span id="calcNetworkBadge">سرعة افتراضية: 1 Tbps</span></div>
+  </div>
+  <div class="speed-lab-presets" aria-label="سيناريوهات جاهزة">
+    <button class="speed-preset active" id="calcBtnMovie" onclick="calculateDownload('movie', 100, this)" type="button">
+      <span class="speed-preset-icon">🎬</span><span class="speed-preset-name" id="calcMovieTitle">فيلم 8K</span><span class="speed-preset-meta" id="calcMovieSize">100 GB</span>
+    </button>
+    <button class="speed-preset" id="calcBtnGame" onclick="calculateDownload('game', 300, this)" type="button">
+      <span class="speed-preset-icon">🎮</span><span class="speed-preset-name" id="calcGameTitle">لعبة ضخمة</span><span class="speed-preset-meta" id="calcGameSize">300 GB</span>
+    </button>
+    <button class="speed-preset" id="calcBtnHolo" onclick="calculateDownload('hologram', 50, this)" type="button">
+      <span class="speed-preset-icon">🌐</span><span class="speed-preset-name" id="calcHoloTitle">محتوى هولوجرامي</span><span class="speed-preset-meta" id="calcHoloSize">50 GB</span>
+    </button>
+  </div>
+  <div class="speed-lab-workspace">
+    <div class="speed-lab-fields">
+      <div class="speed-lab-section-title"><span>01</span><span>خصّص عملية النقل</span></div>
+      <div class="speed-lab-form-grid">
+        <label class="speed-field" for="customFileSize"><span id="customFileSizeLabel">حجم الملف</span><input id="customFileSize" inputmode="decimal" min="0.001" step="any" type="number" value="100"/></label>
+        <label class="speed-field" for="customFileUnit"><span id="customFileUnitLabel">وحدة الحجم</span><select id="customFileUnit"><option value="MB">MB</option><option selected value="GB">GB</option><option value="TB">TB</option></select></label>
+        <label class="speed-field" for="customSpeed"><span id="customSpeedLabel">سرعة الاتصال المفترضة</span><input id="customSpeed" inputmode="decimal" min="0.001" step="any" type="number" value="1"/></label>
+        <label class="speed-field" for="customSpeedUnit"><span id="customSpeedUnitLabel">وحدة السرعة</span><select id="customSpeedUnit"><option value="Mbps">Mbps</option><option value="Gbps">Gbps</option><option selected value="Tbps">Tbps</option></select></label>
+      </div>
+      <button class="speed-calc-action" id="calcCustomBtn" onclick="calculateCustomDownload()" type="button"><span>احسب زمن النقل</span><span aria-hidden="true">↗</span></button>
+      <p class="speed-lab-footnote">ⓘ التقدير النظري لا يشمل ازدحام الشبكة أو التأخير أو فقد البيانات أو كفاءة الأجهزة.</p>
+    </div>
+    <div class="speed-result-panel">
+      <div class="speed-result-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+      <span class="speed-result-label" id="calcResultLabel">زمن النقل التقديري</span>
+      <div class="speed-result-time" aria-live="polite" id="calcResultTime">جارٍ تجهيز التقدير...</div>
+      <div class="speed-result-divider"></div>
+      <div class="speed-result-bottom"><span>MODE</span><strong>THEORETICAL ESTIMATE</strong></div>
+    </div>
+  </div>
 </div>
 </div>
 <div class="tbps" style="margin-top:50px;">
@@ -875,6 +954,37 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 <p class="business-desc" id="bizCard2Desc">قد تساعد شبكات مستقبلية أسرع أنظمة نظم معلومات الأعمال على تحليل سلوك العملاء والمبيعات والمخزون في وقت أقرب. هذا سيناريو توضيحي؛ النتائج الفعلية تعتمد على النظام والتطبيق والبنية التحتية ولا يضمنها هذا المشروع.</p>
 </div>
 </div>
+<div class="head center" style="margin-top:42px;margin-bottom:22px">
+<h3 data-ar="استخدامات 6G في نظم معلومات الأعمال" data-en="How 6G could be used in Business Information Systems" style="font-size:clamp(21px,3vw,28px)">استخدامات 6G في نظم معلومات الأعمال</h3>
+<p class="business-desc" data-ar="أربع أفكار تطبيقية توضح كيف يمكن للاتصال فائق السرعة والاستجابة دعم قرارات الشركات وعملياتها مستقبلًا." data-en="Four practical ideas showing how future high-speed, responsive connectivity could support business decisions and operations.">أربع أفكار تطبيقية توضح كيف يمكن للاتصال فائق السرعة والاستجابة دعم قرارات الشركات وعملياتها مستقبلًا.</p>
+</div>
+<div class="business-grid">
+<div class="business-card" onmousemove="updateCardNeon(event, this)">
+<div class="business-icon">📊</div>
+<h3 data-ar="ذكاء الأعمال والتحليلات اللحظية" data-en="Real-Time Business Intelligence">ذكاء الأعمال والتحليلات اللحظية</h3>
+<p class="business-desc" data-ar="قد يساعد الاتصال المتقدم على تحديث بيانات المبيعات والعملاء والمخزون بسرعة، لتعرض لوحات المعلومات مؤشرات أقرب إلى الوقت الفعلي وتدعم اتخاذ القرار." data-en="Advanced connectivity could help update sales, customer and inventory data quickly, giving dashboards more timely indicators to support decision-making.">قد يساعد الاتصال المتقدم على تحديث بيانات المبيعات والعملاء والمخزون بسرعة، لتعرض لوحات المعلومات مؤشرات أقرب إلى الوقت الفعلي وتدعم اتخاذ القرار.</p>
+<p class="business-desc" data-ar="مثال: متجر يكتشف زيادة الطلب على منتج أثناء اليوم ويعيد توزيع المخزون بين فروعه." data-en="Example: A retailer spots rising demand during the day and reallocates stock between branches.">مثال: متجر يكتشف زيادة الطلب على منتج أثناء اليوم ويعيد توزيع المخزون بين فروعه.</p>
+</div>
+<div class="business-card" onmousemove="updateCardNeon(event, this)">
+<div class="business-icon">🚚</div>
+<h3 data-ar="إدارة سلاسل الإمداد الذكية" data-en="Smart Supply Chain Management">إدارة سلاسل الإمداد الذكية</h3>
+<p class="business-desc" data-ar="يمكن ربط أجهزة التتبع والمستودعات والمركبات وأنظمة الموردين لتبادل معلومات الشحنات والمخزون، والمساعدة في اكتشاف التأخير والتخطيط للتوزيع." data-en="Connected trackers, warehouses, vehicles and supplier systems could exchange shipment and inventory information to help identify delays and plan distribution.">يمكن ربط أجهزة التتبع والمستودعات والمركبات وأنظمة الموردين لتبادل معلومات الشحنات والمخزون، والمساعدة في اكتشاف التأخير والتخطيط للتوزيع.</p>
+<p class="business-desc" data-ar="مثال: شركة لوجستية تتابع الشحنات وتعيد تخطيط المسارات عند حدوث تأخير." data-en="Example: A logistics company tracks shipments and replans routes when delays occur.">مثال: شركة لوجستية تتابع الشحنات وتعيد تخطيط المسارات عند حدوث تأخير.</p>
+</div>
+<div class="business-card" onmousemove="updateCardNeon(event, this)">
+<div class="business-icon">🧠</div>
+<h3 data-ar="اتخاذ القرارات بمساعدة الذكاء الاصطناعي" data-en="AI-Powered Decision Making">اتخاذ القرارات بمساعدة الذكاء الاصطناعي</h3>
+<p class="business-desc" data-ar="قد تتيح مشاركة البيانات من مصادر متعددة بسرعة أكبر لأنظمة الذكاء الاصطناعي تحليل الاتجاهات والتنبيه إلى المشكلات ومقارنة سيناريوهات العمل، مع بقاء القرار النهائي للمسؤولين." data-en="Faster sharing of data from multiple sources could help AI systems analyse trends, flag issues and compare business scenarios, while people retain final decision authority.">قد تتيح مشاركة البيانات من مصادر متعددة بسرعة أكبر لأنظمة الذكاء الاصطناعي تحليل الاتجاهات والتنبيه إلى المشكلات ومقارنة سيناريوهات العمل، مع بقاء القرار النهائي للمسؤولين.</p>
+<p class="business-desc" data-ar="مثال: نظام يقارن بيانات المبيعات والمواسم لمساعدة الإدارة في تخطيط الكميات المطلوبة." data-en="Example: A system compares sales and seasonal data to help managers plan order quantities.">مثال: نظام يقارن بيانات المبيعات والمواسم لمساعدة الإدارة في تخطيط الكميات المطلوبة.</p>
+</div>
+<div class="business-card" onmousemove="updateCardNeon(event, this)">
+<div class="business-icon">🌐</div>
+<h3 data-ar="التوائم الرقمية لتخطيط الأعمال" data-en="Digital Twins for Business Planning">التوائم الرقمية لتخطيط الأعمال</h3>
+<p class="business-desc" data-ar="يمكن للاتصال بين الأجهزة والأنظمة أن يدعم تحديث نسخة افتراضية من مصنع أو مستودع أو فرع، لتجربة تغييرات التشغيل ومقارنة النتائج المتوقعة قبل تطبيقها فعليًا." data-en="Connectivity between devices and systems could help update a virtual model of a factory, warehouse or branch, allowing teams to test operational changes before applying them in the real world.">يمكن للاتصال بين الأجهزة والأنظمة أن يدعم تحديث نسخة افتراضية من مصنع أو مستودع أو فرع، لتجربة تغييرات التشغيل ومقارنة النتائج المتوقعة قبل تطبيقها فعليًا.</p>
+<p class="business-desc" data-ar="مثال: مصنع يحاكي تغيير ترتيب خط الإنتاج لتقدير تأثيره قبل تنفيذ التغيير." data-en="Example: A factory simulates a production-line layout change to estimate its impact before implementation.">مثال: مصنع يحاكي تغيير ترتيب خط الإنتاج لتقدير تأثيره قبل التنفيذ.</p>
+</div>
+</div>
+<p class="business-desc" data-ar="ملاحظة: هذه سيناريوهات مستقبلية محتملة؛ تقنية 6G ما زالت قيد التطوير، والنتائج تعتمد على التطبيقات والبنية التحتية الفعلية." data-en="Note: These are potential future scenarios. 6G is still under development, and outcomes will depend on real applications and infrastructure." style="text-align:center;margin-top:18px">ملاحظة: هذه سيناريوهات مستقبلية محتملة؛ تقنية 6G ما زالت قيد التطوير، والنتائج تعتمد على التطبيقات والبنية التحتية الفعلية.</p>
 </div>
 </section>
 <section class="sec dark scroll-reveal" id="gallery">
@@ -889,17 +999,17 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 </div>
 <div class="gallery-grid">
 <div class="gallery-card" onclick="open3DViewer('pcb')" onmousemove="updateCardNeon(event, this)">
-<div class="gallery-img-box">🔌</div>
+<div class="gallery-img-box art-pcb" aria-hidden="true"><div class="pcb-board"><i class="pcb-chip chip-main"></i><i class="pcb-chip chip-small"></i><i class="pcb-chip chip-side"></i><i class="pcb-heatsink"></i><i class="pcb-trace trace-a"></i><i class="pcb-trace trace-b"></i><i class="pcb-trace trace-c"></i><i class="pcb-led led-a"></i><i class="pcb-led led-b"></i></div><span class="art-caption">PCB / HARDWARE</span></div>
 <h3 data-ar="لوحات الدوائر المطبوعة (PCB)" data-en="Printed Circuit Boards (PCB)" id="galleryCard1Title">لوحات الدوائر المطبوعة (PCB)</h3>
 <p data-ar="اضغط لفتح المعاينة ثلاثية الأبعاد وتفقد بنية الهاردوير المتقدمة." data-en="Click to launch 3D interactive hardware architecture inspection." id="galleryCard1Desc">اضغط لفتح المعاينة ثلاثية الأبعاد وتفقد بنية الهاردوير المتقدمة.</p>
 </div>
 <div class="gallery-card" onclick="open3DViewer('thz')" onmousemove="updateCardNeon(event, this)">
-<div class="gallery-img-box">🌐</div>
+<div class="gallery-img-box art-thz" aria-hidden="true"><div class="wave-source"></div><div class="wave-rings"><i></i><i></i><i></i><i></i><i></i></div><div class="wave-target"></div><span class="art-caption">THz / WAVE PATH</span></div>
 <h3 data-ar="محاكاة ترددات التيرابت (THz)" data-en="Terahertz Simulation" id="galleryCard2Title">محاكاة ترددات التيرابت (THz)</h3>
 <p data-ar="اضغط لبدء محاكاة انتشار الموجات وتوجيه الإشارات بالأسطح الذكية." data-en="Click to launch live 3D wave propagation and IRS routing simulator." id="galleryCard2Desc">اضغط لبدء محاكاة انتشار الموجات وتوجيه الإشارات بالأسطح الذكية.</p>
 </div>
 <div class="gallery-card" onclick="open3DViewer('holo')" onmousemove="updateCardNeon(event, this)">
-<div class="gallery-img-box">👁️‍🗨️</div>
+<div class="gallery-img-box art-holo" aria-hidden="true"><div class="holo-globe"><i class="holo-lat lat-one"></i><i class="holo-lat lat-two"></i><i class="holo-lon lon-one"></i><i class="holo-lon lon-two"></i><i class="holo-node node-one"></i><i class="holo-node node-two"></i><i class="holo-node node-three"></i></div><div class="holo-orbit orbit-one"></div><div class="holo-orbit orbit-two"></div><span class="art-caption">SPATIAL NETWORK</span></div>
 <h3 data-ar="بنية الهولوجرام والتفاعل" data-en="Holographic Mesh Interface" id="galleryCard3Title">بنية الهولوجرام والتفاعل</h3>
 <p data-ar="اضغط لتشغيل بيئة تجسيد البيانات المجسمة ثلاثية الأبعاد." data-en="Click to launch immersive 3D spatial data visualization node." id="galleryCard3Desc">اضغط لتشغيل بيئة تجسيد البيانات المجسمة ثلاثية الأبعاد.</p>
 </div>
@@ -1077,7 +1187,7 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 <h2 class="big" id="teamTitleHead" style="margin-top:12px">فريق المشروع، <span class="grad">معًا.</span></h2>
 <p class="lead" id="teamLeadText">طلاب نظم معلومات الأعمال بأكاديمية المستقبل يتعاونون على مشروع مفاهيمي تفاعلي يستكشف أفكار الاتصال المستقبلي. اضغط على أي بطاقة لعرض المهام والأدوار.</p>
 <div class="team-grid">
-<div class="team-card" data-ar-role="المطور الرئيسي للموقع: طوّر ونسّق أقسام الموقع بالكامل، وحسّن الواجهات وتجربة المستخدم والتصميم المتجاوب والتأثيرات التفاعلية والأنيميشن، واشتغل على قسم الذكاء الاصطناعي وبرمجة الشات بوت وتحسين طريقة عرض المحتوى. كما صمّم وطوّر عرض الباوربوينت، ونسّق الشرائح وأضاف أفكار الحركة والانتقالات العصرية، وساهم في تجهيز مونتاج الفيديو." data-en="Mohab" data-en-role="Lead website developer: improved and coordinated the entire site, refined its interfaces, responsive layout, user experience, interactive effects and animations, developed the AI section and chatbot, and enhanced content presentation. Also designed and upgraded the PowerPoint deck, organized the slides, added modern motion and transition ideas, and contributed to video editing." onclick="playSound('click'); showTeamMember(this)">
+<div class="team-card" data-ar-role="المطور الرئيسي للموقع: طوّر ونسّق أقسام الموقع بالكامل، وحسّن الواجهات وتجربة المستخدم والتصميم المتجاوب والتأثيرات التفاعلية والأنيميشن، واشتغل على قسم الذكاء الاصطناعي وبرمجة الشات بوت وتحسين طريقة عرض المحتوى. كما صمّم وطوّر عرض الباوربوينت، ونسّق الشرائح وأضاف أفكار الحركة والانتقالات العصرية." data-en="Mohab" data-en-role="Lead website developer: improved and coordinated the entire site, refined its interfaces, responsive layout, user experience, interactive effects and animations, developed the AI section and chatbot, and enhanced content presentation. Also designed and upgraded the PowerPoint deck, organized the slides, and added modern motion and transition ideas." onclick="playSound('click'); showTeamMember(this)">
 <div class="team-avatar">💻</div>
 <span class="team-role-tag" id="mohabRoleTag">مطور الذكاء الاصطناعي والواجهات</span>
 <h3>مهاب</h3>
@@ -1089,13 +1199,13 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 <h3>عمرو</h3>
 <p class="team-hint" id="teamHint2">اضغط لعرض المهام والأدوار ←</p>
 </div>
-<div class="team-card" data-ar-role="مساعد في البرمجة وتطوير الواجهات، إدارة البيانات وجداول الأداء، ومراجعة العرض التقديمي وتنسيق الفيديوهات." data-en="Khaled" data-en-role="Assisted in coding and UI development, data management, performance tables, presentation review, and video coordination." onclick="playSound('click'); showTeamMember(this)">
+<div class="team-card" data-ar-role="مساعد في البرمجة وتطوير الواجهات، إدارة البيانات وجداول الأداء، ومراجعة العرض التقديمي." data-en="Khaled" data-en-role="Assisted in coding and UI development, data management, performance tables, and presentation review." onclick="playSound('click'); showTeamMember(this)">
 <div class="team-avatar">⚡</div>
 <span class="team-role-tag" id="khaledRoleTag">الواجهات والبيانات</span>
 <h3>خالد</h3>
 <p class="team-hint" id="teamHint3">اضغط لعرض المهام والأدوار ←</p>
 </div>
-<div class="team-card" data-ar-role="مسؤول استراتيجية المحتوى، إعداد السيناريو الخاص بالعرض التقديمي، ومتابعة اختبارات النظام وتجربة المستخدم." data-en="Osama" data-en-role="Responsible for content strategy, preparing the presentation script, system testing, and user experience evaluation." onclick="playSound('click'); showTeamMember(this)">
+<div class="team-card" data-ar-role="مسؤول استراتيجية المحتوى وتجهيز العرض التقديمي باستخدام PowerPoint؛ أعدّ الشرائح ونظّم الأفكار والمحتوى، ونسّق تسلسل العرض بما يساعد على شرح فكرة مشروع 6G+ بوضوح، إلى جانب إعداد سيناريو التقديم ومتابعة اختبارات النظام وتجربة المستخدم." data-en="Osama" data-en-role="Responsible for content strategy and creating the PowerPoint presentation: organizing slides and ideas, structuring the content, and shaping a clear presentation flow for the 6G+ project. Also prepared the speaking script and supported system testing and user-experience evaluation." onclick="playSound('click'); showTeamMember(this)">
 <div class="team-avatar">🎯</div>
 <span class="team-role-tag" id="osamaRoleTag">الاستراتيجية والسيناريو</span>
 <h3>أسامة</h3>
@@ -1138,14 +1248,15 @@ a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 </div>
 <!-- عارض الـ 3D التفاعلي -->
 <div id="viewer3DModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:1000; align-items:center; justify-content:center; padding:20px;">
-<div class="modal-content-box" style="max-width:850px; width:100%; text-align:center;">
+<div class="modal-content-box" style="max-width:1040px; width:100%; text-align:center;">
 <button aria-label="إغلاق" id="viewer3DCloseBtn" onclick="close3DViewer()" style="position:absolute; top:12px; left:16px; background:none; border:none; color:inherit; font-size:26px; cursor:pointer;">×</button>
 <div data-ar="عارض المحاكاة ثلاثية الأبعاد (3D Holographic Mesh)" data-en="3D Holographic Mesh Viewer" id="viewer3DTitle" style="font-size:19px; font-family:var(--f-disp); font-weight:700; color:var(--cyan); margin-bottom:6px;">عارض المحاكاة ثلاثية الأبعاد (3D Holographic Mesh)</div>
 <p data-ar="يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D (انقر واسحب بالماوس للتحريك بـ 360 درجة):" data-en="Inspect simulation &amp; rotate the 3D model (Click &amp; Drag to rotate 360°):" id="viewer3DDesc" style="font-size:13px; opacity:0.8; margin-bottom:14px;">يمكنك تفقد المحاكاة وتدوير المجسم التفاعلي في فضاء الـ 3D:</p>
-<div style="position:relative; width:100%; height:clamp(280px,48vh,440px); background:radial-gradient(ellipse at 50% 42%, rgba(23,77,112,0.48) 0%, rgba(7,12,24,0.98) 72%); border-radius:18px; border:1px solid rgba(43,208,255,0.42); overflow:hidden; box-shadow:inset 0 0 45px rgba(43,208,255,0.09);">
+<div style="position:relative; width:100%; height:clamp(320px,54vh,520px); background:radial-gradient(ellipse at 50% 42%, rgba(23,77,112,0.48) 0%, rgba(7,12,24,0.98) 72%); border-radius:18px; border:1px solid rgba(43,208,255,0.42); overflow:hidden; box-shadow:inset 0 0 45px rgba(43,208,255,0.09);">
 <canvas aria-label="Interactive 3D concept viewer" height="500" id="canvas3DModel" style="cursor:grab;width:100%;height:100%;max-width:none;touch-action:none;" width="900"></canvas>
 <div id="viewer3DHint" style="position:absolute;bottom:10px;left:12px;right:12px;pointer-events:none;color:#b9d9e8;font-size:12px;text-shadow:0 1px 4px #000;">اسحب لتدوير المجسم • استخدم عجلة الماوس للتقريب</div>
 </div>
+<div id="viewer3DInfo" role="status" aria-live="polite" style="margin:12px auto 0;max-width:760px;text-align:start;padding:12px 14px;border:1px solid rgba(72,232,255,.24);border-radius:14px;background:rgba(8,18,32,.72);color:#d8f6ff;min-height:52px;box-sizing:border-box"><strong id="viewer3DInfoTitle" style="display:block;color:#48e8ff;margin-bottom:4px">اختر جزءًا من المجسم</strong><span id="viewer3DInfoText" style="font-size:12px;line-height:1.7">اسحب للتدوير، واستخدم عجلة الماوس للتقريب، واضغط على أحد الأجزاء لعرض معلوماته.</span></div>
 <div style="display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
 <button aria-label="تكبير" class="liquid-pill" id="viewerZoomInBtn" onclick="adjust3DZoom(1.15)" style="padding:6px 12px;font-size:12px;">＋ تكبير</button>
 <button aria-label="تصغير" class="liquid-pill" id="viewerZoomOutBtn" onclick="adjust3DZoom(0.87)" style="padding:6px 12px;font-size:12px;">－ تصغير</button>
@@ -1276,6 +1387,8 @@ window.close3DViewer = function() {
   playSound('click');
   document.getElementById('viewer3DModal').style.display = 'none';
   if (anim3DFrame) cancelAnimationFrame(anim3DFrame);
+  if (window.__real3D && window.__real3D.frame) cancelAnimationFrame(window.__real3D.frame);
+  if (window.__real3D && window.__real3D.ro) window.__real3D.ro.disconnect();
 }
 
 window.change3DMode = function(mode) {
@@ -1291,15 +1404,184 @@ let pointerDown3D = false;
 
 window.adjust3DZoom = function(factor) {
   view3DZoom = Math.max(0.62, Math.min(1.85, view3DZoom * factor));
+  if (window.__real3D && window.__real3D.camera) { const st=window.__real3D; st.camera.position.multiplyScalar(1/factor); st.camera.position.clampLength(3.2, 13); }
 };
 window.reset3DView = function() {
   userRotationOffset = 0;
   angle3D = 0;
   view3DPitch = -0.38;
   view3DZoom = 1;
+  if (window.__real3D && window.__real3D.camera) { const st=window.__real3D; st.camera.position.set(0, 2.6, 6.5); st.camera.lookAt(0,0,0); st.target.set(0,0,0); st.yaw=0; st.pitch=-.18; }
 };
 
+function startReal3DRenderer() {
+  const THREE = window.THREE;
+  if (!THREE) return false;
+  const holder = document.getElementById('canvas3DModel').parentElement;
+  const oldCanvas = document.getElementById('canvas3DModel');
+  oldCanvas.style.display = 'none';
+  let canvas = document.getElementById('canvas3DWebGL');
+  if (!canvas) {
+    canvas = document.createElement('canvas'); canvas.id='canvas3DWebGL';
+    canvas.setAttribute('aria-label','Interactive real-time 3D model viewer');
+    canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab';
+    holder.insertBefore(canvas, oldCanvas.nextSibling);
+  }
+  if (window.__real3D && window.__real3D.renderer) {
+    try { window.__real3D.renderer.dispose(); } catch(_) {}
+  }
+  if (anim3DFrame) cancelAnimationFrame(anim3DFrame);
+  const scene = new THREE.Scene();
+  const modelGroup = new THREE.Group(); scene.add(modelGroup);
+  scene.fog = new THREE.FogExp2(0x06101e, 0.035);
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  camera.position.set(0,2.6,6.5); camera.lookAt(0,0,0);
+  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
+  renderer.setClearColor(0x06101e,0);
+  if (THREE.SRGBColorSpace) renderer.outputColorSpace=THREE.SRGBColorSpace;
+  if (THREE.ACESFilmicToneMapping) { renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.12; }
+  scene.add(new THREE.HemisphereLight(0x9beeff,0x071323,2.0));
+  const keyLight=new THREE.DirectionalLight(0xffffff,3.0); keyLight.position.set(4,6,5); scene.add(keyLight);
+  const rimLight=new THREE.PointLight(0x21cfff,32,14); rimLight.position.set(-4,2,1); scene.add(rimLight);
+  const cyan=0x38dfff, blue=0x347dff, violet=0x9a78ff, gold=0xd9a64b, green=0x39ffc0;
+  const target=new THREE.Vector3(0,0,0), raycaster=new THREE.Raycaster(), pointer=new THREE.Vector2();
+  const clickable=[], animated=[];
+  const state={renderer,scene,camera,target,frame:0,clickable,animated,drag:false,lastX:0,lastY:0,yaw:0,pitch:-0.18,selected:null};
+  window.__real3D=state;
+  const mat=(color,roughness=.38,metalness=.35,emissive=0,emissiveIntensity=.2,transparent=false,opacity=1)=>new THREE.MeshStandardMaterial({color,roughness,metalness,emissive,emissiveIntensity,transparent,opacity});
+  const addMesh=(geo,material,pos,info,rot)=>{const m=new THREE.Mesh(geo,material);m.position.set(...pos);if(rot)m.rotation.set(...rot);modelGroup.add(m);if(info){m.userData.info=info;clickable.push(m);}return m;};
+  const info=(ar,en,descAr,descEn)=>({ar,en,descAr,descEn});
+  const addLine=(points,color=cyan,opacity=.8,radius=.012)=>{const curve=new THREE.CatmullRomCurve3(points.map(v=>new THREE.Vector3(...v)));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,Math.max(16,points.length*8),radius,5,false),new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:.7,transparent:opacity<1,opacity,roughness:.3,metalness:.3}));modelGroup.add(mesh);return mesh;};
+  const addRing=(r,tube,color,opacity=.65)=>addMesh(new THREE.TorusGeometry(r,tube,8,100),new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:1,transparent:opacity<1,opacity,metalness:.4,roughness:.25}),[0,0,0],null);
+  // A subtle technical ground and studio backdrop.
+  const floor=addMesh(new THREE.PlaneGeometry(18,18),new THREE.MeshStandardMaterial({color:0x081629,roughness:.9,metalness:.1,transparent:true,opacity:.38}),[0,-1.35,0],null,[-Math.PI/2,0,0]);
+  const grid=new THREE.GridHelper(12,32,0x1b94c7,0x17415e);grid.position.y=-1.33;grid.material.transparent=true;grid.material.opacity=.22;scene.add(grid);
+  if(current3DType==='pcb'){
+    // Layered FR-4 board, copper tracks, plated contacts, chips, capacitors and heat sink.
+    addMesh(new THREE.BoxGeometry(4.28,.12,2.78),mat(0x172b36,.3,.72,0x07131b,.12),[0,-.27,0]);
+    addMesh(new THREE.BoxGeometry(4.2,.18,2.7),mat(0x075847,.42,.5,0x063c2f,.3),[0,-.18,0],info('لوحة PCB','PCB board','لوحة متعددة الطبقات تمثل قاعدة تثبيت المكونات ومسارات التوصيل النحاسية.','A layered board base holding components and copper routing.'));
+    addMesh(new THREE.BoxGeometry(4.12,.055,2.62),mat(0x0a896b,.3,.45,0x075d49,.45),[0,-.065,0]);
+    // Gold edge contacts
+    for(let i=0;i<24;i++){const x=-1.82+i*.158;addMesh(new THREE.BoxGeometry(.085,.025,.16),mat(gold,.25,.82,gold,.22),[x,-.025,1.22]);addMesh(new THREE.BoxGeometry(.085,.025,.16),mat(gold,.25,.82,gold,.22),[x,-.025,-1.22]);}
+    const traces=[[[-1.8,-.025,-.85],[-1.2,-.025,-.85],[-.8,-.025,-.5],[.1,-.025,-.5]],[[ -1.8,-.025,.1],[-1.15,-.025,.1],[-.8,-.025,.45],[.7,-.025,.45],[1.25,-.025,.05]],[[ -.35,-.025,-1.05],[-.35,-.025,-.72],[.05,-.025,-.35],[.05,-.025,.05]],[[.5,-.025,-1.05],[.5,-.025,-.75],[.9,-.025,-.4],[1.65,-.025,-.4]], [[-1.8,-.025,.85],[-1.2,-.025,.85],[-.9,-.025,.58],[-.9,-.025,.25]],[[.75,-.025,.95],[1.1,-.025,.65],[1.65,-.025,.65]]];
+    traces.forEach((t,i)=>addLine(t,i%2?green:gold,.95,.012));
+    const chipInfo=info('المعالج الرئيسي','Main processor','شريحة تمثيلية لمعالجة الإشارات والبيانات داخل لوحة الدوائر.','A conceptual processor package for signal and data processing.');
+    const cpu=addMesh(new THREE.BoxGeometry(1.0,.27,.82),mat(0x182333,.24,.65,0x172b45,.5),[-.15,.11,0],chipInfo);
+    addMesh(new THREE.BoxGeometry(.72,.06,.56),mat(0x26384b,.22,.7,0x0d1b2e,.3),[-.15,.275,0],null);
+    addMesh(new THREE.BoxGeometry(.44,.015,.32),mat(0x090e18,.25,.7,cyan,.15),[-.15,.315,0],null);
+    for(let i=0;i<10;i++){const z=-.33+i*.073;for(const side of [-1,1])addMesh(new THREE.BoxGeometry(.08,.035,.025),mat(gold,.25,.8),[-.15+side*.53,.105,z],null);}
+    const radioInfo=info('وحدة الإرسال والاستقبال','RF transceiver','وحدة توضيحية للتعامل مع الإشارات اللاسلكية قبل إرسالها أو استقبالها.','A conceptual radio-frequency module for transmitting and receiving signals.');
+    addMesh(new THREE.BoxGeometry(.62,.19,.55),mat(0x263746,.28,.55,blue,.45),[1.05,.075,.48],radioInfo);
+    addMesh(new THREE.BoxGeometry(.38,.08,.32),mat(0x121c2a,.25,.6,0x203c67,.5),[1.05,.19,.48]);
+    const powerInfo=info('دوائر الطاقة','Power circuitry','مكونات تنظيم الطاقة وتوزيعها على الأجزاء المختلفة من اللوحة.','Power components regulate and distribute energy across the board.');
+    addMesh(new THREE.BoxGeometry(.48,.16,.45),mat(0x303c49,.3,.45),[-1.35,.04,.58],powerInfo);
+    for(let i=0;i<5;i++)addMesh(new THREE.CylinderGeometry(.07,.07,.09,16),mat(0xbac5ce,.24,.8),[-1.35+i*.13,.1,-.95],null);
+    // Heat sink fins
+    addMesh(new THREE.BoxGeometry(.68,.1,.55),mat(0x8998a7,.24,.8),[.95,.1,-.48],info('مشتت حراري','Heat sink','زعانف معدنية لزيادة مساحة تبديد الحرارة في نموذج إلكتروني.','Metal fins increase the surface area for heat dissipation.'));
+    for(let i=0;i<7;i++)addMesh(new THREE.BoxGeometry(.055,.24,.48),mat(0x9aabb8,.23,.85),[.68+i*.09,.25,-.48]);
+    for(let i=0;i<8;i++){const x=-1.7+i*.45;const led=addMesh(new THREE.SphereGeometry(.045,16,12),mat(i%2?green:cyan,.2,.2,i%2?green:cyan,2),[x,.02,-1.0]);animated.push({obj:led,kind:'led',phase:i*.6});}
+    // Tiny screw holes at board corners
+    for(const x of [-1.9,1.9])for(const z of [-1.15,1.15]){addMesh(new THREE.CylinderGeometry(.09,.09,.025,24),mat(0x0c1d29,.5,.5),[x,-.02,z]);addMesh(new THREE.CylinderGeometry(.045,.045,.028,20),mat(0x050b12,.4,.65),[x,-.005,z]);}
+  } else if(current3DType==='thz'){
+    // Conceptual THz link: directional antennas, transverse field oscillation,
+    // and a reconfigurable reflecting panel. This is illustrative, not a solver.
+    const txInfo=info('هوائي الإرسال','Transmit antenna','هوائي اتجاهي يطلق إشارة نحو المسار. شكل الموجة توضيحي وليس حسابًا كهرومغناطيسيًا عدديًا.','A directional antenna launches a signal into the link. The waveform is illustrative, not a numerical EM simulation.');
+    const rxInfo=info('هوائي الاستقبال','Receive antenna','يجمع الهوائي جزءًا من الطاقة الواصلة؛ يوضح النموذج أن الإشارة تضعف مع المسافة.','The receiver collects part of the arriving energy; the model qualitatively shows distance-related attenuation.');
+    // Compact antenna mounts and direction-facing horn bodies.
+    for(const [x,c,inf,rot] of [[-2.05,blue,txInfo,-Math.PI/2],[2.05,green,rxInfo,Math.PI/2]]){
+      addMesh(new THREE.CylinderGeometry(.22,.28,.18,32),mat(0x24394c,.32,.72),[x,-.78,0]);
+      addMesh(new THREE.CylinderGeometry(.055,.075,.68,24),mat(0x8799aa,.28,.78),[x,-.35,0]);
+      const horn=addMesh(new THREE.CylinderGeometry(.30,.105,.72,32,1,true),mat(c===blue?0x284a73:0x236b5b,.28,.65,c,.22,.12,.9),[x+(x<0?.37:-.37),.04,0],inf,[0,0,rot]);
+      const rim=addMesh(new THREE.TorusGeometry(.30,.025,10,48),mat(c,.22,.65,c,.8),[x+(x<0?.73:-.73),.04,0]);rim.rotation.y=Math.PI/2;
+      addMesh(new THREE.SphereGeometry(.075,20,16),mat(c,.18,.25,c,2),[x,.18,0]);
+    }
+    // The wave travels along +X; its electric-field displacement is transverse (Y).
+    // A few phase-offset traces make the field readable in 3D without implying literal wavelength.
+    for(let lane=-2;lane<=2;lane++){
+      const count=100, positions=new Float32Array(count*3), geometry=new THREE.BufferGeometry();
+      geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
+      const color=lane%2?violet:cyan;
+      const lineMat=new THREE.LineBasicMaterial({color,transparent:true,opacity:lane===0?.95:.48});
+      const line=new THREE.Line(geometry,lineMat);modelGroup.add(line);
+      animated.push({kind:'thzline',obj:line,update:(t)=>{
+        const arr=geometry.attributes.position.array;
+        for(let j=0;j<count;j++){
+          const u=j/(count-1),x=-1.22+u*2.44;
+          const attenuation=Math.exp(-u*1.05);
+          const phase=(u* Math.PI*9)-t*3.4+lane*.34;
+          arr[j*3]=x;arr[j*3+1]=Math.sin(phase)*.19*attenuation;arr[j*3+2]=lane*.095;
+        }
+        geometry.attributes.position.needsUpdate=true;geometry.computeBoundingSphere();
+      }});
+    }
+    // Wavefront markers perpendicular to the propagation direction.
+    for(let i=0;i<5;i++){
+      const x=-.95+i*.46;
+      const ring=addMesh(new THREE.CircleGeometry(.22-i*.025,48),new THREE.MeshBasicMaterial({color:i%2?violet:cyan,transparent:true,opacity:.28,side:THREE.DoubleSide}),[x,0,0]);
+      ring.rotation.y=Math.PI/2;animated.push({obj:ring,kind:'wave',phase:i*.6});
+    }
+    // Reconfigurable intelligent surface, shown off-axis to suggest a reflected path.
+    const smartInfo=info('سطح ذكي قابل لإعادة التشكيل','Reconfigurable intelligent surface','لوحة مفاهيمية من عناصر عاكسة صغيرة؛ يمكن ضبط أطوارها لتغيير اتجاه الانعكاس في سيناريوهات بحثية.','A conceptual array of small reflecting elements whose phases can steer a reflected path in selected research scenarios.');
+    const panelGroup=new THREE.Group();panelGroup.position.set(.05,.1,-1.02);panelGroup.rotation.y=-.34;modelGroup.add(panelGroup);
+    const panel=new THREE.Mesh(new THREE.BoxGeometry(.12,1.2,1.5),mat(0x102b43,.3,.55,cyan,.22));panel.userData.info=smartInfo;clickable.push(panel);panelGroup.add(panel);
+    for(let row=0;row<7;row++)for(let col=0;col<9;col++){
+      const cellColor=(row+col)%2?cyan:violet;
+      const cell=new THREE.Mesh(new THREE.BoxGeometry(.025,.105,.105),mat(cellColor,.24,.42,cellColor,.55));
+      cell.position.set(.075,-.5+row*.16,-.64+col*.16);panelGroup.add(cell);
+    }
+    // A faint reflected route from panel to receiver, explicitly schematic.
+    addLine([[-.45,.02,-.95],[.45,.28,-.7],[1.25,.12,-.25],[1.65,.08,0]],violet,.52,.009);
+  } else {
+    const globeInfo=info('شبكة الهولوجرام','Holographic network','كرة شبكية توضيحية تمثل عقد الاتصال وروابط البيانات؛ ليست خريطة شبكة حقيقية.','A conceptual mesh sphere representing network nodes and data links, not a live network map.');
+    const globe=addMesh(new THREE.SphereGeometry(1.15,48,32),new THREE.MeshPhysicalMaterial({color:0x164e7a,metalness:.28,roughness:.22,transparent:true,opacity:.24,wireframe:true,emissive:cyan,emissiveIntensity:.5}),[0,0,0],globeInfo);animated.push({obj:globe,kind:'globe'});
+    const inner=addMesh(new THREE.SphereGeometry(.86,32,24),new THREE.MeshPhysicalMaterial({color:0x2c9bdb,metalness:.2,roughness:.3,transparent:true,opacity:.11,emissive:blue,emissiveIntensity:.4}),[0,0,0]);
+    const ring1=addRing(1.48,.012,cyan,.85);ring1.rotation.x=.85;animated.push({obj:ring1,kind:'orbit',speed:.3});
+    const ring2=addRing(1.62,.009,violet,.75);ring2.rotation.y=1.1;ring2.rotation.x=.3;animated.push({obj:ring2,kind:'orbit',speed:-.22});
+    const nodes=[];
+    for(let i=0;i<32;i++){const y=1-2*(i+.5)/32,rad=Math.sqrt(1-y*y),a=i*2.399;nodes.push([rad*Math.cos(a)*1.18,y*1.18,rad*Math.sin(a)*1.18]);}
+    nodes.forEach((pos,i)=>{const ni=addMesh(new THREE.SphereGeometry(i%7===0?.055:.032,12,10),mat(i%4===0?violet:cyan,.2,.25,i%4===0?violet:cyan,2),pos,info('عقدة اتصال','Network node','عقدة افتراضية ضمن شبكة مترابطة. اضغط على عقد أخرى لاستكشاف الفكرة.','A conceptual node in a connected network.' ));animated.push({obj:ni,kind:'node',phase:i*.4});if(i%2===0)addLine([pos,nodes[(i+5)%nodes.length]],cyan,.3,.006);});
+    addMesh(new THREE.SphereGeometry(.18,24,18),mat(0x143e60,.18,.2,cyan,2),[0,0,0],info('مركز البيانات','Data core','نقطة مركزية بصرية لتوضيح تبادل البيانات بين عقد الشبكة.','A visual center illustrating data exchange between network nodes.'));
+  }
+  const updateInfo=(obj)=>{const d=obj&&obj.userData&&obj.userData.info;const en=(document.querySelector('.site').lang||'ar')==='en';document.getElementById('viewer3DInfoTitle').textContent=d?(en?d.en:d.ar):(en?'Explore the 3D model':'استكشف المجسم ثلاثي الأبعاد');document.getElementById('viewer3DInfoText').textContent=d?(en?d.descEn:d.descAr):(en?'Drag to orbit, use the wheel to zoom, and click a component to inspect it.':'اسحب للتدوير، واستخدم عجلة الماوس للتقريب، واضغط على أي جزء لعرض معلوماته.');state.selected=obj||null;};
+  updateInfo(null);
+  canvas.onpointerdown=e=>{state.drag=true;state.lastX=e.clientX;state.lastY=e.clientY;state.moved=false;canvas.style.cursor='grabbing';try{canvas.setPointerCapture(e.pointerId);}catch(_){};};
+  canvas.onpointermove=e=>{if(!state.drag)return;const dx=e.clientX-state.lastX,dy=e.clientY-state.lastY;if(Math.abs(dx)+Math.abs(dy)>2)state.moved=true;state.yaw+=dx*.008;state.pitch=Math.max(-1.15,Math.min(1.15,state.pitch+dy*.006));state.lastX=e.clientX;state.lastY=e.clientY;};
+  const stopDrag=e=>{if(!state.drag)return;state.drag=false;canvas.style.cursor='grab';if(!state.moved&&e){const rect=canvas.getBoundingClientRect();pointer.x=((e.clientX-rect.left)/rect.width)*2-1;pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(clickable,false);if(hits.length){updateInfo(hits[0].object);playSound('click');}}};
+  canvas.onpointerup=stopDrag;canvas.onpointercancel=()=>{state.drag=false;canvas.style.cursor='grab';};
+  canvas.onwheel=e=>{e.preventDefault();camera.position.multiplyScalar(e.deltaY<0?.91:1.1);camera.position.clampLength(3.2,13);};
+  const resize=()=>{const rect=holder.getBoundingClientRect();const w=Math.max(1,rect.width),h=Math.max(1,rect.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};
+  if(window.ResizeObserver){state.ro=new ResizeObserver(resize);state.ro.observe(holder);}else window.addEventListener('resize',resize);resize();
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const animate=()=>{state.frame=requestAnimationFrame(animate);const t=performance.now()*.001;
+    if(!state.drag&&mode3DState==='rotate'&&!reduced)state.yaw+=.003;
+    modelGroup.rotation.y=state.yaw;
+    modelGroup.rotation.x=state.pitch*.22;
+    animated.forEach(a=>{if(a.kind==='thzline'&&a.update){a.update(t);}else if(a.kind==='led'){a.obj.material.emissiveIntensity=mode3DState==='pulse'?1.2+Math.abs(Math.sin(t*3+a.phase))*3:.6+Math.abs(Math.sin(t*2+a.phase))*1.6;}else if(a.kind==='node'){a.obj.scale.setScalar(mode3DState==='pulse'?1+Math.sin(t*3+a.phase)*.28:1);}else if(a.kind==='orbit'&&mode3DState!=='wireframe'){a.obj.rotation.z+=a.speed*.006;}else if(a.kind==='wave'){a.obj.material.opacity=.25+.55*(.5+.5*Math.sin(t*3+a.phase));}else if(a.kind==='beam'){a.obj.material.opacity=.28+.45*(.5+.5*Math.sin(t*2+a.phase));}else if(a.kind==='globe'&&mode3DState==='pulse'){a.obj.scale.setScalar(1+Math.sin(t*3)*.025);}});
+    const wire=mode3DState==='wireframe';scene.traverse(o=>{if(o.isMesh&&o.material&&'wireframe' in o.material&&o.userData.baseWire===undefined){o.userData.baseWire=!!o.material.wireframe;}if(o.isMesh&&o.material&&'wireframe' in o.material){if(o.userData.baseWire!==undefined)o.material.wireframe=o.userData.baseWire||wire;}});
+    renderer.render(scene,camera);
+  };animate();
+  // Reflect the selected display mode in the controls.
+  document.getElementById('viewer3DHint').textContent=(document.querySelector('.site').lang||'ar')==='en'?'Drag to orbit • Scroll to zoom • Click components for details':'اسحب للتدوير • عجلة الماوس للتقريب • اضغط على المكونات لعرض التفاصيل';
+  return true;
+}
+
+function loadThreeAndUpgrade() {
+  if (window.THREE) { startReal3DRenderer(); return; }
+  if (!window.__threeLoading) {
+    window.__threeLoading=true;
+    const script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+    script.async=true;
+    script.onload=()=>{window.__threeLoading=false;if(document.getElementById('viewer3DModal').style.display!=='none')startReal3DRenderer();};
+    script.onerror=()=>{window.__threeLoading=false;};
+    document.head.appendChild(script);
+  }
+}
+
 function start3DRenderer() {
+  loadThreeAndUpgrade();
+  if (window.THREE && startReal3DRenderer()) return;
   const canvas = document.getElementById('canvas3DModel');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -1450,31 +1732,39 @@ function start3DRenderer() {
         ctx.beginPath();ctx.arc(q.x,q.y,4*q.s*zoom,0,Math.PI*2);ctx.fillStyle=i?green:cyan;ctx.shadowBlur=18;ctx.shadowColor=ctx.fillStyle;ctx.fill();ctx.shadowBlur=0;
       });
     } else if(current3DType==='thz'){
-      // Wavefronts in 3D space with a transmitter, receiver, and travelling pulse.
-      for(let k=0;k<7;k++){
-        const x=-150+k*48;
+      // Conceptual transverse wave travelling from transmitter to receiver.
+      // Amplitude fades with distance; this is a visual teaching aid, not a physical solver.
+      const pathY=-4;
+      for(let lane=-2;lane<=2;lane++){
         ctx.beginPath();
-        for(let j=0;j<=64;j++){
-          const z=-92+j*2.9;
-          const y= -Math.sin(j*0.23-angle3D*2+k*0.22)*18;
-          const q=project({x,y,z},yaw,pitch,cx,cy,focal,zoom);
+        for(let j=0;j<=180;j++){
+          const u=j/180,x=-135+u*270;
+          const attenuation=Math.exp(-u*1.15);
+          const y=pathY-Math.sin(u*Math.PI*11-angle3D*2.5+lane*.32)*19*attenuation;
+          const q=project({x,y,z:lane*11},yaw,pitch,cx,cy,focal,zoom);
           if(j===0)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y);
         }
-        ctx.strokeStyle=k%2?`rgba(72,232,255,${0.22+k*0.075})`:`rgba(162,139,255,${0.25+k*0.06})`;
-        ctx.lineWidth=2.2;ctx.shadowBlur=8;ctx.shadowColor=cyan;ctx.stroke();ctx.shadowBlur=0;
+        ctx.strokeStyle=lane===0?cyan:lane%2?'rgba(162,139,255,.52)':'rgba(72,232,255,.48)';
+        ctx.lineWidth=lane===0?2.5:1.3;ctx.shadowBlur=lane===0?10:3;ctx.shadowColor=ctx.strokeStyle;ctx.stroke();ctx.shadowBlur=0;
       }
-      // Transmitter / receiver towers.
+      // Directional antenna units at both ends of the link.
       [-1,1].forEach((side,i)=>{
-        const x=side*165;
-        box3(x,0,0,28,76,28,i?'#123d50':'#17365c',i?green:blue,yaw,pitch,cx,cy,focal,zoom);
-        for(let z=-1;z<=1;z+=2)for(let y=-1;y<=1;y+=2)
-          line3({x:x+z*17,y:y*40,z:-17},{x:x+z*17,y:y*40,z:17},cyan,1,yaw,pitch,cx,cy,focal,zoom);
-        const q=project({x,y:-54,z:0},yaw,pitch,cx,cy,focal,zoom);
-        ctx.beginPath();ctx.arc(q.x,q.y,7*q.s,0,Math.PI*2);ctx.fillStyle=i?green:blue;ctx.shadowBlur=22;ctx.shadowColor=ctx.fillStyle;ctx.fill();ctx.shadowBlur=0;
+        const x=side*165, color=i?green:blue;
+        box3(x,-10,0,26,62,26,i?'#123d50':'#17365c',color,yaw,pitch,cx,cy,focal,zoom);
+        const dish=project({x:x+(i?-17:17),y:-8,z:0},yaw,pitch,cx,cy,focal,zoom);
+        ctx.beginPath();ctx.arc(dish.x,dish.y,13*dish.s,0,Math.PI*2);ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.shadowBlur=12;ctx.shadowColor=color;ctx.stroke();ctx.shadowBlur=0;
+        const dot=project({x,y:-47,z:0},yaw,pitch,cx,cy,focal,zoom);
+        ctx.beginPath();ctx.arc(dot.x,dot.y,5*dot.s,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
       });
-      const px=Math.sin(angle3D*1.7)*115;
-      const pulse=project({x:px,y:-Math.sin(angle3D*2)*20,z:0},yaw,pitch,cx,cy,focal,zoom);
-      ctx.beginPath();ctx.arc(pulse.x,pulse.y,7*pulse.s,0,Math.PI*2);ctx.fillStyle='#fff';ctx.shadowBlur=24;ctx.shadowColor=cyan;ctx.fill();ctx.shadowBlur=0;
+      // Schematic reconfigurable surface, separated from the direct path.
+      box3(8,-8,-68,9,92,76,light?'#d9e9f5':'#102b43',violet,yaw,pitch,cx,cy,focal,zoom);
+      for(let row=0;row<6;row++)for(let col=0;col<7;col++){
+        const q=project({x:8,y:-43+row*14,z:-98+col*10},yaw,pitch,cx,cy,focal,zoom);
+        ctx.fillStyle=(row+col)%2?cyan:violet;ctx.globalAlpha=.8;ctx.fillRect(q.x-2.2*q.s,q.y-2.2*q.s,4.4*q.s,4.4*q.s);ctx.globalAlpha=1;
+      }
+      const u=(Math.sin(angle3D*1.7)+1)/2;
+      const pulse=project({x:-135+u*270,y:pathY-Math.sin(u*Math.PI*11-angle3D*2.5)*19*Math.exp(-u*1.15),z:0},yaw,pitch,cx,cy,focal,zoom);
+      ctx.beginPath();ctx.arc(pulse.x,pulse.y,5*pulse.s,0,Math.PI*2);ctx.fillStyle='#fff';ctx.shadowBlur=18;ctx.shadowColor=cyan;ctx.fill();ctx.shadowBlur=0;
     } else {
       // Rotating geodesic-style holographic sphere with latitude/longitude mesh.
       const r=100+(mode3DState==='pulse'?Math.sin(angle3D*3)*7:0);
@@ -1657,7 +1947,7 @@ let lastDownloadSelection = { type: 'movie', sizeGB: 100 };
 window.calculateDownload = function(type, sizeGB, btnElement, silent = false) {
   if (!silent) playSound('click');
   lastDownloadSelection = { type, sizeGB };
-  document.querySelectorAll('.calc-btn').forEach(b => b.classList.toggle('active', b === btnElement));
+  document.querySelectorAll('.speed-preset').forEach(b => b.classList.toggle('active', b === btnElement));
   const sizeInput = document.getElementById('customFileSize');
   const sizeUnit = document.getElementById('customFileUnit');
   const speedInput = document.getElementById('customSpeed');
@@ -1800,8 +2090,8 @@ window.sendAIQuery = function() {
         reply = "Hi! I'm Mahmama, the guide for this 6G+ educational project. Ask me about the site, its sections, the team, AI, simulations, the calculator, or how to use the controls.";
       } else if (has('team','members','who built','who made','whole team')) {
         reply = "The team section currently presents eight members: Mohab, Amr, Khaled, Osama, Fouad, Zein, Adham, and Mohamed. Open the Team section and select a card to read the role listed for that member.";
-      } else if (has('mohab','website developer','powerpoint','presentation','video','who developed')) {
-        reply = "Mohab's listed role is lead website and AI developer. His profile describes work on the site's sections, interface, responsive layout, interactions and animations, the AI/chatbot area, plus the PowerPoint design and motion ideas and video editing.";
+      } else if (has('mohab','website developer','powerpoint','presentation','who developed')) {
+        reply = "Mohab's listed role is lead website and AI developer. His profile describes work on the site's sections, interface, responsive layout, interactions and animations, the AI/chatbot area, plus the PowerPoint design and motion ideas and refined slide transitions.";
       } else if (has('amr','leader','project lead')) {
         reply = "Amr is listed as project leader, with responsibilities related to coordinating the project, system simulation, technical performance indicators, and helping with the site and presentation.";
       } else if (has('goal','purpose','objective','why this project','project idea')) {
@@ -1834,8 +2124,8 @@ window.sendAIQuery = function() {
         reply = "أهلاً بيك! أنا محماااا، دليلك لمشروع 6G+. اسألني عن الموقع أو أقسامه أو الفريق أو الذكاء الاصطناعي أو المحاكاة أو الحاسبة، وأنا هساعدك بالمعلومات الموجودة في المشروع.";
       } else if (has('فريق','العمل','اعضاء','الأعضاء','كل الفريق','الفريق كله','مين عمل')) {
         reply = "الفريق المعروض في قسم الفريق مكوّن من 8 أعضاء: مهاب، عمرو، خالد، أسامة، فؤاد، زين، أدهم، ومحمد. اضغط على بطاقة أي عضو عشان تشوف الدور المكتوب له في المشروع.";
-      } else if (has('مهاب','باوربوينت','بوربوينت','عرض تقديمي','مونتاج','مين طور','مين طور الموقع','مطور الموقع')) {
-        reply = "مهاب هو المطور الرئيسي للموقع والـ AI حسب وصف بطاقة الفريق: اشتغل على تنسيق وتطوير أقسام الموقع والواجهات وتجربة المستخدم والتصميم المتجاوب والتأثيرات والأنيميشن، وقسم الذكاء الاصطناعي والشات بوت، وكمان تطوير الباوربوينت وحركة الشرائح والمساهمة في مونتاج الفيديو.";
+      } else if (has('مهاب','باوربوينت','بوربوينت','عرض تقديمي','مين طور','مين طور الموقع','مطور الموقع')) {
+        reply = "مهاب هو المطور الرئيسي للموقع والـ AI حسب وصف بطاقة الفريق: اشتغل على تنسيق وتطوير أقسام الموقع والواجهات وتجربة المستخدم والتصميم المتجاوب والتأثيرات والأنيميشن، وقسم الذكاء الاصطناعي والشات بوت، وكمان تطوير الباوربوينت وتنظيم الشرائح والانتقالات.";
       } else if (has('عمرو','ليدر','قائد','قيادة')) {
         reply = "عمرو موصوف في قسم الفريق بأنه ليدر المشروع، ومسؤول عن تنسيق العمل ومحاكاة النظام ومؤشرات الأداء التقنية والمساعدة في تطوير الموقع والعرض.";
       } else if (has('هدف','المشروع','فكرة المشروع','ليه عملتوا','الغرض')) {
@@ -1928,12 +2218,9 @@ addEventListener('scroll',scrub,{passive:true});addEventListener('resize',scrub)
 
 const cEl=document.getElementById('count');let ran=false;
 function runCount(){
-  if(ran||reduce)return;ran=true;const t0=performance.now(),D=2400;
-  (function step(now){
-    const u=clamp((now-t0)/D),e=1-Math.pow(1-u,3);
-    cEl.textContent=(1-(1-.001)*e).toFixed(3);
-    if(u<1)requestAnimationFrame(step);
-  })(t0);
+  if(ran||reduce||!cEl)return;
+  ran=true;
+  if(cEl.dataset.measured !== 'true') cEl.textContent='—';
 }
 if('IntersectionObserver' in window&&!reduce){
   const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){runCount();io2.disconnect()}}),{threshold:.6});
@@ -3193,6 +3480,210 @@ body:not(.light-theme) input::placeholder,body:not(.light-theme) textarea::place
  const langButton=document.getElementById('lang');if(langButton)langButton.addEventListener('click',()=>setTimeout(refreshSuggestions,0));
  const observer=new MutationObserver(refreshSuggestions);if(site)observer.observe(site,{attributes:true,attributeFilter:['lang']});
  refreshSuggestions();
+})();
+</script>
+
+
+<style id="6g-plus-final-ui-fixes">
+/* Consistent, readable native controls in both themes; keep the original 6G+ identity. */
+.site input[type="number"], .site select, .site textarea {
+  max-width: 100%; min-width: 0; border-radius: 10px; font: inherit;
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.site input[type="number"]:focus-visible, .site select:focus-visible, .site textarea:focus-visible {
+  outline: 2px solid var(--cyan, #2bd0ff); outline-offset: 2px;
+}
+body:not(.light-theme) .site select, body:not(.light-theme) .site select option {
+  color: #f5f7ff !important; background: #101827 !important; color-scheme: dark;
+}
+body.light-theme .site select, body.light-theme .site select option {
+  color: #172033 !important; background: #fff !important; color-scheme: light;
+}
+#speedTestBtn:disabled { cursor: progress; }
+#speedTestStatus { overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) {
+  .site input[type="number"], .site select, .site textarea { transition: none; }
+}
+</style>
+<script id="6g-plus-reliability-patch">
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const site = document.querySelector('.site');
+  const lang = () => (site && site.lang) || document.documentElement.lang || 'ar';
+  const isEnglish = () => lang() === 'en';
+  const numberFormat = value => Number(value).toLocaleString(isEnglish() ? 'en-US' : 'ar-EG', { maximumFractionDigits: 2 });
+
+  // Recalculate live when values/units change, while retaining the explicit Calculate button.
+  window.calculateCustomDownload = function(silent = false) {
+    if (!silent && typeof window.playSound === 'function') window.playSound('click');
+    const sizeInput = $('customFileSize'), sizeUnit = $('customFileUnit');
+    const speedInput = $('customSpeed'), speedUnit = $('customSpeedUnit');
+    const result = $('calcResultTime');
+    if (!sizeInput || !sizeUnit || !speedInput || !speedUnit || !result) return;
+
+    const size = sizeInput.valueAsNumber;
+    const speed = speedInput.valueAsNumber;
+    const goodSize = Number.isFinite(size) && size > 0;
+    const goodSpeed = Number.isFinite(speed) && speed > 0;
+    sizeInput.setAttribute('aria-invalid', String(!goodSize));
+    speedInput.setAttribute('aria-invalid', String(!goodSpeed));
+    if (!goodSize || !goodSpeed) {
+      result.textContent = isEnglish()
+        ? 'Enter a valid file size and connection speed greater than zero.'
+        : 'أدخل حجم ملف صحيحًا وسرعة اتصال أكبر من صفر.';
+      return;
+    }
+
+    const sizeMultipliers = { MB: 1e6, GB: 1e9, TB: 1e12 };
+    const speedMultipliers = { Mbps: 1e6, Gbps: 1e9, Tbps: 1e12 };
+    const bytes = size * (sizeMultipliers[sizeUnit.value] || NaN);
+    const bitsPerSecond = speed * (speedMultipliers[speedUnit.value] || NaN);
+    const seconds = (bytes * 8) / bitsPerSecond;
+    if (!Number.isFinite(seconds) || seconds < 0) {
+      result.textContent = isEnglish() ? 'This value is too large to calculate.' : 'القيمة كبيرة جدًا ويتعذر حسابها.';
+      return;
+    }
+
+    let timeText;
+    if (seconds < 0.001) timeText = `${numberFormat(seconds * 1e6)} ${isEnglish() ? 'µs' : 'ميكروثانية'}`;
+    else if (seconds < 1) timeText = `${numberFormat(seconds * 1000)} ${isEnglish() ? 'ms' : 'مللي ثانية'}`;
+    else if (seconds < 60) timeText = `${numberFormat(seconds)} ${isEnglish() ? 'seconds' : 'ثانية'}`;
+    else if (seconds < 3600) timeText = `${numberFormat(seconds / 60)} ${isEnglish() ? 'minutes' : 'دقيقة'}`;
+    else if (seconds < 86400) timeText = `${numberFormat(seconds / 3600)} ${isEnglish() ? 'hours' : 'ساعة'}`;
+    else timeText = `${numberFormat(seconds / 86400)} ${isEnglish() ? 'days' : 'يوم'}`;
+
+    const rateText = `${numberFormat(speed)} ${speedUnit.value}`;
+    result.textContent = isEnglish()
+      ? `Estimated transfer time: ${timeText} at ${rateText}. Ideal theoretical estimate; actual transfers may take longer.`
+      : `زمن النقل النظري: ${timeText} عند سرعة ${rateText}. النقل الفعلي قد يستغرق وقتًا أطول.`;
+  };
+
+  ['customFileSize','customFileUnit','customSpeed','customSpeedUnit'].forEach(id => {
+    const el = $(id);
+    if (!el || el.dataset.liveCalcBound === 'true') return;
+    el.dataset.liveCalcBound = 'true';
+    el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => window.calculateCustomDownload(true));
+  });
+
+  // Speed test: use a per-run controller so timeout/cancellation cannot affect a later run.
+  let activeSpeedTest = null;
+  window.runRealSpeedTest = async function() {
+    const btn = $('speedTestBtn'), status = $('speedTestStatus');
+    const latencyEl = $('count'), downloadEl = $('throughputCount');
+    const latencyLabel = $('unitLatency'), downloadLabel = $('unitThroughput');
+    if (!btn || !status || !latencyEl || !downloadEl || btn.disabled) return;
+
+    if (activeSpeedTest) activeSpeedTest.abort();
+    const controller = new AbortController();
+    activeSpeedTest = controller;
+    const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    const say = (ar, en) => { status.textContent = isEnglish() ? en : ar; };
+    say('جارٍ قياس استجابة الخادم…', 'Measuring server response time…');
+
+    try {
+      const base = 'https://speed.cloudflare.com/__down?bytes=';
+      const pingStart = performance.now();
+      const pingResponse = await fetch(`${base}1000&cb=${Date.now()}`, {
+        cache: 'no-store', signal: controller.signal, credentials: 'omit'
+      });
+      if (!pingResponse.ok) throw new Error('Response check failed');
+      await pingResponse.arrayBuffer();
+      const responseMs = performance.now() - pingStart;
+
+      say('جارٍ قياس سرعة التنزيل (حوالي 5 ميجابايت)…', 'Measuring download speed (about 5 MB)…');
+      const downloadBytes = 5_000_000;
+      const downloadStart = performance.now();
+      const downloadResponse = await fetch(`${base}${downloadBytes}&cb=${Date.now()}`, {
+        cache: 'no-store', signal: controller.signal, credentials: 'omit'
+      });
+      if (!downloadResponse.ok) throw new Error('Download test failed');
+      const data = await downloadResponse.arrayBuffer();
+      const elapsedSeconds = (performance.now() - downloadStart) / 1000;
+      if (!data.byteLength || !Number.isFinite(responseMs) || !Number.isFinite(elapsedSeconds) || elapsedSeconds <= 0) {
+        throw new Error('Invalid measurement');
+      }
+      const mbps = (data.byteLength * 8) / elapsedSeconds / 1e6;
+      if (!Number.isFinite(mbps) || mbps <= 0) throw new Error('Invalid speed result');
+
+      latencyEl.dataset.measured = 'true';
+      downloadEl.dataset.measured = 'true';
+      latencyEl.textContent = responseMs.toLocaleString(isEnglish() ? 'en-US' : 'ar-EG', { maximumFractionDigits: 0 });
+      downloadEl.textContent = mbps.toLocaleString(isEnglish() ? 'en-US' : 'ar-EG', { maximumFractionDigits: 2 });
+      if (latencyLabel) latencyLabel.textContent = isEnglish() ? 'Approx. HTTP response time (ms)' : 'زمن استجابة HTTP تقريبي (مللي ثانية)';
+      if (downloadLabel) downloadLabel.textContent = isEnglish() ? 'Measured download speed (Mbps)' : 'سرعة التنزيل المقاسة (Mbps)';
+      say(`تم القياس: استجابة HTTP نحو ${responseMs.toFixed(0)} مللي ثانية، وسرعة تنزيل ${mbps.toFixed(2)} Mbps. تختلف النتيجة حسب الشبكة والخادم.`,
+          `Measured: HTTP response about ${responseMs.toFixed(0)} ms and download speed ${mbps.toFixed(2)} Mbps. Results vary by network and server.`);
+    } catch (error) {
+      const timedOut = error && error.name === 'AbortError';
+      say(
+        timedOut ? 'انتهت مهلة الاختبار (15 ثانية). تحقق من الاتصال ثم حاول مرة أخرى.' : 'تعذر إجراء الاختبار. تحقق من الإنترنت أو افتح الموقع عبر اتصال يسمح بالوصول إلى خادم الاختبار.',
+        timedOut ? 'The test timed out after 15 seconds. Check your connection and try again.' : 'The test failed. Check your internet connection and access to the test server.'
+      );
+    } finally {
+      window.clearTimeout(timeoutId);
+      if (activeSpeedTest === controller) activeSpeedTest = null;
+      btn.disabled = false;
+      btn.removeAttribute('aria-busy');
+    }
+  };
+
+  // Keep the theme control's label and accessible name synchronized with the action it performs.
+  function syncThemeLabel() {
+    const button = $('themeToggle');
+    if (!button) return;
+    const light = document.body.classList.contains('light-theme');
+    if (isEnglish()) {
+      button.textContent = light ? 'Dark mode' : 'Light mode';
+      button.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+    } else {
+      button.textContent = light ? 'الوضع الداكن' : 'الوضع الفاتح';
+      button.setAttribute('aria-label', light ? 'التبديل إلى الوضع الداكن' : 'التبديل إلى الوضع الفاتح');
+    }
+  }
+  const themeButton = $('themeToggle');
+  if (themeButton) {
+    themeButton.addEventListener('click', () => window.setTimeout(syncThemeLabel, 0));
+    syncThemeLabel();
+  }
+
+  // Wrap the existing language system instead of replacing its existing translations.
+  if (typeof window.setLang === 'function' && !window.setLang.__6gReliabilityWrapped) {
+    const originalSetLang = window.setLang;
+    const wrappedSetLang = function(value) {
+      const result = originalSetLang.apply(this, arguments);
+      const current = value === 'en' ? 'en' : 'ar';
+      document.documentElement.lang = current;
+      document.documentElement.dir = current === 'en' ? 'ltr' : 'rtl';
+      if (site) { site.lang = current; site.dir = current === 'en' ? 'ltr' : 'rtl'; }
+      syncThemeLabel();
+      window.calculateCustomDownload(true);
+      // Restore the correct labels after language passes update the measured-result units.
+      if ($('count') && $('count').textContent.trim() !== '—') {
+        if ($('unitLatency')) $('unitLatency').textContent = current === 'en' ? 'Approx. HTTP response time (ms)' : 'زمن استجابة HTTP تقريبي (مللي ثانية)';
+        if ($('unitThroughput')) $('unitThroughput').textContent = current === 'en' ? 'Measured download speed (Mbps)' : 'سرعة التنزيل المقاسة (Mbps)';
+      }
+      return result;
+    };
+    wrappedSetLang.__6gReliabilityWrapped = true;
+    window.setLang = wrappedSetLang;
+  }
+
+  // Use a neutral placeholder until a real test is completed; never present sample values as live data.
+  if ($('count')) $('count').textContent = '—';
+  if ($('throughputCount')) $('throughputCount').textContent = '—';
+  if ($('unitLatency')) $('unitLatency').textContent = isEnglish() ? 'Run the test to see a result' : 'شغّل الاختبار لعرض النتيجة';
+  if ($('unitThroughput')) $('unitThroughput').textContent = isEnglish() ? 'Run the test to see a result' : 'شغّل الاختبار لعرض النتيجة';
+
+  // Reapply after the site's saved-language initialization runs at the end of the document.
+  window.addEventListener('load', () => {
+    syncThemeLabel();
+    window.calculateCustomDownload(true);
+    if ($('count') && $('count').textContent.trim() === '0.001') $('count').textContent = '—';
+    if ($('throughputCount') && $('throughputCount').textContent.trim() === '1.0') $('throughputCount').textContent = '—';
+  }, { once: true });
 })();
 </script>
 
